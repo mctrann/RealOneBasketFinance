@@ -1,0 +1,8 @@
+bin/ 
+.settings/ 
+ 
+# Eclipse Core 
+.project
+
+*.class 
+ 

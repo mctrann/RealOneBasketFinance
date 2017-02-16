@@ -4,5 +4,5 @@ bin/
 # Eclipse Core 
 .project
 
-*class 
+*.class 
  

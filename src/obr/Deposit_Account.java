@@ -14,4 +14,17 @@ public class Deposit_Account extends Assets{
 	public void setAPR(double apr) {
 		this.apr = apr;
 	}
+	
+	public double getRiskMeasure() {
+		return 0;
+	}
+	
+	public double getBRR() {
+		
+		return Math.pow(Math.E, getAPR()) - 1;
+	}
+	
+	public double getValue() {
+		return 0;
+	}
 }

@@ -41,4 +41,10 @@ public abstract class Persons {
 		return email;
 	}
 	
+	public abstract String getSecID();
+	
+	public abstract String getType();
+
+
+	
 }

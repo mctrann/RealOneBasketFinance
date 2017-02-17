@@ -2,19 +2,20 @@ package obr;
 
 import java.io.FileNotFoundException;
 import java.io.PrintWriter;
+import java.util.ArrayList;
 import java.util.List;
 
 public class PortfolioWriter {
-
+	private double fees;
 	public void PortfolioWriter(List<Portfolios>portInfo, List<Persons> perInfo, List<Assets> assetInfo) {
-	PrintWriter write = null;
+		PrintWriter write = null;
 		
 		try{
 			write = new PrintWriter("data/output1.txt");
 		} catch (FileNotFoundException e) {
 			e.printStackTrace();
 		}
-
+		
 		
 		write.println("Porfolio Summary Report");
 		write.println("--------------------------------------------------------------------------------------------------------------------------------------");
@@ -38,7 +39,19 @@ public class PortfolioWriter {
 					break;
 				}
 			}
-		write.println(String.format("%-30s %-30s %-30s %-30s %-30s %-30s %-30s %-30s", portInfo.get(i).getPortfolioCode(), ownerName, managerName, "d", "d", "d", "d", "d"));  //use obj.get to access info and print
+			
+			List<Integer> annualReturn = new ArrayList<Integer>();
+			int totalValue = 0;
+			
+			//gets the type of the assets
+			for(int a = 0; a < portInfo.size(); a++) {
+				portInfo.get(i).getAnnualReturn(portInfo.get(a).getAssetList());
+			}
+			
+			//writes in the info
+			write.println(String.format("%-30s %-30s %-30s %-30s %-30s %-30s %-30s %-30s", portInfo.get(i).getPortfolioCode(), ownerName, managerName, portInfo.get(i).getFees(portInfo.get(i).getManagerCode()), 
+					"D", "d", "d", "d"));  //use obj.get to access info and print
+			fees += portInfo.get(i).getFees(portInfo.get(i).getManagerCode());
 		}
 		
 //		for (int z = 0; z < portInfo.size(); z++) {

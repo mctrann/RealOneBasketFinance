@@ -13,7 +13,7 @@ import java.util.List;
 
 public class Data_Converter {
 	private  static List<Persons> perInfo= new ArrayList<Persons>(); 
-	private static List <Assets> ass= new ArrayList<Assets>();
+	private static List <Assets> assetInfo= new ArrayList<Assets>();
 	private static List<Portfolios> portInfo = new ArrayList<Portfolios>();
 	// parse persons and assets files
 	public static void dataParser(){
@@ -144,7 +144,7 @@ public class Data_Converter {
 						betaMeasure = Double.parseDouble(assets_arr[5]);
 						stockSymbol = assets_arr[6];
 						sharePrice = Double.parseDouble(assets_arr[7]);
-						ass.add(b = new Stocks(code, type, label,quartDiv,BRR,betaMeasure,stockSymbol,sharePrice));
+						assetInfo.add(b = new Stocks(code, type, label,quartDiv,BRR,betaMeasure,stockSymbol,sharePrice));
 					}
 					else if (type.equals("P")){
 						Private_Investments b;
@@ -153,13 +153,13 @@ public class Data_Converter {
 						BRR = Double.parseDouble(assets_arr[4]);
 						omegaMeasure = Double.parseDouble(assets_arr[5]);
 						totalValue = Double.parseDouble(assets_arr[6]);
-						ass.add(b = new Private_Investments(code, type, label,quartDiv,BRR,omegaMeasure,totalValue));
+						assetInfo.add(b = new Private_Investments(code, type, label,quartDiv,BRR,omegaMeasure,totalValue));
 					}
 					else if (type.equals("D")){
 						Deposit_Account b;
 						label = assets_arr[2];
 						apr = Double.parseDouble(assets_arr[3]);
-						ass.add(b = new Deposit_Account(code, type, label,apr));
+						assetInfo.add(b = new Deposit_Account(code, type, label,apr));
 					}
 				}
 				counter2++;
@@ -208,7 +208,7 @@ public class Data_Converter {
 						}
 					}
 					Portfolios port;
-					portInfo.add(port = new Portfolios(portCode, ownerCode, mangerCode, benCode, assetList1));
+					portInfo.add(port = new Portfolios(portCode, ownerCode, mangerCode, benCode, assetList1, perInfo, assetInfo));
 				}
 				counter3++;
 			}
@@ -224,6 +224,10 @@ public class Data_Converter {
 			e.printStackTrace();
 		}
 	}
+	
+	public List<Persons> getPerInfo() {
+		return perInfo;
+	}
 	//runs program
 	public static void main(String args[]){	
 		dataParser();
@@ -231,10 +235,10 @@ public class Data_Converter {
 		thing.JSONConverterP(perInfo);
 		XMLWriter thing2= new XMLWriter();
 		thing2.xmlPersonConverter(perInfo);
-		thing.JSONconverterA(ass);
-		thing2.xmlAssetConverter(ass);
+		thing.JSONconverterA(assetInfo);
+		thing2.xmlAssetConverter(assetInfo);
 		PortfolioWriter thing3 = new PortfolioWriter();
-		thing3.PortfolioWriter(portInfo, perInfo, ass);	
+		thing3.PortfolioWriter(portInfo, perInfo, assetInfo);	
 		}
 		
 }

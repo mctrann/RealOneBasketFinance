@@ -169,15 +169,29 @@ public class Data_Converter {
 	}
 	//runs program
 	public static void main(String args[]){	
-		dataParser();
-		JSONWriter thing = new JSONWriter();
-		thing.JSONConverterP(perInfo);
-		XMLWriter thing2= new XMLWriter();
-		thing2.xmlPersonConverter(perInfo);
-		thing.JSONconverterA(ass);
-		thing2.xmlAssetConverter(ass);
+//		dataParser();
+//		JSONWriter thing = new JSONWriter();
+//		thing.JSONConverterP(perInfo);
+//		XMLWriter thing2= new XMLWriter();
+//		thing2.xmlPersonConverter(perInfo);
+//		thing.JSONconverterA(ass);
+//		thing2.xmlAssetConverter(ass);
 		
-	}
+		
+		System.out.println("Porfolio Summary Report");
+		System.out.println("--------------------------------------------------------------------------------------------------------------------------------------");
+		System.out.print(String.format("%-30s %-30s %-30s %-30s %-30s %-30s %-30s %-30s", "Portfolio", "Owner", "Manager", "Fees", "Comissions", "Weighted Risk", "Return", "Total"));
+		//for(int i:perInfo.size()) {
+		//System.out.print(String.format("%-30s %-30s %-30s %-30f %-30f %-30f %-30f %-30f", ));  //use obj.get to access info and print
+		//}
+		
+		System.out.println("Portfolio Details");
+		System.out.println("--------------------------------------------------------------------------------------------------------------------------------------");
+		//System.out.println("Portfolio " + obj.get(porfolioCode));
+		System.out.println("------------------------------------------------------");
+		
+		}
+		
 }
 
 

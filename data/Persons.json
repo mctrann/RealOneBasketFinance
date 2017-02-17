@@ -1,0 +1,341 @@
+[
+  {
+    "type": "J",
+    "secID": "sec098",
+    "personCode": "FVD101",
+    "firstName": "Eric",
+    "lastName": "Le",
+    "address": {
+      "street": "1040 Van Dorn St",
+      "city": "Lincoln",
+      "state": "NE",
+      "country": "United States",
+      "zipCode": "68512"
+    },
+    "email": [
+      "EricLe@email.com"
+    ]
+  },
+  {
+    "type": "J",
+    "secID": "sec789",
+    "personCode": "8E57R6",
+    "firstName": " Joseph",
+    "lastName": " Field",
+    "address": {
+      "street": " 3420 Grand Ave",
+      "city": "Baton Rouge",
+      "state": "LA",
+      "country": "United States",
+      "zipCode": "70810"
+    },
+    "email": [
+      "jField3@email.com"
+    ]
+  },
+  {
+    "secID": "sec129",
+    "type": "E",
+    "personCode": "V1RT72",
+    "firstName": " Mickey",
+    "lastName": " Tran",
+    "address": {
+      "street": " 7605 Vine St",
+      "city": " Lincoln",
+      "state": " NE",
+      "country": " ",
+      "zipCode": " 68505"
+    },
+    "email": [
+      "Tran_M@email.com",
+      "mctrann@gmail.com"
+    ]
+  },
+  {
+    "personCode": "57IPQ9",
+    "firstName": " Maryjane",
+    "lastName": "Neal",
+    "address": {
+      "street": " 709 Diamond Cove",
+      "city": " Providence",
+      "state": " RI",
+      "country": " ",
+      "zipCode": " "
+    },
+    "email": [
+      "MJ_Oneal@email.com",
+      " mj@yahoo.com"
+    ]
+  },
+  {
+    "secID": "sec897",
+    "type": "E",
+    "personCode": "01WR93",
+    "firstName": " Verna",
+    "lastName": "Braswell",
+    "address": {
+      "street": " 2554 Whitman Court",
+      "city": "Wallinford",
+      "state": "CT",
+      "country": "United States",
+      "zipCode": "06492"
+    },
+    "email": [
+      ""
+    ]
+  },
+  {
+    "personCode": "931570",
+    "firstName": " Tommy",
+    "lastName": " Scholl",
+    "address": {
+      "street": " 4095 Marion Drive",
+      "city": " Tampa",
+      "state": " FL",
+      "country": " United States",
+      "zipCode": " 33607"
+    },
+    "email": [
+      " SchollT@email.com",
+      " st@gmail.com",
+      " lol@yahoo.com"
+    ]
+  },
+  {
+    "type": "J",
+    "secID": "sec974",
+    "personCode": "43TY5U",
+    "firstName": " Sabrina",
+    "lastName": "Weissmuller",
+    "address": {
+      "street": " 2248 Fittro Street",
+      "city": " Blytheville",
+      "state": " AR",
+      "country": " United States",
+      "zipCode": " 72315"
+    },
+    "email": [
+      " S_Weiss@email.com"
+    ]
+  },
+  {
+    "personCode": "REV455",
+    "firstName": " David",
+    "lastName": " Baker",
+    "address": {
+      "street": " 3635 Simpson St",
+      "city": " Green Rock",
+      "state": " IL",
+      "country": " United States",
+      "zipCode": " 61244"
+    },
+    "email": [
+      " "
+    ]
+  },
+  {
+    "type": "J",
+    "secID": "sec284",
+    "personCode": "56CG8W",
+    "firstName": " Molly",
+    "lastName": "Flores",
+    "address": {
+      "street": " 2852 Shady Pines Dr",
+      "city": " Bluefield",
+      "state": " VA",
+      "country": "United States",
+      "zipCode": "24605"
+    },
+    "email": [
+      " MollyOFlores@email.com",
+      " flores@msn.com",
+      " mF@aol.com"
+    ]
+  },
+  {
+    "type": "J",
+    "secID": "sec049",
+    "personCode": "411GJ5",
+    "firstName": " Terry",
+    "lastName": " Maurice",
+    "address": {
+      "street": " 2117 Charter St",
+      "city": " Kansas City",
+      "state": " KS",
+      "country": " United States",
+      "zipCode": " 64106"
+    },
+    "email": [
+      " T_Maurice@email.com"
+    ]
+  },
+  {
+    "personCode": "23lJAL",
+    "firstName": " James",
+    "lastName": " Kaufmann",
+    "address": {
+      "street": " 544 Tavern Pl",
+      "city": " Martinsburg",
+      "state": " WV",
+      "country": " United States",
+      "zipCode": " 25401"
+    },
+    "email": [
+      " J_Kaufmann@email.com"
+    ]
+  },
+  {
+    "personCode": "56LJLK",
+    "firstName": " Edward",
+    "lastName": "Johnson",
+    "address": {
+      "street": " 3048 West Virginia Av",
+      "city": " Albany",
+      "state": " NY",
+      "country": " United States",
+      "zipCode": " 12207"
+    },
+    "email": [
+      ""
+    ]
+  },
+  {
+    "secID": "sec465",
+    "type": "E",
+    "personCode": "4L5K4J",
+    "firstName": " Lan",
+    "lastName": " K\u0027Ung",
+    "address": {
+      "street": " 2963 Pennsylvania Av",
+      "city": " Teterboro",
+      "state": " NJ",
+      "country": " United States",
+      "zipCode": " 07608"
+    },
+    "email": [
+      " LanK@email.com"
+    ]
+  },
+  {
+    "type": "J",
+    "secID": "sec197",
+    "personCode": "34KDKE",
+    "firstName": " Heidi",
+    "lastName": " Russell",
+    "address": {
+      "street": " 1329 Pine Dr",
+      "city": " Madisonville",
+      "state": " KY",
+      "country": " United States",
+      "zipCode": " 42431"
+    },
+    "email": [
+      " HEIDI777@email.com"
+    ]
+  },
+  {
+    "secID": "sec397",
+    "type": "E",
+    "personCode": "23L53T",
+    "firstName": " Suleman",
+    "lastName": "Overes",
+    "address": {
+      "street": " 3558 Holt St",
+      "city": " West Palm Beach",
+      "state": " FL",
+      "country": " United States",
+      "zipCode": " 33409"
+    },
+    "email": [
+      " SuLLyO@email.com"
+    ]
+  },
+  {
+    "type": "J",
+    "secID": "sec783",
+    "personCode": "23LJFD",
+    "firstName": " Hsin",
+    "lastName": "Hsu",
+    "address": {
+      "street": " 3649 Hickory St",
+      "city": " Ogden",
+      "state": " UT",
+      "country": " United States",
+      "zipCode": " 84401"
+    },
+    "email": [
+      " HH35@email.com"
+    ]
+  },
+  {
+    "secID": "476",
+    "type": "E",
+    "personCode": "01WK93",
+    "firstName": " Anna",
+    "lastName": "Mullen",
+    "address": {
+      "street": " 1383 Martha St",
+      "city": " Mohave Valley",
+      "state": " AZ",
+      "country": " United States",
+      "zipCode": " 86440"
+    },
+    "email": [
+      " MullenA@email.com"
+    ]
+  },
+  {
+    "personCode": "LAKSFE",
+    "firstName": " Spongebob",
+    "lastName": "Squarepants",
+    "address": {
+      "street": " 1234 Pineapple Under Da Sea St",
+      "city": " Bikini Bottom",
+      "state": " Pacific Ocean",
+      "country": " Earth",
+      "zipCode": ""
+    },
+    "email": [
+      " KrustyKrabLifer@email.com",
+      " squidward10tickle@gmail.com",
+      " sandyCheeks@yahoo.com"
+    ]
+  },
+  {
+    "type": "J",
+    "secID": "sec158",
+    "personCode": "230FJA",
+    "firstName": " Nawaf",
+    "lastName": "Bishara",
+    "address": {
+      "street": " 2459 Godfrey Rd",
+      "city": " New York",
+      "state": " NY",
+      "country": " United States",
+      "zipCode": " 10036"
+    },
+    "email": [
+      " NawafB@email.com"
+    ]
+  },
+  {
+    "type": "J",
+    "secID": "120",
+    "personCode": "LKJL5L",
+    "firstName": " Lyndsey",
+    "lastName": "Welch",
+    "address": {
+      "street": " 2938 Jett Ln",
+      "city": " Gardena",
+      "state": " CA",
+      "country": " United States",
+      "zipCode": " 90247"
+    },
+    "email": [
+      " Lyn_Welch@email.com",
+      " welches123@yahoo.com",
+      " lynFunTime@gmail.com",
+      " workLyn@cse.unl.edu"
+    ]
+  }
+]

@@ -9,10 +9,10 @@ public class Portfolios {
 	private String ownerCode;
 	private String managerCode;
 	private String beneficiaryCode;
-	private Map assetList = new HashMap<>();
+	private HashMap<String, Double> assetList = new HashMap<String, Double>();
 	
 	public Portfolios(String portfolioCode, String ownerCode, String managerCode, String beneficiaryCode,
-			Map assetList) {
+			HashMap<String, Double> assetList) {
 		this.portfolioCode = portfolioCode;
 		this.ownerCode = ownerCode;
 		this.managerCode = managerCode;

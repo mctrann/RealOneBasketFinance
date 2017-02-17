@@ -7,13 +7,14 @@ import java.io.FileReader;
 import java.io.IOException;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
 
 public class Data_Converter {
 	private  static List<Persons> perInfo= new ArrayList<Persons>(); 
 	private static List <Assets> ass= new ArrayList<Assets>();
-	
+	private static List<Portfolios> portInfo = new ArrayList<Portfolios>();
 	// parse persons and assets files
 	public static void dataParser(){
 
@@ -166,30 +167,74 @@ public class Data_Converter {
 		} catch (IOException e1) {
 			e1.printStackTrace();
 		}
+		
+	BufferedReader reader3 = null;
+		
+		try {
+			reader3 = new BufferedReader(new FileReader("data/Portfolio.dat"));
+		} 
+		catch (FileNotFoundException e) {
+			System.out.println("Invalid Input");
+		}
+		
+		String line3 = null;
+		int startLine3 = 1;
+		int counter3 = startLine3;
+		
+		try {
+			while((line3 = reader3.readLine()) != null) {
+				if (counter3 > startLine3) {
+					String portArr[] = line3.split(";");
+					String portCode = portArr[0];
+					String ownerCode = portArr[1];
+					String mangerCode = portArr[2];
+					String benCode;
+					if(portArr[3].equals("")) {
+						benCode = null;
+					}
+					else {
+						benCode = portArr[3];
+					}
+					
+					String assetList[] = portArr[4].split(",");
+					HashMap<String, Double> assetList1 = new HashMap<String, Double>();
+					if(assetList[0].equals("")) {
+						assetList1.put(null, null);
+					}
+					else {
+						for(int i = 0; i < assetList.length; i++) {
+							String tempAsset[] = assetList[i].split(":");
+							assetList1.put(tempAsset[0], Double.parseDouble(tempAsset[1]));
+						}
+					}
+					Portfolios port;
+					portInfo.add(port = new Portfolios(portCode, ownerCode, mangerCode, benCode, assetList1));
+				}
+				counter3++;
+			}
+			
+		} 
+		catch (IOException e1) {
+			e1.printStackTrace();
+		}
+		try {
+			reader3.close();
+		}
+		catch (IOException e){
+			e.printStackTrace();
+		}
 	}
 	//runs program
 	public static void main(String args[]){	
-//		dataParser();
-//		JSONWriter thing = new JSONWriter();
-//		thing.JSONConverterP(perInfo);
-//		XMLWriter thing2= new XMLWriter();
-//		thing2.xmlPersonConverter(perInfo);
-//		thing.JSONconverterA(ass);
-//		thing2.xmlAssetConverter(ass);
-		
-		
-		System.out.println("Porfolio Summary Report");
-		System.out.println("--------------------------------------------------------------------------------------------------------------------------------------");
-		System.out.print(String.format("%-30s %-30s %-30s %-30s %-30s %-30s %-30s %-30s", "Portfolio", "Owner", "Manager", "Fees", "Comissions", "Weighted Risk", "Return", "Total"));
-		//for(int i:perInfo.size()) {
-		//System.out.print(String.format("%-30s %-30s %-30s %-30f %-30f %-30f %-30f %-30f", ));  //use obj.get to access info and print
-		//}
-		
-		System.out.println("Portfolio Details");
-		System.out.println("--------------------------------------------------------------------------------------------------------------------------------------");
-		//System.out.println("Portfolio " + obj.get(porfolioCode));
-		System.out.println("------------------------------------------------------");
-		
+		dataParser();
+		JSONWriter thing = new JSONWriter();
+		thing.JSONConverterP(perInfo);
+		XMLWriter thing2= new XMLWriter();
+		thing2.xmlPersonConverter(perInfo);
+		thing.JSONconverterA(ass);
+		thing2.xmlAssetConverter(ass);
+		PortfolioWriter thing3 = new PortfolioWriter();
+		thing3.PortfolioWriter(portInfo, perInfo, ass);	
 		}
 		
 }

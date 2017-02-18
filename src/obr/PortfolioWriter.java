@@ -7,7 +7,7 @@ import java.util.List;
 
 public class PortfolioWriter {
 	private double fees;
-	public void PortfolioWriter(List<Portfolios>portInfo, List<Persons> perInfo, List<Assets> assetInfo) {
+	public void PortfolioWrite(List<Portfolios>portInfo, List<Persons> perInfo, List<Assets> assetInfo) {
 		PrintWriter write = null;
 		
 		try{
@@ -16,11 +16,12 @@ public class PortfolioWriter {
 			e.printStackTrace();
 		}
 		
-		
+		int a = 0;
 		write.println("Porfolio Summary Report");
 		write.println("--------------------------------------------------------------------------------------------------------------------------------------");
 		write.println(String.format("%-30s %-30s %-30s %-30s %-30s %-30s %-30s %-30s", "Portfolio", "Owner", "Manager", "Fees", "Comissions", "Weighted Risk", "Return", "Total"));
 		for(int i = 0; i < portInfo.size(); i++) {
+			
 			//gets the owner's name
 			String ownerName = "";
 			for(int j = 0; j < perInfo.size(); j++) {
@@ -40,17 +41,23 @@ public class PortfolioWriter {
 				}
 			}
 			
-			List<Integer> annualReturn = new ArrayList<Integer>();
-			int totalValue = 0;
+			List<Double> annualReturn = new ArrayList<Double>();
+			double totalValue = 0;
 			
 			//gets the type of the assets
-			for(int a = 0; a < portInfo.size(); a++) {
-				portInfo.get(i).getAnnualReturn(portInfo.get(a).getAssetList());
+			
+			if(a < portInfo.size()) {
+				annualReturn.addAll(portInfo.get(a).getAnnualReturn(portInfo.get(a).getAssetList()));
+				a++;
 			}
 			
+			
+			for(int q = 0; q < annualReturn.size(); q++) {
+				totalValue = totalValue + annualReturn.get(q);
+			}
 			//writes in the info
-			write.println(String.format("%-30s %-30s %-30s %-30s %-30s %-30s %-30s %-30s", portInfo.get(i).getPortfolioCode(), ownerName, managerName, portInfo.get(i).getFees(portInfo.get(i).getManagerCode()), 
-					"D", "d", "d", "d"));  //use obj.get to access info and print
+			write.println(String.format("%-30s %-30s %-30s %-30s %-30s %-30s %-30s %-30s", portInfo.get(i).getPortfolioCode(), ownerName, managerName,"$" + portInfo.get(i).getFees(portInfo.get(i).getManagerCode()) + "0",
+					"D", totalValue, "d", "d"));  //use obj.get to access info and print
 			fees += portInfo.get(i).getFees(portInfo.get(i).getManagerCode());
 		}
 		

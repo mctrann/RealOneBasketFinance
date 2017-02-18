@@ -238,7 +238,7 @@ public class Data_Converter {
 		thing.JSONconverterA(assetInfo);
 		thing2.xmlAssetConverter(assetInfo);
 		PortfolioWriter thing3 = new PortfolioWriter();
-		thing3.PortfolioWriter(portInfo, perInfo, assetInfo);	
+		thing3.PortfolioWrite(portInfo, perInfo, assetInfo);	
 		}
 		
 }

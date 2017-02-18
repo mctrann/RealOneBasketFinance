@@ -23,6 +23,7 @@ public class Portfolios {
 		this.beneficiaryCode = beneficiaryCode;
 		this.assetList = assetList;
 		this.perInfo = perInfo;
+		this.assetInfo = assetInfo;
 	}
 	
 	public String getPortfolioCode() {
@@ -75,30 +76,25 @@ public class Portfolios {
 //		
 //	}
 //	
-	public double getAnnualReturn(HashMap<String, Double> assetList) {
-//		for(int i = 0; i < assetInfo.size(); i++) {
-//			for(int k = 0; k < assetList.size(); k++) {
-//				if(assetList.get(k).equals(assetInfo.get(i)))
-//			}
-//		
-//		}
-//		for(int i = 0; i < assetList.size(); i++) {
-//			for(int k = 0; k < assetInfo.size(); k++) {
-//				
-//			}
-//		}
-		double annualReturn = 0.0;
+	public List<Double> getAnnualReturn(HashMap<String, Double> assetList) {
+
+		List<Double> annualReturn = new ArrayList<Double>();
 		for(Map.Entry<String, Double> key : assetList.entrySet()) {
 			for(int i = 0; i < assetInfo.size(); i++) {
-				if(key.equals(assetInfo.get(i).getCode())) {
-					if(assetInfo.get(i).getType() == "S")
-					annualReturn = assetInfo.get(i).getBRR() * (assetInfo.get(i).getValue() * key.getValue());
-				}
-				else if(assetInfo.get(i).getType() == "D") {
-					annualReturn = assetInfo.get(i).getBRR() * (key.getValue());
-				}
-				else{
-					annualReturn = assetInfo.get(i).getBRR() * (assetInfo.get(i).getValue() * key.getValue());
+				if(key.getKey().equals(assetInfo.get(i).getCode())) {
+					if(assetInfo.get(i).getType().equals("S")) {
+						annualReturn.add(assetInfo.get(i).getBRR() * (assetInfo.get(i).getValue() * key.getValue()));
+						break;
+					}
+					else if(assetInfo.get(i).getType().equals("D")) {
+						annualReturn.add(assetInfo.get(i).getBRR() * (key.getValue()));
+						break;
+					}
+					else{
+						annualReturn.add(assetInfo.get(i).getBRR() * (assetInfo.get(i).getValue() * key.getValue()));
+						break;
+					}
+					
 				}
 			}
 		}

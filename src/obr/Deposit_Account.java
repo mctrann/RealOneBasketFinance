@@ -21,7 +21,7 @@ public class Deposit_Account extends Assets{
 	
 	public double getBRR() {
 		
-		return Math.pow(Math.E, getAPR()) - 1;
+		return Math.pow(Math.E, (getAPR()/100)) - 1;
 	}
 	
 	public double getValue() {

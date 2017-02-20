@@ -8,4 +8,10 @@ public class Customer extends Persons{
 		super( personCode, firstName, lastName, address, email);
 	}
 
+	public String getSecID(){
+		return null;
+	}
+	public String getType(){
+		return null;
+	}
 }

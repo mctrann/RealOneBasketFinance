@@ -1,4 +1,4 @@
-	package obr;
+package obr;
 
 public class Stocks extends Assets{
 	private double quartDiv;
@@ -31,7 +31,7 @@ public class Stocks extends Assets{
 		  this.quartDiv = quartDiv;
 	}
 	
-	public double getbaseRateOfReturn() {
+	public double getBRR() {
 		  return baseRateOfReturn;
 	}
 	
@@ -39,7 +39,7 @@ public class Stocks extends Assets{
 		  this.baseRateOfReturn = baseRateOfReturn;
 	}
 	
-	public double getBetaMeasure() {
+	public double getRiskMeasure() {
 		return betaMeasure;
 	}
 	
@@ -55,7 +55,7 @@ public class Stocks extends Assets{
 		this.stockSymbol = stockSymbol;
 	}
 	
-	public double getSharePrice() {
+	public double getValue() {
 		return sharePrice;
 	}
 	

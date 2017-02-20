@@ -30,7 +30,7 @@ public class Private_Investments extends Assets{
 		this.baseRateOfReturn = BRR;
 	} 
 
-	public double getOmegaMeasure() {
+	public double getRiskMeasure() {
 		return omegaMeasure;
 	}
 
@@ -38,7 +38,7 @@ public class Private_Investments extends Assets{
 		this.omegaMeasure = omegaMeasure;
 	}	 
 
-	public double getTotalValue() {
+	public double getValue() {
 		return totalValue;
 	} 
 

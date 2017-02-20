@@ -7,13 +7,14 @@ import java.io.FileReader;
 import java.io.IOException;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
 
 public class Data_Converter {
 	private  static List<Persons> perInfo= new ArrayList<Persons>(); 
-	private static List <Assets> ass= new ArrayList<Assets>();
-	
+	private static List <Assets> assetInfo= new ArrayList<Assets>();
+	private static List<Portfolios> portInfo = new ArrayList<Portfolios>();
 	// parse persons and assets files
 	public static void dataParser(){
 
@@ -143,7 +144,7 @@ public class Data_Converter {
 						betaMeasure = Double.parseDouble(assets_arr[5]);
 						stockSymbol = assets_arr[6];
 						sharePrice = Double.parseDouble(assets_arr[7]);
-						ass.add(b = new Stocks(code, type, label,quartDiv,BRR,betaMeasure,stockSymbol,sharePrice));
+						assetInfo.add(b = new Stocks(code, type, label,quartDiv,BRR,betaMeasure,stockSymbol,sharePrice));
 					}
 					else if (type.equals("P")){
 						Private_Investments b;
@@ -152,13 +153,13 @@ public class Data_Converter {
 						BRR = Double.parseDouble(assets_arr[4]);
 						omegaMeasure = Double.parseDouble(assets_arr[5]);
 						totalValue = Double.parseDouble(assets_arr[6]);
-						ass.add(b = new Private_Investments(code, type, label,quartDiv,BRR,omegaMeasure,totalValue));
+						assetInfo.add(b = new Private_Investments(code, type, label,quartDiv,BRR,omegaMeasure,totalValue));
 					}
 					else if (type.equals("D")){
 						Deposit_Account b;
 						label = assets_arr[2];
 						apr = Double.parseDouble(assets_arr[3]);
-						ass.add(b = new Deposit_Account(code, type, label,apr));
+						assetInfo.add(b = new Deposit_Account(code, type, label,apr));
 					}
 				}
 				counter2++;
@@ -166,6 +167,66 @@ public class Data_Converter {
 		} catch (IOException e1) {
 			e1.printStackTrace();
 		}
+		
+	BufferedReader reader3 = null;
+		
+		try {
+			reader3 = new BufferedReader(new FileReader("data/Portfolio.dat"));
+		} 
+		catch (FileNotFoundException e) {
+			System.out.println("Invalid Input");
+		}
+		
+		String line3 = null;
+		int startLine3 = 1;
+		int counter3 = startLine3;
+		
+		try {
+			while((line3 = reader3.readLine()) != null) {
+				if (counter3 > startLine3) {
+					String portArr[] = line3.split(";");
+					String portCode = portArr[0];
+					String ownerCode = portArr[1];
+					String mangerCode = portArr[2];
+					String benCode;
+					if(portArr[3].equals("")) {
+						benCode = null;
+					}
+					else {
+						benCode = portArr[3];
+					}
+					
+					String assetList[] = portArr[4].split(",");
+					HashMap<String, Double> assetList1 = new HashMap<String, Double>();
+					if(assetList[0].equals("")) {
+						assetList1.put(null, null);
+					}
+					else {
+						for(int i = 0; i < assetList.length; i++) {
+							String tempAsset[] = assetList[i].split(":");
+							assetList1.put(tempAsset[0], Double.parseDouble(tempAsset[1]));
+						}
+					}
+					Portfolios port;
+					portInfo.add(port = new Portfolios(portCode, ownerCode, mangerCode, benCode, assetList1, perInfo, assetInfo));
+				}
+				counter3++;
+			}
+			
+		} 
+		catch (IOException e1) {
+			e1.printStackTrace();
+		}
+		try {
+			reader3.close();
+		}
+		catch (IOException e){
+			e.printStackTrace();
+		}
+	}
+	
+	public List<Persons> getPerInfo() {
+		return perInfo;
 	}
 	//runs program
 	public static void main(String args[]){	
@@ -174,10 +235,12 @@ public class Data_Converter {
 		thing.JSONConverterP(perInfo);
 		XMLWriter thing2= new XMLWriter();
 		thing2.xmlPersonConverter(perInfo);
-		thing.JSONconverterA(ass);
-		thing2.xmlAssetConverter(ass);
+		thing.JSONconverterA(assetInfo);
+		thing2.xmlAssetConverter(assetInfo);
+		PortfolioWriter thing3 = new PortfolioWriter();
+		thing3.PortfolioWrite(portInfo, perInfo, assetInfo);	
+		}
 		
-	}
 }
 
 

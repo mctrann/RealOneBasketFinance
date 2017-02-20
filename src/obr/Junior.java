@@ -14,7 +14,7 @@ public class Junior extends Persons {
 	public String getSecID(){
 		return this.secID;
 	}
-	public String getTyper(){
+	public String getType(){
 		return this.type;
 	}
 

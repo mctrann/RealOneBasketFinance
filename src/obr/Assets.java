@@ -1,6 +1,6 @@
 package obr;
 
-public class Assets {
+public abstract class Assets {
 
 	private String code;
 	private String type;
@@ -30,4 +30,8 @@ public class Assets {
 	public void setLabel(String label) {
 		this.label = label;
 	}
+	
+	public abstract double getRiskMeasure();
+	public abstract double getBRR();
+	public abstract double getValue();
 }

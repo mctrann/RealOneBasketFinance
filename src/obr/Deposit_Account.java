@@ -27,4 +27,8 @@ public class Deposit_Account extends Assets{
 	public double getValue() {
 		return 0;
 	}
+	
+	public double getQuartDiv() {
+		return 0;
+	}
 }

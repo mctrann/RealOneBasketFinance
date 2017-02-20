@@ -168,7 +168,7 @@ public class Data_Converter {
 			e1.printStackTrace();
 		}
 		
-	BufferedReader reader3 = null;
+		BufferedReader reader3 = null;
 		
 		try {
 			reader3 = new BufferedReader(new FileReader("data/Portfolio.dat"));
@@ -196,17 +196,18 @@ public class Data_Converter {
 						benCode = portArr[3];
 					}
 					
-					String assetList[] = portArr[4].split(",");
 					HashMap<String, Double> assetList1 = new HashMap<String, Double>();
-					if(assetList[0].equals("")) {
-						assetList1.put(null, null);
-					}
-					else {
+					try {
+						String assetList[] = portArr[4].split(",");
 						for(int i = 0; i < assetList.length; i++) {
 							String tempAsset[] = assetList[i].split(":");
 							assetList1.put(tempAsset[0], Double.parseDouble(tempAsset[1]));
 						}
 					}
+					catch(ArrayIndexOutOfBoundsException e) {
+						assetList1.put("", 0.0);
+					}
+					
 					Portfolios port;
 					portInfo.add(port = new Portfolios(portCode, ownerCode, mangerCode, benCode, assetList1, perInfo, assetInfo));
 				}

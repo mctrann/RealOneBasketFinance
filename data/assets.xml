@@ -4,7 +4,7 @@
     <type>S</type>
     <label>Apple</label>
     <quartDiv>3.82</quartDiv>
-    <baseRateOfReturn>8.3E-4</baseRateOfReturn>
+    <baseRateOfReturn>0.083</baseRateOfReturn>
     <betaMeasure>0.22</betaMeasure>
     <stockSymbol>AAPL</stockSymbol>
     <sharePrice>128.75</sharePrice>
@@ -15,7 +15,7 @@
     <type>S</type>
     <label>Cisco Systems Inc</label>
     <quartDiv>5.65</quartDiv>
-    <baseRateOfReturn>7.9E-4</baseRateOfReturn>
+    <baseRateOfReturn>0.079</baseRateOfReturn>
     <betaMeasure>0.31</betaMeasure>
     <stockSymbol>CSCO</stockSymbol>
     <sharePrice>31.18</sharePrice>
@@ -26,7 +26,7 @@
     <type>S</type>
     <label>Intel Corp</label>
     <quartDiv>1.27</quartDiv>
-    <baseRateOfReturn>0.0015</baseRateOfReturn>
+    <baseRateOfReturn>0.15</baseRateOfReturn>
     <betaMeasure>1.23</betaMeasure>
     <stockSymbol>INTC</stockSymbol>
     <sharePrice>36.68</sharePrice>
@@ -37,7 +37,7 @@
     <type>S</type>
     <label>Micron Technology Inc</label>
     <quartDiv>7.5</quartDiv>
-    <baseRateOfReturn>0.0022</baseRateOfReturn>
+    <baseRateOfReturn>0.22</baseRateOfReturn>
     <betaMeasure>-0.77</betaMeasure>
     <stockSymbol>MU</stockSymbol>
     <sharePrice>24.79</sharePrice>
@@ -70,7 +70,7 @@
     <label>Fells Wargo Building</label>
     <quartDiv>32.0</quartDiv>
     <baseRateOfReturn>24.24</baseRateOfReturn>
-    <omegaMeasure>0.11</omegaMeasure>
+    <omegaBaseMeasure>0.11</omegaBaseMeasure>
     <totalValue>1377522.93</totalValue>
     <percentageStake>0.0</percentageStake>
   </private investment>
@@ -80,7 +80,7 @@
     <label>Carlyle Offices</label>
     <quartDiv>16.87</quartDiv>
     <baseRateOfReturn>32.12</baseRateOfReturn>
-    <omegaMeasure>0.37</omegaMeasure>
+    <omegaBaseMeasure>0.37</omegaBaseMeasure>
     <totalValue>5955125.67</totalValue>
     <percentageStake>0.0</percentageStake>
   </private investment>
@@ -90,7 +90,7 @@
     <label>United West Corporation</label>
     <quartDiv>17.38</quartDiv>
     <baseRateOfReturn>4.2</baseRateOfReturn>
-    <omegaMeasure>0.69</omegaMeasure>
+    <omegaBaseMeasure>0.69</omegaBaseMeasure>
     <totalValue>525600.32</totalValue>
     <percentageStake>0.0</percentageStake>
   </private investment>
@@ -99,7 +99,7 @@
     <type>S</type>
     <label>Spreetail</label>
     <quartDiv>5.4</quartDiv>
-    <baseRateOfReturn>0.0034200000000000003</baseRateOfReturn>
+    <baseRateOfReturn>0.342</baseRateOfReturn>
     <betaMeasure>0.33</betaMeasure>
     <stockSymbol>SPRTL</stockSymbol>
     <sharePrice>300.0</sharePrice>
@@ -111,7 +111,7 @@
     <label>Old McDonald Farm</label>
     <quartDiv>15.0</quartDiv>
     <baseRateOfReturn>23.24</baseRateOfReturn>
-    <omegaMeasure>0.12</omegaMeasure>
+    <omegaBaseMeasure>0.12</omegaBaseMeasure>
     <totalValue>100600.38</totalValue>
     <percentageStake>0.0</percentageStake>
   </private investment>
@@ -135,7 +135,7 @@
     <label>Seattle Grace</label>
     <quartDiv>19.98</quartDiv>
     <baseRateOfReturn>3.04</baseRateOfReturn>
-    <omegaMeasure>0.5</omegaMeasure>
+    <omegaBaseMeasure>0.5</omegaBaseMeasure>
     <totalValue>421234.34</totalValue>
     <percentageStake>0.0</percentageStake>
   </private investment>
@@ -152,7 +152,7 @@
     <label>Doofenshmirtz Inc</label>
     <quartDiv>20.98</quartDiv>
     <baseRateOfReturn>4.04</baseRateOfReturn>
-    <omegaMeasure>0.16</omegaMeasure>
+    <omegaBaseMeasure>0.16</omegaBaseMeasure>
     <totalValue>421254.04</totalValue>
     <percentageStake>0.0</percentageStake>
   </private investment>
@@ -162,7 +162,7 @@
     <label>Chum Bucket</label>
     <quartDiv>20.98</quartDiv>
     <baseRateOfReturn>3.44</baseRateOfReturn>
-    <omegaMeasure>0.75</omegaMeasure>
+    <omegaBaseMeasure>0.75</omegaBaseMeasure>
     <totalValue>250341.14</totalValue>
     <percentageStake>0.0</percentageStake>
   </private investment>
@@ -171,7 +171,7 @@
     <type>S</type>
     <label>Netflix Inc</label>
     <quartDiv>2.34</quartDiv>
-    <baseRateOfReturn>9.8E-4</baseRateOfReturn>
+    <baseRateOfReturn>0.098</baseRateOfReturn>
     <betaMeasure>0.23</betaMeasure>
     <stockSymbol>NFLX</stockSymbol>
     <sharePrice>139.2</sharePrice>
@@ -182,7 +182,7 @@
     <type>S</type>
     <label>Facebook Inc</label>
     <quartDiv>1.5</quartDiv>
-    <baseRateOfReturn>4.6E-4</baseRateOfReturn>
+    <baseRateOfReturn>0.046</baseRateOfReturn>
     <betaMeasure>0.88</betaMeasure>
     <stockSymbol>FB</stockSymbol>
     <sharePrice>130.84</sharePrice>

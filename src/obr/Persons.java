@@ -3,12 +3,14 @@ import java.util.List;
 
 public abstract class Persons {
 	
+	//create private variables of class Persons
 	private String personCode;
 	private String firstName;
 	private String lastName;
 	private Address address;
-	private List<String> email; //TODO: HOW TO 'GET' EMAIL 
+	private List<String> email;
 	
+	//constructor
 	public Persons(String personCode, String firstName, String lastName, Address address,List<String> email) {
 		this.personCode = personCode;
 		this.firstName = firstName;
@@ -17,36 +19,35 @@ public abstract class Persons {
 		this.address = address;
 	}
 
+	//method to return person code
 	public String getPersonCode() {
 		return personCode;
 	}
 
-	public void setPersonCode(String personCode) {
-		this.personCode = personCode;
-	}
-
+	//method to return first name
 	public String getFirstName() {
 		return firstName;
 	}
-	public void setFirstName(String firstName) {
-		this.firstName = firstName;
-	}
+
+	//method to return last name
 	public String getLastName() {
 		return lastName;
 	}
-	public void setLastName(String lastName) {
-		this.lastName = lastName;
-	}
+	
+	//method to return an array of emails
 	public List<String> getEmail() {
 		return email;
 	}
 	
+	//
 	public abstract String getSecID();
 	
 	public abstract String getType();
 
+	//abstract method to calculate the commissions
 	public abstract double getCommissions(double totalReturnValue);
 	
+	//abstract method to calculate the fees
 	public abstract double getFees(List<Assets> assetList);
 	
 }

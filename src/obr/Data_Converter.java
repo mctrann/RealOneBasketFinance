@@ -12,10 +12,13 @@ import java.util.List;
 
 
 public class Data_Converter {
-	private  static List<Persons> perInfo= new ArrayList<Persons>(); 
+
+	//creates list of objects
+	private static List<Persons> perInfo= new ArrayList<Persons>(); 
 	private static List <Assets> assetInfo= new ArrayList<Assets>();
 	private static List<Portfolios> portInfo = new ArrayList<Portfolios>();
-	// parse persons and assets files
+
+	//parse persons and assets files
 	public static void dataParser(){
 
 		//reads file
@@ -26,11 +29,12 @@ public class Data_Converter {
 		catch(FileNotFoundException e) {
 			System.out.println("File not found");
 		}
+
 		//skips first line that is an integer
 		String line1 = null;
 		int startLine = 1;
 		int counter = startLine;
-		
+
 		//Parsing Persons.dat into the Persons.java class
 		try {
 			while((line1 = reader.readLine()) != null) {
@@ -54,7 +58,7 @@ public class Data_Converter {
 					String firstName=name[1];
 					String lastName=name[0];
 					String addressArr[] = persons_arr[3].split(",");
-					
+
 					String street=addressArr[0];
 					String city=addressArr[1];
 					String state=addressArr[2];
@@ -140,7 +144,7 @@ public class Data_Converter {
 						label = assets_arr[2];
 						quartDiv = Double.parseDouble(assets_arr[3]);
 						double tempBRR = Double.parseDouble(assets_arr[4]);
-						BRR=tempBRR/100;
+						BRR=tempBRR;
 						betaMeasure = Double.parseDouble(assets_arr[5]);
 						stockSymbol = assets_arr[6];
 						sharePrice = Double.parseDouble(assets_arr[7]);
@@ -168,19 +172,22 @@ public class Data_Converter {
 			e1.printStackTrace();
 		}
 		
-	BufferedReader reader3 = null;
-		
+		//creates BufferedReader for Portfolio.dat
+		BufferedReader reader3 = null;
+
 		try {
 			reader3 = new BufferedReader(new FileReader("data/Portfolio.dat"));
 		} 
 		catch (FileNotFoundException e) {
 			System.out.println("Invalid Input");
 		}
-		
+
+		//used to skip the first line
 		String line3 = null;
 		int startLine3 = 1;
 		int counter3 = startLine3;
-		
+
+		//parses through Portfolio.dat
 		try {
 			while((line3 = reader3.readLine()) != null) {
 				if (counter3 > startLine3) {
@@ -195,9 +202,8 @@ public class Data_Converter {
 					else {
 						benCode = portArr[3];
 					}
-					
+
 					//Splits the asset list
-					
 					List<Assets> assetNewInfo = new ArrayList<Assets>();
 					try {
 						String assetList[] = portArr[4].split(",");
@@ -227,14 +233,14 @@ public class Data_Converter {
 					catch (ArrayIndexOutOfBoundsException e) {
 						assetNewInfo.add(null);
 					}
-					
+
 					//Adds the information to a list of Portfolios
 					Portfolios port;
 					portInfo.add(port = new Portfolios(portCode, ownerCode, managerCode, benCode, assetNewInfo ));
 				}
 				counter3++;
 			}
-			
+
 		} 
 		catch (IOException e1) {
 			e1.printStackTrace();
@@ -246,10 +252,11 @@ public class Data_Converter {
 			e.printStackTrace();
 		}
 	}
-	
+
 	public List<Persons> getPerInfo() {
 		return perInfo;
 	}
+
 	//runs program
 	public static void main(String args[]){	
 		dataParser();
@@ -261,9 +268,8 @@ public class Data_Converter {
 		thing2.xmlAssetConverter(assetInfo);
 		PortfolioWriter thing3 = new PortfolioWriter();
 		thing3.PortfolioWrite(portInfo, perInfo);	
-		}
-		
+	}
+
 }
 
 
-	

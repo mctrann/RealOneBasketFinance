@@ -49,10 +49,22 @@ public class Portfolios {
 		return assetList;
 	}
 	
-//	public double getTotalReturnValue(List<Assets> assetList) {
-//		
-//	}
+	//method to calculate to get total annual return value
+	public double getTotalReturnValue(List<Assets> assetList) {
+		double totalReturnValue = 0.0;
+		
+		for(int i = 0; i < assetList.size(); i++) {
+			if(assetList.get(i) == null) {
+				totalReturnValue = 0.0;
+			}
+			else {
+				totalReturnValue = totalReturnValue + assetList.get(i).getAnnualReturn();
+			}
+		}
+		return totalReturnValue;
+	}
 	
+	//method to calculate the total value of a particular portfolio
 	public double getTotalValue(List<Assets> assetList) {
 		double totalValue = 0.0;
 		
@@ -65,5 +77,32 @@ public class Portfolios {
 		}
 		
 		return totalValue;
+	}
+	
+	//method to calculate risk
+	public double getRisk(List<Assets> assetList) {
+		double totalValue = 0.0;
+		for(int i = 0; i < assetList.size(); i++) {
+			if(assetList.get(i) == (null)) {
+				totalValue = 0.0;
+			}
+			else {
+				totalValue = totalValue + assetList.get(i).getCalcValue();
+			}
+			
+		}
+		
+		double riskMeasure = 0.0;
+		for(int i = 0; i < assetList.size(); i++) {
+			if(totalValue == 0) {
+				riskMeasure = 0.0;
+				break;
+			}
+			else{
+				riskMeasure = riskMeasure + (assetList.get(i).getRiskMeasure() * (assetList.get(i).getCalcValue()/totalValue));
+			}
+		}
+		
+		return riskMeasure;
 	}
 }

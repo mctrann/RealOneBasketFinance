@@ -1,67 +1,76 @@
 package obr;
 
 public class Private_Investments extends Assets{
+	
+	//creates the private variables of class Private_Investments
 	private double quartDiv;
 	private double baseRateOfReturn;
-	private double omegaMeasure;
+	private double omegaBaseMeasure;
 	private double totalValue;
 	private double percentageStake;
 
-	public Private_Investments(String code, String type, String label, double quartDiv, double BRR, double omegaMeasure, double totalValue) {
+	//constructor
+	public Private_Investments(String code, String type, String label, double quartDiv, double BRR, double omegaBaseMeasure, double totalValue) {
 		super(code, type, label); 
-		this.omegaMeasure = omegaMeasure;
+		this.omegaBaseMeasure = omegaBaseMeasure;
 		this.baseRateOfReturn = BRR;
 		this.totalValue = totalValue;
 		this.quartDiv = quartDiv;
 	}
 	
+	//copy constructor
 	public Private_Investments(Private_Investments pi) {
 		this(pi.getCode(), pi.getType(), pi.getLabel(), pi.getQuartDiv(), pi.getBRR(), pi.getRiskMeasure(), pi.getValue());
 	}
+	
+	//method to return quarterly dividend
 	public double getQuartDiv() {
 		return quartDiv;
 	}
 
-	public void setQuartDiv(double quartDiv) {
-		this.quartDiv = quartDiv;
-	}
-
+	//method to return base rate of return
 	public double getBRR() {
 		return baseRateOfReturn;
 	}
 
-	public void setBRR(double BRR) {
-		this.baseRateOfReturn = BRR;
-	} 
-
+	//method to return the omega measure
 	public double getRiskMeasure() {
-		return omegaMeasure;
+		double omegaMeasure = 0.0;
+		double offset = Math.pow(Math.E, (-100000/getCalcValue()));
+		return omegaMeasure = offset + getOmegaMeasure();
 	}
-
-	public void setOmegaMeasure(double omegaMeasure) {
-		this.omegaMeasure = omegaMeasure;
-	}	 
-
+	
+	public double getOmegaMeasure() {
+		return omegaBaseMeasure;
+	}
+	//method to return value of the private investment
 	public double getValue() {
 		return totalValue;
 	} 
 
+	//method to set the stake percentage
 	public void setPercentageStake(double percentageStake) {
 		this.percentageStake = percentageStake;
 	}
 	
+	//method to return the stake percentage
 	public double getPercentageStake() {
 		return percentageStake;
 	}
-	
-	public void setTotalValue(double totalValue) {
-		this.totalValue = totalValue;
-	}
 
+	//method to calculate the total value
 	public double getCalcValue() {
 		double totalValue = 0;
 		
 		totalValue = getValue() * (getPercentageStake()/100);
 		return totalValue;
+	}
+	
+	//method to calculate the annual return
+	public double getAnnualReturn() {
+		double value = 0.0;
+		
+		value = (getBRR() * getCalcValue()) + (4 * getQuartDiv());
+		return value;
 	}
 }

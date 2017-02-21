@@ -6,7 +6,7 @@ public class Stocks extends Assets{
 	private double betaMeasure;
 	private String stockSymbol;
 	private double sharePrice;
-	
+	private double sharesOwned;
 
 	//FIXME:constructor
 	public Stocks (String code, String type, String label, double quartDiv, double baseRateOfReturn, double betaMeasure, String stockSymbol
@@ -19,6 +19,10 @@ public class Stocks extends Assets{
 		this.stockSymbol=stockSymbol;
 		this.sharePrice=sharePrice;
 		
+	}
+	
+	public Stocks(Stocks aStock) {
+		this(aStock.getCode(), aStock.getType(), aStock.getLabel(), aStock.getQuartDiv(), aStock.getBRR(), aStock.getRiskMeasure(), aStock.getStockSymbol(), aStock.getSharePrice());
 	}
 	
 //TODO: MAKE GETTERS AND SETTERS FOR EACH
@@ -55,11 +59,26 @@ public class Stocks extends Assets{
 		this.stockSymbol = stockSymbol;
 	}
 	
-	public double getValue() {
-		return sharePrice;
-	}
-	
 	public void setSharePrice(double sharePrice) {
 		this.sharePrice = sharePrice;
 	}
+	
+	public double getSharePrice() {
+		return sharePrice;
+	}
+	public double getSharesOwned() {
+		return sharesOwned;
+	}
+	public void setSharesOwned(double sharesOwned) {
+		this.sharesOwned = sharesOwned;
+	}
+	
+	public double getCalcValue() {
+		double totalValue = getSharePrice() * getSharesOwned();
+		return totalValue;
+	}
+	
+//	public double getAnnualReturn() {
+//		
+//	}
 }

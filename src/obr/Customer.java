@@ -14,4 +14,12 @@ public class Customer extends Persons{
 	public String getType(){
 		return null;
 	}
+	
+	public double getCommissions(double totalReturnValue) {
+		return 0;
+	}
+	
+	public double getFees(List<Assets> arrayList) {
+		return 0;
+	}
 }

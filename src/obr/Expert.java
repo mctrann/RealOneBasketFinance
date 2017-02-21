@@ -20,5 +20,26 @@ public class Expert extends Persons {
 		return this.type;
 	}
 
+	public double getCommissions(double totalReturnValue) {
+		double commission = totalReturnValue * .05;
+		return commission;
+	}
+	
+	public double getFees(List<Assets> arrayList) {
+		double fee = 0.0;
+		int counter = 1;
+		for(int i = 0; i < arrayList.size(); i++) {
+			if(arrayList.get(i) == null) {
+				fee = 0.0;
+				break;
+			}
+			else {
+				fee = counter * 10;
+			}
+			counter++;
+		}
+
+		return fee;
+	}
 
 }

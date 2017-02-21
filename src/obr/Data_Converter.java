@@ -187,28 +187,50 @@ public class Data_Converter {
 					String portArr[] = line3.split(";");
 					String portCode = portArr[0];
 					String ownerCode = portArr[1];
-					String mangerCode = portArr[2];
+					String managerCode = portArr[2];
 					String benCode;
 					if(portArr[3].equals("")) {
-						benCode = null;
+						benCode = "none";
 					}
 					else {
 						benCode = portArr[3];
 					}
 					
-					String assetList[] = portArr[4].split(",");
-					HashMap<String, Double> assetList1 = new HashMap<String, Double>();
-					if(assetList[0].equals("")) {
-						assetList1.put(null, null);
-					}
-					else {
+					//Splits the asset list
+					
+					List<Assets> assetNewInfo = new ArrayList<Assets>();
+					try {
+						String assetList[] = portArr[4].split(",");
 						for(int i = 0; i < assetList.length; i++) {
-							String tempAsset[] = assetList[i].split(":");
-							assetList1.put(tempAsset[0], Double.parseDouble(tempAsset[1]));
+							for(int j = 0; j < assetInfo.size(); j++) {
+								String tempAsset[] = assetList[i].split(":");
+								if(tempAsset[0].equals(assetInfo.get(j).getCode())) {
+									if(assetInfo.get(j).getType().equals("S")) {
+										Stocks newStock = new Stocks((Stocks) assetInfo.get(j));
+										newStock.setSharesOwned(Double.parseDouble(tempAsset[1]));
+										assetNewInfo.add(newStock);
+									}
+									else if(assetInfo.get(j).getType().equals("D")) {
+										Deposit_Account newDP = new Deposit_Account((Deposit_Account) assetInfo.get(j));
+										newDP.setBalance(Double.parseDouble(tempAsset[1]));
+										assetNewInfo.add(newDP);
+									}
+									else{
+										Private_Investments newPI = new Private_Investments((Private_Investments) assetInfo.get(j));
+										newPI.setPercentageStake(Double.parseDouble(tempAsset[1]));
+										assetNewInfo.add(newPI);
+									}
+								}
+							}
 						}
 					}
+					catch (ArrayIndexOutOfBoundsException e) {
+						assetNewInfo.add(null);
+					}
+					
+					//Adds the information to a list of Portfolios
 					Portfolios port;
-					portInfo.add(port = new Portfolios(portCode, ownerCode, mangerCode, benCode, assetList1, perInfo, assetInfo));
+					portInfo.add(port = new Portfolios(portCode, ownerCode, managerCode, benCode, assetNewInfo ));
 				}
 				counter3++;
 			}
@@ -238,7 +260,7 @@ public class Data_Converter {
 		thing.JSONconverterA(assetInfo);
 		thing2.xmlAssetConverter(assetInfo);
 		PortfolioWriter thing3 = new PortfolioWriter();
-		thing3.PortfolioWriter(portInfo, perInfo, assetInfo);	
+		thing3.PortfolioWrite(portInfo, perInfo);	
 		}
 		
 }

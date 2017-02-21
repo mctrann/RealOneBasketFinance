@@ -45,6 +45,8 @@ public abstract class Persons {
 	
 	public abstract String getType();
 
-
+	public abstract double getCommissions(double totalReturnValue);
+	
+	public abstract double getFees(List<Assets> assetList);
 	
 }

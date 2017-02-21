@@ -5,7 +5,7 @@ public class Private_Investments extends Assets{
 	private double baseRateOfReturn;
 	private double omegaMeasure;
 	private double totalValue;
-
+	private double percentageStake;
 
 	public Private_Investments(String code, String type, String label, double quartDiv, double BRR, double omegaMeasure, double totalValue) {
 		super(code, type, label); 
@@ -13,6 +13,10 @@ public class Private_Investments extends Assets{
 		this.baseRateOfReturn = BRR;
 		this.totalValue = totalValue;
 		this.quartDiv = quartDiv;
+	}
+	
+	public Private_Investments(Private_Investments pi) {
+		this(pi.getCode(), pi.getType(), pi.getLabel(), pi.getQuartDiv(), pi.getBRR(), pi.getRiskMeasure(), pi.getValue());
 	}
 	public double getQuartDiv() {
 		return quartDiv;
@@ -42,8 +46,22 @@ public class Private_Investments extends Assets{
 		return totalValue;
 	} 
 
+	public void setPercentageStake(double percentageStake) {
+		this.percentageStake = percentageStake;
+	}
+	
+	public double getPercentageStake() {
+		return percentageStake;
+	}
+	
 	public void setTotalValue(double totalValue) {
 		this.totalValue = totalValue;
 	}
 
+	public double getCalcValue() {
+		double totalValue = 0;
+		
+		totalValue = getValue() * (getPercentageStake()/100);
+		return totalValue;
+	}
 }

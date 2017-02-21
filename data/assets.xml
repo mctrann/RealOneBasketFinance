@@ -8,6 +8,7 @@
     <betaMeasure>0.22</betaMeasure>
     <stockSymbol>AAPL</stockSymbol>
     <sharePrice>128.75</sharePrice>
+    <sharesOwned>0.0</sharesOwned>
   </stock>
   <stock>
     <code>BR8427AP</code>
@@ -18,6 +19,7 @@
     <betaMeasure>0.31</betaMeasure>
     <stockSymbol>CSCO</stockSymbol>
     <sharePrice>31.18</sharePrice>
+    <sharesOwned>0.0</sharesOwned>
   </stock>
   <stock>
     <code>GH59T5U3</code>
@@ -28,6 +30,7 @@
     <betaMeasure>1.23</betaMeasure>
     <stockSymbol>INTC</stockSymbol>
     <sharePrice>36.68</sharePrice>
+    <sharesOwned>0.0</sharesOwned>
   </stock>
   <stock>
     <code>TY50QW29</code>
@@ -38,24 +41,28 @@
     <betaMeasure>-0.77</betaMeasure>
     <stockSymbol>MU</stockSymbol>
     <sharePrice>24.79</sharePrice>
+    <sharesOwned>0.0</sharesOwned>
   </stock>
   <deposit account>
     <code>O3I4JTVJ</code>
     <type>D</type>
     <label>CD</label>
     <apr>2.6</apr>
+    <balance>0.0</balance>
   </deposit account>
   <deposit account>
     <code>2LK45J5L</code>
     <type>D</type>
     <label>401K</label>
     <apr>5.0</apr>
+    <balance>0.0</balance>
   </deposit account>
   <deposit account>
     <code>U54USDLJ</code>
     <type>D</type>
     <label>RothIRA</label>
     <apr>8.0</apr>
+    <balance>0.0</balance>
   </deposit account>
   <private investment>
     <code>l2ASLDK5</code>
@@ -65,6 +72,7 @@
     <baseRateOfReturn>24.24</baseRateOfReturn>
     <omegaMeasure>0.11</omegaMeasure>
     <totalValue>1377522.93</totalValue>
+    <percentageStake>0.0</percentageStake>
   </private investment>
   <private investment>
     <code>2l34J3LE</code>
@@ -74,6 +82,7 @@
     <baseRateOfReturn>32.12</baseRateOfReturn>
     <omegaMeasure>0.37</omegaMeasure>
     <totalValue>5955125.67</totalValue>
+    <percentageStake>0.0</percentageStake>
   </private investment>
   <private investment>
     <code>23LK4LK2</code>
@@ -83,6 +92,7 @@
     <baseRateOfReturn>4.2</baseRateOfReturn>
     <omegaMeasure>0.69</omegaMeasure>
     <totalValue>525600.32</totalValue>
+    <percentageStake>0.0</percentageStake>
   </private investment>
   <stock>
     <code>JFK12342</code>
@@ -93,6 +103,7 @@
     <betaMeasure>0.33</betaMeasure>
     <stockSymbol>SPRTL</stockSymbol>
     <sharePrice>300.0</sharePrice>
+    <sharesOwned>0.0</sharesOwned>
   </stock>
   <private investment>
     <code>EIEIO12</code>
@@ -102,18 +113,21 @@
     <baseRateOfReturn>23.24</baseRateOfReturn>
     <omegaMeasure>0.12</omegaMeasure>
     <totalValue>100600.38</totalValue>
+    <percentageStake>0.0</percentageStake>
   </private investment>
   <deposit account>
     <code>JPII22</code>
     <type>D</type>
     <label>Gerber</label>
     <apr>2.16</apr>
+    <balance>0.0</balance>
   </deposit account>
   <deposit account>
     <code>NLU123</code>
     <type>D</type>
     <label>College Savings</label>
     <apr>3.5</apr>
+    <balance>0.0</balance>
   </deposit account>
   <private investment>
     <code>DC2EF13</code>
@@ -123,12 +137,14 @@
     <baseRateOfReturn>3.04</baseRateOfReturn>
     <omegaMeasure>0.5</omegaMeasure>
     <totalValue>421234.34</totalValue>
+    <percentageStake>0.0</percentageStake>
   </private investment>
   <deposit account>
     <code>F324JWJ</code>
     <type>D</type>
     <label>Life Savings</label>
     <apr>1.6</apr>
+    <balance>0.0</balance>
   </deposit account>
   <private investment>
     <code>JLKOP13</code>
@@ -138,6 +154,7 @@
     <baseRateOfReturn>4.04</baseRateOfReturn>
     <omegaMeasure>0.16</omegaMeasure>
     <totalValue>421254.04</totalValue>
+    <percentageStake>0.0</percentageStake>
   </private investment>
   <private investment>
     <code>SPR342</code>
@@ -147,6 +164,7 @@
     <baseRateOfReturn>3.44</baseRateOfReturn>
     <omegaMeasure>0.75</omegaMeasure>
     <totalValue>250341.14</totalValue>
+    <percentageStake>0.0</percentageStake>
   </private investment>
   <stock>
     <code>CH1LL0</code>
@@ -157,6 +175,7 @@
     <betaMeasure>0.23</betaMeasure>
     <stockSymbol>NFLX</stockSymbol>
     <sharePrice>139.2</sharePrice>
+    <sharesOwned>0.0</sharesOwned>
   </stock>
   <stock>
     <code>4L23JRI</code>
@@ -167,5 +186,6 @@
     <betaMeasure>0.88</betaMeasure>
     <stockSymbol>FB</stockSymbol>
     <sharePrice>130.84</sharePrice>
+    <sharesOwned>0.0</sharesOwned>
   </stock>
 </assets>

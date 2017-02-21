@@ -5,6 +5,7 @@
     "betaMeasure": 0.22,
     "stockSymbol": "AAPL",
     "sharePrice": 128.75,
+    "sharesOwned": 0.0,
     "code": "CMRO1592",
     "type": "S",
     "label": "Apple"
@@ -15,6 +16,7 @@
     "betaMeasure": 0.31,
     "stockSymbol": "CSCO",
     "sharePrice": 31.18,
+    "sharesOwned": 0.0,
     "code": "BR8427AP",
     "type": "S",
     "label": "Cisco Systems Inc"
@@ -25,6 +27,7 @@
     "betaMeasure": 1.23,
     "stockSymbol": "INTC",
     "sharePrice": 36.68,
+    "sharesOwned": 0.0,
     "code": "GH59T5U3",
     "type": "S",
     "label": "Intel Corp"
@@ -35,24 +38,28 @@
     "betaMeasure": -0.77,
     "stockSymbol": "MU",
     "sharePrice": 24.79,
+    "sharesOwned": 0.0,
     "code": "TY50QW29",
     "type": "S",
     "label": "Micron Technology Inc"
   },
   {
     "apr": 2.6,
+    "balance": 0.0,
     "code": "O3I4JTVJ",
     "type": "D",
     "label": "CD"
   },
   {
     "apr": 5.0,
+    "balance": 0.0,
     "code": "2LK45J5L",
     "type": "D",
     "label": "401K"
   },
   {
     "apr": 8.0,
+    "balance": 0.0,
     "code": "U54USDLJ",
     "type": "D",
     "label": "RothIRA"
@@ -62,6 +69,7 @@
     "baseRateOfReturn": 24.24,
     "omegaMeasure": 0.11,
     "totalValue": 1377522.93,
+    "percentageStake": 0.0,
     "code": "l2ASLDK5",
     "type": "P",
     "label": "Fells Wargo Building"
@@ -71,6 +79,7 @@
     "baseRateOfReturn": 32.12,
     "omegaMeasure": 0.37,
     "totalValue": 5955125.67,
+    "percentageStake": 0.0,
     "code": "2l34J3LE",
     "type": "P",
     "label": "Carlyle Offices"
@@ -80,6 +89,7 @@
     "baseRateOfReturn": 4.2,
     "omegaMeasure": 0.69,
     "totalValue": 525600.32,
+    "percentageStake": 0.0,
     "code": "23LK4LK2",
     "type": "P",
     "label": "United West Corporation"
@@ -90,6 +100,7 @@
     "betaMeasure": 0.33,
     "stockSymbol": "SPRTL",
     "sharePrice": 300.0,
+    "sharesOwned": 0.0,
     "code": "JFK12342",
     "type": "S",
     "label": "Spreetail"
@@ -99,18 +110,21 @@
     "baseRateOfReturn": 23.24,
     "omegaMeasure": 0.12,
     "totalValue": 100600.38,
+    "percentageStake": 0.0,
     "code": "EIEIO12",
     "type": "P",
     "label": "Old McDonald Farm"
   },
   {
     "apr": 2.16,
+    "balance": 0.0,
     "code": "JPII22",
     "type": "D",
     "label": "Gerber"
   },
   {
     "apr": 3.5,
+    "balance": 0.0,
     "code": "NLU123",
     "type": "D",
     "label": "College Savings"
@@ -120,12 +134,14 @@
     "baseRateOfReturn": 3.04,
     "omegaMeasure": 0.5,
     "totalValue": 421234.34,
+    "percentageStake": 0.0,
     "code": "DC2EF13",
     "type": "P",
     "label": "Seattle Grace"
   },
   {
     "apr": 1.6,
+    "balance": 0.0,
     "code": "F324JWJ",
     "type": "D",
     "label": "Life Savings"
@@ -135,6 +151,7 @@
     "baseRateOfReturn": 4.04,
     "omegaMeasure": 0.16,
     "totalValue": 421254.04,
+    "percentageStake": 0.0,
     "code": "JLKOP13",
     "type": "P",
     "label": "Doofenshmirtz Inc"
@@ -144,6 +161,7 @@
     "baseRateOfReturn": 3.44,
     "omegaMeasure": 0.75,
     "totalValue": 250341.14,
+    "percentageStake": 0.0,
     "code": "SPR342",
     "type": "P",
     "label": "Chum Bucket"
@@ -154,6 +172,7 @@
     "betaMeasure": 0.23,
     "stockSymbol": "NFLX",
     "sharePrice": 139.2,
+    "sharesOwned": 0.0,
     "code": "CH1LL0",
     "type": "S",
     "label": "Netflix Inc"
@@ -164,6 +183,7 @@
     "betaMeasure": 0.88,
     "stockSymbol": "FB",
     "sharePrice": 130.84,
+    "sharesOwned": 0.0,
     "code": "4L23JRI",
     "type": "S",
     "label": "Facebook Inc"

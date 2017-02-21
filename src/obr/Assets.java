@@ -33,5 +33,8 @@ public abstract class Assets {
 	
 	public abstract double getRiskMeasure();
 	public abstract double getBRR();
-	public abstract double getValue();
+//	public abstract double getStoredValue();
+//	public abstract double getAnnualReturn();
+	public abstract double getCalcValue();
+	public abstract double getQuartDiv();
 }

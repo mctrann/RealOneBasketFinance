@@ -68,7 +68,7 @@ public class Stocks extends Assets{
 		return totalValue;
 	}
 	
-	//FIXME:method to calculate the annual return 
+	//method to calculate the annual return 
 	public double getAnnualReturn() {
 		double value = 0.0;
 		value = (getBRR() * getCalcValue()) + (4 * getQuartDiv());

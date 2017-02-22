@@ -26,7 +26,7 @@ public class Junior extends Persons {
 		return this.type;
 	}
 
-	//FIXME:method to calculate commissions
+	//method to calculate commissions
 	public double getCommissions(double totalReturnValue) {
 		double commission = totalReturnValue * .02;
 		return commission;

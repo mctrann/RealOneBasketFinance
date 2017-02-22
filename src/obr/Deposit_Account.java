@@ -27,21 +27,17 @@ public class Deposit_Account extends Assets{
 		return 0;
 	}
 	
-	//TODO: USED?
+	//
 	public double getValue() {
 		return 0;
 	}
 	
-<<<<<<< HEAD
 <<<<<<< HEAD
 	public double getBRR() {
 		
 		return Math.pow(Math.E, (getAPR()/100)) - 1;
 =======
 	//method to set the balance from the Portfolio.dat
-=======
-	//method to set the balance, used to set portfolio.dat value of deposits
->>>>>>> jjfield3
 	public void setBalance(double balance) {
 		this.balance = balance;
 >>>>>>> jjfield3

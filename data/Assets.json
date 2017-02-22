@@ -23,7 +23,7 @@
   },
   {
     "quartDiv": 1.27,
-    "baseRateOfReturn": 0.015,
+    "baseRateOfReturn": 0.15,
     "betaMeasure": 1.23,
     "stockSymbol": "INTC",
     "sharePrice": 36.68,
@@ -35,7 +35,7 @@
   {
     "quartDiv": 7.5,
     "baseRateOfReturn": 0.22,
-    "betaMeasure": 0.77,
+    "betaMeasure": -0.77,
     "stockSymbol": "MU",
     "sharePrice": 24.79,
     "sharesOwned": 0.0,
@@ -66,7 +66,7 @@
   },
   {
     "quartDiv": 32.0,
-    "baseRateOfReturn": 0.24239999999999998,
+    "baseRateOfReturn": 24.24,
     "omegaBaseMeasure": 0.11,
     "totalValue": 1377522.93,
     "percentageStake": 0.0,
@@ -76,7 +76,7 @@
   },
   {
     "quartDiv": 16.87,
-    "baseRateOfReturn": 0.3212,
+    "baseRateOfReturn": 32.12,
     "omegaBaseMeasure": 0.37,
     "totalValue": 5955125.67,
     "percentageStake": 0.0,
@@ -86,7 +86,7 @@
   },
   {
     "quartDiv": 17.38,
-    "baseRateOfReturn": 0.042,
+    "baseRateOfReturn": 4.2,
     "omegaBaseMeasure": 0.69,
     "totalValue": 525600.32,
     "percentageStake": 0.0,
@@ -107,7 +107,7 @@
   },
   {
     "quartDiv": 15.0,
-    "baseRateOfReturn": 0.2324,
+    "baseRateOfReturn": 23.24,
     "omegaBaseMeasure": 0.12,
     "totalValue": 100600.38,
     "percentageStake": 0.0,
@@ -131,7 +131,7 @@
   },
   {
     "quartDiv": 19.98,
-    "baseRateOfReturn": 0.0304,
+    "baseRateOfReturn": 3.04,
     "omegaBaseMeasure": 0.5,
     "totalValue": 421234.34,
     "percentageStake": 0.0,
@@ -148,7 +148,7 @@
   },
   {
     "quartDiv": 20.98,
-    "baseRateOfReturn": 0.0404,
+    "baseRateOfReturn": 4.04,
     "omegaBaseMeasure": 0.16,
     "totalValue": 421254.04,
     "percentageStake": 0.0,
@@ -158,7 +158,7 @@
   },
   {
     "quartDiv": 20.98,
-    "baseRateOfReturn": 0.0344,
+    "baseRateOfReturn": 3.44,
     "omegaBaseMeasure": 0.75,
     "totalValue": 250341.14,
     "percentageStake": 0.0,

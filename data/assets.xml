@@ -26,7 +26,7 @@
     <type>S</type>
     <label>Intel Corp</label>
     <quartDiv>1.27</quartDiv>
-    <baseRateOfReturn>0.015</baseRateOfReturn>
+    <baseRateOfReturn>0.15</baseRateOfReturn>
     <betaMeasure>1.23</betaMeasure>
     <stockSymbol>INTC</stockSymbol>
     <sharePrice>36.68</sharePrice>
@@ -38,7 +38,7 @@
     <label>Micron Technology Inc</label>
     <quartDiv>7.5</quartDiv>
     <baseRateOfReturn>0.22</baseRateOfReturn>
-    <betaMeasure>0.77</betaMeasure>
+    <betaMeasure>-0.77</betaMeasure>
     <stockSymbol>MU</stockSymbol>
     <sharePrice>24.79</sharePrice>
     <sharesOwned>0.0</sharesOwned>
@@ -69,7 +69,7 @@
     <type>P</type>
     <label>Fells Wargo Building</label>
     <quartDiv>32.0</quartDiv>
-    <baseRateOfReturn>0.24239999999999998</baseRateOfReturn>
+    <baseRateOfReturn>24.24</baseRateOfReturn>
     <omegaBaseMeasure>0.11</omegaBaseMeasure>
     <totalValue>1377522.93</totalValue>
     <percentageStake>0.0</percentageStake>
@@ -79,7 +79,7 @@
     <type>P</type>
     <label>Carlyle Offices</label>
     <quartDiv>16.87</quartDiv>
-    <baseRateOfReturn>0.3212</baseRateOfReturn>
+    <baseRateOfReturn>32.12</baseRateOfReturn>
     <omegaBaseMeasure>0.37</omegaBaseMeasure>
     <totalValue>5955125.67</totalValue>
     <percentageStake>0.0</percentageStake>
@@ -89,7 +89,7 @@
     <type>P</type>
     <label>United West Corporation</label>
     <quartDiv>17.38</quartDiv>
-    <baseRateOfReturn>0.042</baseRateOfReturn>
+    <baseRateOfReturn>4.2</baseRateOfReturn>
     <omegaBaseMeasure>0.69</omegaBaseMeasure>
     <totalValue>525600.32</totalValue>
     <percentageStake>0.0</percentageStake>
@@ -110,7 +110,7 @@
     <type>P</type>
     <label>Old McDonald Farm</label>
     <quartDiv>15.0</quartDiv>
-    <baseRateOfReturn>0.2324</baseRateOfReturn>
+    <baseRateOfReturn>23.24</baseRateOfReturn>
     <omegaBaseMeasure>0.12</omegaBaseMeasure>
     <totalValue>100600.38</totalValue>
     <percentageStake>0.0</percentageStake>
@@ -134,7 +134,7 @@
     <type>P</type>
     <label>Seattle Grace</label>
     <quartDiv>19.98</quartDiv>
-    <baseRateOfReturn>0.0304</baseRateOfReturn>
+    <baseRateOfReturn>3.04</baseRateOfReturn>
     <omegaBaseMeasure>0.5</omegaBaseMeasure>
     <totalValue>421234.34</totalValue>
     <percentageStake>0.0</percentageStake>
@@ -151,7 +151,7 @@
     <type>P</type>
     <label>Doofenshmirtz Inc</label>
     <quartDiv>20.98</quartDiv>
-    <baseRateOfReturn>0.0404</baseRateOfReturn>
+    <baseRateOfReturn>4.04</baseRateOfReturn>
     <omegaBaseMeasure>0.16</omegaBaseMeasure>
     <totalValue>421254.04</totalValue>
     <percentageStake>0.0</percentageStake>
@@ -161,7 +161,7 @@
     <type>P</type>
     <label>Chum Bucket</label>
     <quartDiv>20.98</quartDiv>
-    <baseRateOfReturn>0.0344</baseRateOfReturn>
+    <baseRateOfReturn>3.44</baseRateOfReturn>
     <omegaBaseMeasure>0.75</omegaBaseMeasure>
     <totalValue>250341.14</totalValue>
     <percentageStake>0.0</percentageStake>

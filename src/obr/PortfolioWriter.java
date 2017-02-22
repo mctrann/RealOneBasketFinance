@@ -107,9 +107,9 @@ public class PortfolioWriter {
 		for (int z = 0; z < portInfo.size(); z++) {
 			write.println("--------------------------------------------------------------------------------------------------------------------------------------");
 			write.println("Portfolio: " + portInfo.get(z).getPortfolioCode());
-			write.println("Owner: " + portInfo.get(z).getOwnerCode());
-			write.println("Manager: " + portInfo.get(z).getManagerCode());
-			write.println("Beneficiary: " + portInfo.get(z).getBeneficiaryCode());
+			write.println("Owner: " + portInfo.get(z).getOwnerCode());//FIXME: GET OWNER NAME
+			write.println("Manager: " + portInfo.get(z).getManagerCode()); //FIXME: GET MANAGER NAME
+			write.println("Beneficiary: " + portInfo.get(z).getBeneficiaryCode()); //FIXME: get ben name
 			write.println(String.format("%-10s %-10s %-10s %-10s %-10s %-10s", "Code", "Asset", "Return Rate", "Risk", "Annual Return", "Value"));
 			try {
 				for(int t = 0; t < portInfo.get(z).getAssetList().size(); t++) {

@@ -54,7 +54,8 @@ public class Portfolios {
 		return assetList;
 	}
 	
-	//method to calculate to get total annual return value
+	//method to calculate to get total annual return value 
+	//TODO:of each portfolio or all portfolios?
 	public double getTotalReturnValue(List<Assets> assetList) {
 		double totalReturnValue = 0.0;
 		
@@ -84,6 +85,7 @@ public class Portfolios {
 		return totalValue;
 	}
 	
+<<<<<<< HEAD
 <<<<<<< HEAD
 //	public double getCommisions() {
 //		for()
@@ -116,8 +118,12 @@ public class Portfolios {
 				}
 =======
 	//method to calculate risk
+=======
+	//method to calculate total risk of portfolio
+>>>>>>> jjfield3
 	public double getRisk(List<Assets> assetList) {
 		double totalValue = 0.0;
+		//calculate totalValue of all assets in one portfolio
 		for(int i = 0; i < assetList.size(); i++) {
 			if(assetList.get(i) == (null)) {
 				totalValue = 0.0;
@@ -128,7 +134,7 @@ public class Portfolios {
 			}
 			
 		}
-		
+		//calculates aggregate risk measure with total value calculated above
 		double riskMeasure = 0.0;
 		for(int i = 0; i < assetList.size(); i++) {
 			if(totalValue == 0) {

@@ -7,7 +7,6 @@ import java.io.FileReader;
 import java.io.IOException;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
 
 
@@ -144,7 +143,7 @@ public class Data_Converter {
 						label = assets_arr[2];
 						quartDiv = Double.parseDouble(assets_arr[3]);
 						double tempBRR = Double.parseDouble(assets_arr[4]);
-						BRR=tempBRR;
+						BRR=(tempBRR)/100;
 						betaMeasure = Double.parseDouble(assets_arr[5]);
 						stockSymbol = assets_arr[6];
 						sharePrice = Double.parseDouble(assets_arr[7]);
@@ -154,7 +153,8 @@ public class Data_Converter {
 						Private_Investments b;
 						label = assets_arr[2];
 						quartDiv = Double.parseDouble(assets_arr[3]);
-						BRR = Double.parseDouble(assets_arr[4]);
+						double tempBRR = Double.parseDouble(assets_arr[4]);
+						BRR=(tempBRR)/100;
 						omegaMeasure = Double.parseDouble(assets_arr[5]);
 						totalValue = Double.parseDouble(assets_arr[6]);
 						assetInfo.add(b = new Private_Investments(code, type, label,quartDiv,BRR,omegaMeasure,totalValue));
@@ -187,7 +187,8 @@ public class Data_Converter {
 		int startLine3 = 1;
 		int counter3 = startLine3;
 
-		//parses through Portfolio.dat
+		//parses through Portfolio.dat 
+		//stores codes in appropriate variables
 		try {
 			while((line3 = reader3.readLine()) != null) {
 				if (counter3 > startLine3) {
@@ -203,25 +204,39 @@ public class Data_Converter {
 						benCode = portArr[3];
 					}
 
-					//Splits the asset list
+					
 					List<Assets> assetNewInfo = new ArrayList<Assets>();
 					try {
+						//Splits the asset list
 						String assetList[] = portArr[4].split(",");
+						//parses through assetList
 						for(int i = 0; i < assetList.length; i++) {
 							for(int j = 0; j < assetInfo.size(); j++) {
+								//splits each asset at its type and value
 								String tempAsset[] = assetList[i].split(":");
+								//finds code from assetInfo list that equals code from assetList
 								if(tempAsset[0].equals(assetInfo.get(j).getCode())) {
+									//if asset type is Stock
 									if(assetInfo.get(j).getType().equals("S")) {
+										//creates new stock object with info from assetInfo + info from portfolio
 										Stocks newStock = new Stocks((Stocks) assetInfo.get(j));
+										//stores amount of shares owned itno sharesOwn variable
 										newStock.setSharesOwned(Double.parseDouble(tempAsset[1]));
+										//adds newStock into list of assetNewInfo
 										assetNewInfo.add(newStock);
 									}
+									//if asset type is Deposit
 									else if(assetInfo.get(j).getType().equals("D")) {
+										//creates new deposit object with info from assetInfo + info from portfolio
 										Deposit_Account newDP = new Deposit_Account((Deposit_Account) assetInfo.get(j));
+										//parses balance in portfolio into balance of deposit
 										newDP.setBalance(Double.parseDouble(tempAsset[1]));
+										//adds deposit account to list of assetNewInfo
 										assetNewInfo.add(newDP);
 									}
+									//if asset type is private investment
 									else{
+										//creates new private investment object with info from assetInfo + info from portfolio
 										Private_Investments newPI = new Private_Investments((Private_Investments) assetInfo.get(j));
 										newPI.setPercentageStake(Double.parseDouble(tempAsset[1]));
 										assetNewInfo.add(newPI);
@@ -260,12 +275,12 @@ public class Data_Converter {
 	//runs program
 	public static void main(String args[]){	
 		dataParser();
-		JSONWriter thing = new JSONWriter();
-		thing.JSONConverterP(perInfo);
-		XMLWriter thing2= new XMLWriter();
-		thing2.xmlPersonConverter(perInfo);
-		thing.JSONconverterA(assetInfo);
-		thing2.xmlAssetConverter(assetInfo);
+//		JSONWriter thing = new JSONWriter();
+//		thing.JSONConverterP(perInfo);
+//		XMLWriter thing2= new XMLWriter();
+//		thing2.xmlPersonConverter(perInfo);
+//		thing.JSONconverterA(assetInfo);
+//		thing2.xmlAssetConverter(assetInfo);
 		PortfolioWriter thing3 = new PortfolioWriter();
 <<<<<<< HEAD
 		thing3.PortfolioWrite(portInfo, perInfo, assetInfo);	

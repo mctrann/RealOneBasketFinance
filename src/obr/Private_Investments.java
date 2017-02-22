@@ -39,7 +39,7 @@ public class Private_Investments extends Assets{
 		double offset = Math.pow(Math.E, (-100000/getCalcValue()));
 		return omegaMeasure = offset + getOmegaMeasure();
 	}
-	
+	//method to return omega BASE measure
 	public double getOmegaMeasure() {
 		return omegaBaseMeasure;
 	}

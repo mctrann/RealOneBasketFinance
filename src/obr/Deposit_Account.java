@@ -27,12 +27,12 @@ public class Deposit_Account extends Assets{
 		return 0;
 	}
 	
-	//
+	//TODO: USED?
 	public double getValue() {
 		return 0;
 	}
 	
-	//method to set the balance from the Portfolio.dat
+	//method to set the balance, used to set portfolio.dat value of deposits
 	public void setBalance(double balance) {
 		this.balance = balance;
 	}

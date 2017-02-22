@@ -66,7 +66,7 @@ public class PortfolioWriter {
 					df.format(localCommissions), df.format(portInfo.get(i).getRisk(portInfo.get(i).getAssetList())), df.format(localReturnValue), df.format(localTotalValue)));  //use obj.get to access info and print
 		}
 		
-		write.println(String.format("%-30s %-30s %-30s %-30s %-30s", "Totals", totalFees, totalCommissions, totalReturnValue, totalValue));
+		write.println(String.format("%-30s %-30s %-30s %-30s %-30s", "Totals", df.format(totalFees), df.format(totalCommissions), df.format(totalReturnValue), df.format(totalValue)));
 		//writes the individual details of each portfolio
 		write.println();
 		write.println("Portfolio Details");

@@ -204,12 +204,11 @@ public class Data_Converter {
 					}
 
 					
-					String assetList[] = portArr[4].split(",");
-					HashMap<String, Double> assetList1 = new HashMap<String, Double>();
-					if(assetList[0].equals("")) {
-						assetList1.put(null, null);
-					}
-					else {
+					List<Assets> assetNewInfo = new ArrayList<Assets>();
+					try {
+						//Splits the asset list
+						String assetList[] = portArr[4].split(",");
+						//parses through assetList
 						for(int i = 0; i < assetList.length; i++) {
 							for(int j = 0; j < assetInfo.size(); j++) {
 								//splits each asset at its type and value
@@ -245,12 +244,16 @@ public class Data_Converter {
 							}
 						}
 					}
+					catch (ArrayIndexOutOfBoundsException e) {
+						assetNewInfo.add(null);
+					}
+
+					//Adds the information to a list of Portfolios
 					Portfolios port;
 					portInfo.add(port = new Portfolios(portCode, ownerCode, managerCode, benCode, assetNewInfo ));
 				}
 				counter3++;
 			}
-
 		} 
 		catch (IOException e1) {
 			e1.printStackTrace();
@@ -263,39 +266,20 @@ public class Data_Converter {
 		}
 	}
 
-	public List<Persons> getPerInfo() {
-		return perInfo;
-	}
-
 	//runs program
 	public static void main(String args[]){	
 		dataParser();
-//		JSONWriter thing = new JSONWriter();
-//		thing.JSONConverterP(perInfo);
-//		XMLWriter thing2= new XMLWriter();
-//		thing2.xmlPersonConverter(perInfo);
-//		thing.JSONconverterA(assetInfo);
-//		thing2.xmlAssetConverter(assetInfo);
+		JSONWriter thing = new JSONWriter();
+		thing.JSONConverterP(perInfo);
+		XMLWriter thing2= new XMLWriter();
+		thing2.xmlPersonConverter(perInfo);
+		thing.JSONconverterA(assetInfo);
+		thing2.xmlAssetConverter(assetInfo);
 		PortfolioWriter thing3 = new PortfolioWriter();
-		thing3.PortfolioWriter(portInfo, perInfo, assetInfo);	
+		thing3.PortfolioWrite(portInfo, perInfo);	
 		}
 		
 }
 
 
 
-		//creates BufferedReader for Portfolio.dat
-		BufferedReader reader3 = null;
-
-					List<Assets> assetNewInfo = new ArrayList<Assets>();
-					try {
-						//Splits the asset list
-						String assetList[] = portArr[4].split(",");
-						//parses through assetList
-					catch (ArrayIndexOutOfBoundsException e) {
-						assetNewInfo.add(null);
-					}
-
-					//Adds the information to a list of Portfolios
-		thing3.PortfolioWrite(portInfo, perInfo);	
-	}

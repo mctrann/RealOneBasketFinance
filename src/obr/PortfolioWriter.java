@@ -9,18 +9,24 @@ import java.util.List;
 import java.util.Map;
 
 public class PortfolioWriter {
-	private double fees;
-	public void PortfolioWrite(List<Portfolios>portInfo, List<Persons> perInfo, List<Assets> assetInfo) {
-		DecimalFormat df = new DecimalFormat("0.00");
+	
+	//create private variables of class PortfolioWriter
+	private double totalFees = 0.0;
+	private double totalCommissions = 0.0;
+	private double totalReturnValue = 0.0;
+	private double totalValue = 0.0; 
+	
+	public void PortfolioWrite(List<Portfolios>portInfo, List<Persons> perInfo) {
+		
 		PrintWriter write = null;
-
+		DecimalFormat df = new DecimalFormat("0.00");
 		try{
 			write = new PrintWriter("data/output1.txt");
 		} catch (FileNotFoundException e) {
 			e.printStackTrace();
 		}
 
-		int a = 0;
+
 		write.println("Porfolio Summary Report");
 		write.println("--------------------------------------------------------------------------------------------------------------------------------------");
 		write.println(String.format("%-30s %-30s %-30s %-30s %-30s %-30s %-30s %-30s", "Portfolio", "Owner", "Manager", "Fees", "Comissions", "Weighted Risk", "Return", "Total"));
@@ -33,86 +39,55 @@ public class PortfolioWriter {
 					ownerName = perInfo.get(j).getLastName() + ", " + perInfo.get(j).getFirstName();
 					break;
 				}
-
 			}
 
-			//gets the manager's name
+			//gets the manager's name and fees
 			String managerName = "";
+			double localFees = 0.0;
+			double localCommissions = 0.0;
 			for(int k = 0; k < perInfo.size(); k++) {
 				if(portInfo.get(i).getManagerCode().equals(perInfo.get(k).getPersonCode())) {
 					managerName = perInfo.get(k).getLastName() + ", " + perInfo.get(k).getFirstName();
+					localFees = perInfo.get(k).getFees(portInfo.get(i).getAssetList());
+					totalFees = totalFees + localFees;
+					localCommissions = localCommissions + perInfo.get(k).getCommissions(portInfo.get(i).getTotalReturnValue(portInfo.get(i).getAssetList()));
+					totalCommissions = totalCommissions + localCommissions;
 					break;
 				}
 			}
-			
-			//gets the return
-			double totalReturnValue = 0;
-			double totalValue = 0;
-			HashMap<String, Double> assetHash = new HashMap<String, Double>();
-			assetHash.putAll(portInfo.get(i).getAssetList());
 
-			for(Map.Entry<String, Double> entry : assetHash.entrySet()) {
-				totalReturnValue = totalReturnValue + portInfo.get(i).getAnnualReturn(entry.getKey(), entry.getValue());
-				totalValue = totalValue + portInfo.get(i).getTotalValue(entry.getKey(), entry.getValue());
-			}
+			double localTotalValue = portInfo.get(i).getTotalValue(portInfo.get(i).getAssetList());
+			totalValue = totalValue + localTotalValue;
 			
-			double commission = 0;
-			commission = portInfo.get(i).getCommissions(portInfo.get(i).getManagerCode(), totalReturnValue);
-			
-			write.println(String.format("%-30s %-30s %-30s %-30s %-30s %-30s %-30s %-30s", portInfo.get(i).getPortfolioCode(), ownerName, managerName,"$" + portInfo.get(i).getFees(portInfo.get(i).getManagerCode()),
-					commission, "Risk", df.format(totalReturnValue), df.format(totalValue)));  //use obj.get to access info and print
-			fees += portInfo.get(i).getFees(portInfo.get(i).getManagerCode());
+			double localReturnValue = portInfo.get(i).getTotalReturnValue(portInfo.get(i).getAssetList());
+			totalReturnValue = totalReturnValue + localReturnValue;
+			//writes in the info
+			write.println(String.format("%-30s %-30s %-30s %-30s %-30s %-30s %-30s %-30s", portInfo.get(i).getPortfolioCode(), ownerName, managerName, df.format(localFees), 
+					df.format(localCommissions), df.format(portInfo.get(i).getRisk(portInfo.get(i).getAssetList())), df.format(localReturnValue), df.format(localTotalValue)));  //use obj.get to access info and print
 		}
-
-		//Writes the individual portfolios
+		
+		write.println(String.format("%-30s %-30s %-30s %-30s %-30s", "Totals", totalFees, totalCommissions, totalReturnValue, totalValue));
+		//writes the individual details of each portfolio
+		write.println();
 		write.println("Portfolio Details");
 		for (int z = 0; z < portInfo.size(); z++) {
 			write.println("--------------------------------------------------------------------------------------------------------------------------------------");
-			write.println("Portfolio " + portInfo.get(z).getPortfolioCode());
-			write.println("Owner: " + portInfo.get(z).getOwnerCode());
-			write.println("Manager:" + portInfo.get(z).getManagerCode());
-			write.println("Beneficiary: " + portInfo.get(z).getBeneficiaryCode());
+			write.println("Portfolio: " + portInfo.get(z).getPortfolioCode());
+			write.println("Owner: " + portInfo.get(z).getOwnerCode());//FIXME: GET OWNER NAME
+			write.println("Manager: " + portInfo.get(z).getManagerCode()); //FIXME: GET MANAGER NAME
+			write.println("Beneficiary: " + portInfo.get(z).getBeneficiaryCode()); //FIXME: get ben name
 			write.println(String.format("%-10s %-10s %-10s %-10s %-10s %-10s", "Code", "Asset", "Return Rate", "Risk", "Annual Return", "Value"));
-
-			//creates new HashMap of the instance z of portInfo
-			HashMap<String, Double> assetHash = new HashMap<String, Double>();
-			assetHash.putAll(portInfo.get(z).getAssetList());
-
-			//Goes through the HashMap at instance z of portInfo
-			double totalValue = 0.0;
-			double totalReturnRate = 0.0;
-			for(Map.Entry<String, Double> key : assetHash.entrySet()) {
-
-				for(int t = 0; t < assetInfo.size(); t++) {
-					if(key.getKey().equals(assetInfo.get(t).getCode())) {
-						if(assetInfo.get(t).getType().equals("S")) {
-							write.println(String.format("%-10s %-10s %-10s %-10s %-10s %-10s", key.getKey(), assetInfo.get(t).getLabel(), "d", df.format(assetInfo.get(t).getRiskMeasure()), df.format(portInfo.get(z).getAnnualReturn(key.getKey(), key.getValue())), df.format(assetInfo.get(t).getValue() * key.getValue())));
-							totalValue = totalValue + (assetInfo.get(t).getValue() * key.getValue());
-							totalReturnRate = totalReturnRate + portInfo.get(z).getAnnualReturn(key.getKey(), key.getValue());
-							break;
-						}
-						else if(assetInfo.get(t).getType().equals("D")) {
-							write.println(String.format("%-10s %-10s %-10s %-10s %-10s %-10s", key.getKey(), assetInfo.get(t).getLabel(), "d", df.format(assetInfo.get(t).getRiskMeasure()), df.format(portInfo.get(z).getAnnualReturn(key.getKey(), key.getValue())), df.format(key.getValue())));
-							totalValue = totalValue + key.getValue();
-							totalReturnRate = totalReturnRate + portInfo.get(z).getAnnualReturn(key.getKey(), key.getValue());
-							break;
-						}
-						else if (assetInfo.get(t).getType().equals("P")) {
-							write.println(String.format("%-10s %-10s %-10s %-10s %-10s %-10s", key.getKey(), assetInfo.get(t).getLabel(), "d", df.format(assetInfo.get(t).getRiskMeasure()), df.format(portInfo.get(z).getAnnualReturn(key.getKey(), key.getValue())), df.format(assetInfo.get(t).getValue() * (key.getValue()/100))));
-							totalValue = totalValue + (assetInfo.get(t).getValue() * (key.getValue()/100));
-							totalReturnRate = totalReturnRate + portInfo.get(z).getAnnualReturn(key.getKey(), key.getValue());
-							break;
-						}
-						else {
-
-						}
-					}
+			try {
+				for(int t = 0; t < portInfo.get(z).getAssetList().size(); t++) {
+					write.println(String.format("%-10s %-10s %-10s %-10s %-10s %-10s", portInfo.get(z).getAssetList().get(t).getCode(),
+							portInfo.get(z).getAssetList().get(t).getLabel(), "D", df.format(portInfo.get(z).getAssetList().get(t).getRiskMeasure()),
+							df.format(portInfo.get(z).getAssetList().get(t).getAnnualReturn()), portInfo.get(z).getAssetList().get(t).getCalcValue()));
 				}
 			}
-			write.println(String.format("%-10s %-10s %-10s %-10s", "Totals", "d", df.format(totalReturnRate), df.format(totalValue)));
+			catch (NullPointerException e) {
+				write.print("");
+			}
 		}
-
-		//closes the PrinteWriter
 		write.close();
 	}
 }

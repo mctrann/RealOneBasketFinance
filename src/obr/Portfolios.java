@@ -7,66 +7,84 @@ import java.util.Map;
 
 public class Portfolios {
 	
+	//create private variables
 	private String portfolioCode;
 	private String ownerCode;
 	private String managerCode;
 	private String beneficiaryCode;
-	private HashMap<String, Double> assetList = new HashMap<String, Double>();
-	private List<Persons> perInfo = new ArrayList<Persons>();
-	private List<Assets> assetInfo = new ArrayList<Assets>();
+	private List<Assets> assetList;
 	
+	//create constructor
 	public Portfolios(String portfolioCode, String ownerCode, String managerCode, String beneficiaryCode,
-			HashMap<String, Double> assetList, List<Persons> perInfo, List<Assets> assetInfo){
+			List<Assets> assetList){
 		this.portfolioCode = portfolioCode;
 		this.ownerCode = ownerCode;
 		this.managerCode = managerCode;
 		this.beneficiaryCode = beneficiaryCode;
 		this.assetList = assetList;
+<<<<<<< HEAD
 		this.perInfo = perInfo;
 		this.assetInfo = assetInfo;
+=======
+>>>>>>> jjfield3
 	}
-	
+
+	//method for returning the portfolio code
 	public String getPortfolioCode() {
 		return portfolioCode;
 	}
-
+	
+	//method for returning the owner dode
 	public String getOwnerCode() {
 		return ownerCode;
 	}
 
+	//method for returning the manager code
 	public String getManagerCode() {
 		return managerCode;
 	}
 
+	//method for returning the beneficiary code
 	public String getBeneficiaryCode() {
 		return beneficiaryCode;
 	}
 
-	public HashMap getAssetList() {
+	//method for returning the list of Assets
+	public List<Assets> getAssetList() {
 		return assetList;
 	}
 	
-	public double getFees(String mangerCode) {
-		int countArr = 0;
-		for(int i = 0; i < assetList.size(); i++) {
-			countArr += 1;
-		}
+	//method to calculate to get total annual return value
+	public double getTotalReturnValue(List<Assets> assetList) {
+		double totalReturnValue = 0.0;
 		
-		double fee = 0.0;
-		for(int i = 0; i < perInfo.size(); i++) {
-			if(managerCode.equals(perInfo.get(i).getPersonCode())) {
-				if(perInfo.get(i).getType().equals("E")) {
-					fee = countArr * 50;
-				}
-				else if(perInfo.get(i).getType().equals("J")) {
-					fee = countArr * 10;
-				}
+		for(int i = 0; i < assetList.size(); i++) {
+			if(assetList.get(i) == null) {
+				totalReturnValue = 0.0;
+			}
+			else {
+				totalReturnValue = totalReturnValue + assetList.get(i).getAnnualReturn();
+			}
+		}
+		return totalReturnValue;
+	}
+	
+	//method to calculate the total value of a particular portfolio
+	public double getTotalValue(List<Assets> assetList) {
+		double totalValue = 0.0;
+		
+		for(int i = 0; i < assetList.size(); i++) {
+			if(assetList.get(i) == (null)){
+				totalValue = 0.0;
+			}else{
+			totalValue = totalValue + assetList.get(i).getCalcValue();
 			}
 		}
 		
-		return fee;
+		return totalValue;
 	}
 	
+<<<<<<< HEAD
 //	public double getCommisions() {
 //		for()
 //	}
@@ -96,12 +114,32 @@ public class Portfolios {
 					}
 					
 				}
+=======
+	//method to calculate risk
+	public double getRisk(List<Assets> assetList) {
+		double totalValue = 0.0;
+		for(int i = 0; i < assetList.size(); i++) {
+			if(assetList.get(i) == (null)) {
+				totalValue = 0.0;
+			}
+			else {
+				totalValue = totalValue + assetList.get(i).getCalcValue();
+>>>>>>> jjfield3
+			}
+			
+		}
+		
+		double riskMeasure = 0.0;
+		for(int i = 0; i < assetList.size(); i++) {
+			if(totalValue == 0) {
+				riskMeasure = 0.0;
+				break;
+			}
+			else{
+				riskMeasure = riskMeasure + (assetList.get(i).getRiskMeasure() * (assetList.get(i).getCalcValue()/totalValue));
 			}
 		}
-		return annualReturn;
-	}
 		
-//	public double totalFees() {
-//		
-//	}
+		return riskMeasure;
+	}
 }

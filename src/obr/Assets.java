@@ -1,37 +1,40 @@
 package obr;
 
 public abstract class Assets {
-
+	//private variables of class Assets
 	private String code;
 	private String type;
 	private String label;
 	
+	//constructor
 	Assets(String code, String type, String label) {
 		this.code = code;
 		this.type = type;
 		this.label = label;
 	}
 	
+	//method to return the code
 	public String getCode() {
 		return code;
 	}	
-	public void setCode(String code) {
-		this.code = code;
-	}	
+
+	//method to return the type
 	public String getType() {
 		return type;
 	}	
-	public void setType(String type) {
-		this.type = type;
-	}	
+
+	//method to return the label
 	public String getLabel() {
 		return label;
 	}
-	public void setLabel(String label) {
-		this.label = label;
-	}
-	
+
+	//abstract method to calculate the risk measure
 	public abstract double getRiskMeasure();
-	public abstract double getBRR();
-	public abstract double getValue();
+	
+	//abstract method to calculate the annual return
+	public abstract double getAnnualReturn();
+	
+	//abstract method to return the calculated value of an asset
+	public abstract double getCalcValue();
+
 }

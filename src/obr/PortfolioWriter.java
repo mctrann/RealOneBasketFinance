@@ -28,7 +28,7 @@ public class PortfolioWriter {
 
 
 		write.println("Porfolio Summary Report");
-		write.println("--------------------------------------------------------------------------------------------------------------------------------------");
+		write.println("---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------");
 		write.println(String.format("%-30s %-30s %-30s %-30s %-30s %-30s %-30s %-30s", "Portfolio", "Owner", "Manager", "Fees", "Comissions", "Weighted Risk", "Return", "Total"));
 		for(int i = 0; i < portInfo.size(); i++) {
 
@@ -66,7 +66,7 @@ public class PortfolioWriter {
 					df.format(localCommissions), df.format(portInfo.get(i).getRisk(portInfo.get(i).getAssetList())), df.format(localReturnValue), df.format(localTotalValue)));  //use obj.get to access info and print
 		}
 		
-		write.println(String.format("%-30s %-30s %-30s %-30s %-30s", "Totals", df.format(totalFees), df.format(totalCommissions), df.format(totalReturnValue), df.format(totalValue)));
+		write.println(String.format("%-30s %-30s %-30s %-30s %-30s %-30s %-30s %-30s", "Totals", "", "", "", "", df.format(totalFees), df.format(totalCommissions), df.format(totalReturnValue), df.format(totalValue)));
 		//writes the individual details of each portfolio
 		write.println();
 		write.println("Portfolio Details");
@@ -76,10 +76,10 @@ public class PortfolioWriter {
 			write.println("Owner: " + portInfo.get(z).getOwnerCode());//FIXME: GET OWNER NAME
 			write.println("Manager: " + portInfo.get(z).getManagerCode()); //FIXME: GET MANAGER NAME
 			write.println("Beneficiary: " + portInfo.get(z).getBeneficiaryCode()); //FIXME: get ben name
-			write.println(String.format("%-10s %-10s %-10s %-10s %-10s %-10s", "Code", "Asset", "Return Rate", "Risk", "Annual Return", "Value"));
+			write.println(String.format("%-25s %-25s %-25s %-25s %-25s %-25s", "Code", "Asset", "Return Rate", "Risk", "Annual Return", "Value"));
 			try {
 				for(int t = 0; t < portInfo.get(z).getAssetList().size(); t++) {
-					write.println(String.format("%-10s %-10s %-10s %-10s %-10s %-10s", portInfo.get(z).getAssetList().get(t).getCode(),
+					write.println(String.format("%-25s %-25s %-25s %-25s %-25s %-25s", portInfo.get(z).getAssetList().get(t).getCode(),
 							portInfo.get(z).getAssetList().get(t).getLabel(), "D", df.format(portInfo.get(z).getAssetList().get(t).getRiskMeasure()),
 							df.format(portInfo.get(z).getAssetList().get(t).getAnnualReturn()), portInfo.get(z).getAssetList().get(t).getCalcValue()));
 				}

@@ -20,7 +20,7 @@ public class Private_Investments extends Assets{
 	
 	//copy constructor
 	public Private_Investments(Private_Investments pi) {
-		this(pi.getCode(), pi.getType(), pi.getLabel(), pi.getQuartDiv(), pi.getBRR(), pi.getRiskMeasure(), pi.getValue());
+		this(pi.getCode(), pi.getType(), pi.getLabel(), pi.getQuartDiv(), pi.getBRR(), pi.getRiskMeasure(), pi.getPVValue());
 	}
 	
 	//method to return quarterly dividend
@@ -44,7 +44,7 @@ public class Private_Investments extends Assets{
 		return omegaBaseMeasure;
 	}
 	//method to return value of the private investment
-	public double getValue() {
+	public double getPVValue() {
 		return totalValue;
 	} 
 
@@ -62,15 +62,20 @@ public class Private_Investments extends Assets{
 	public double getCalcValue() {
 		double totalValue = 0;
 		
-		totalValue = getValue() * (getPercentageStake()/100);
+		totalValue = getPVValue() * (getPercentageStake()/100);
 		return totalValue;
 	}
 	
 	//method to calculate the annual return
 	public double getAnnualReturn() {
 		double value = 0.0;
-		
-		value = (getBRR() * getCalcValue()) + (4 * getQuartDiv());
+		value = ((getBRR() * getPVValue()) + (4 * getQuartDiv()))  * (getPercentageStake()/100);
+		return value;
+	}
+	
+	//method to calculate the return rate
+	public double getReturnRate(){
+		double value = (getAnnualReturn()/getCalcValue()) * 100;
 		return value;
 	}
 }

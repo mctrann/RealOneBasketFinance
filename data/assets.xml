@@ -4,168 +4,188 @@
     <type>S</type>
     <label>Apple</label>
     <quartDiv>3.82</quartDiv>
-    <baseRateOfReturn>8.3E-4</baseRateOfReturn>
+    <baseRateOfReturn>0.083</baseRateOfReturn>
     <betaMeasure>0.22</betaMeasure>
     <stockSymbol>AAPL</stockSymbol>
     <sharePrice>128.75</sharePrice>
+    <sharesOwned>0.0</sharesOwned>
   </stock>
   <stock>
     <code>BR8427AP</code>
     <type>S</type>
     <label>Cisco Systems Inc</label>
     <quartDiv>5.65</quartDiv>
-    <baseRateOfReturn>7.9E-4</baseRateOfReturn>
+    <baseRateOfReturn>0.079</baseRateOfReturn>
     <betaMeasure>0.31</betaMeasure>
     <stockSymbol>CSCO</stockSymbol>
     <sharePrice>31.18</sharePrice>
+    <sharesOwned>0.0</sharesOwned>
   </stock>
   <stock>
     <code>GH59T5U3</code>
     <type>S</type>
     <label>Intel Corp</label>
     <quartDiv>1.27</quartDiv>
-    <baseRateOfReturn>0.0015</baseRateOfReturn>
+    <baseRateOfReturn>0.015</baseRateOfReturn>
     <betaMeasure>1.23</betaMeasure>
     <stockSymbol>INTC</stockSymbol>
     <sharePrice>36.68</sharePrice>
+    <sharesOwned>0.0</sharesOwned>
   </stock>
   <stock>
     <code>TY50QW29</code>
     <type>S</type>
     <label>Micron Technology Inc</label>
     <quartDiv>7.5</quartDiv>
-    <baseRateOfReturn>0.0022</baseRateOfReturn>
-    <betaMeasure>-0.77</betaMeasure>
+    <baseRateOfReturn>0.22</baseRateOfReturn>
+    <betaMeasure>0.77</betaMeasure>
     <stockSymbol>MU</stockSymbol>
     <sharePrice>24.79</sharePrice>
+    <sharesOwned>0.0</sharesOwned>
   </stock>
   <deposit account>
     <code>O3I4JTVJ</code>
     <type>D</type>
     <label>CD</label>
     <apr>2.6</apr>
+    <balance>0.0</balance>
   </deposit account>
   <deposit account>
     <code>2LK45J5L</code>
     <type>D</type>
     <label>401K</label>
     <apr>5.0</apr>
+    <balance>0.0</balance>
   </deposit account>
   <deposit account>
     <code>U54USDLJ</code>
     <type>D</type>
     <label>RothIRA</label>
     <apr>8.0</apr>
+    <balance>0.0</balance>
   </deposit account>
   <private investment>
     <code>l2ASLDK5</code>
     <type>P</type>
     <label>Fells Wargo Building</label>
     <quartDiv>32.0</quartDiv>
-    <baseRateOfReturn>24.24</baseRateOfReturn>
-    <omegaMeasure>0.11</omegaMeasure>
+    <baseRateOfReturn>0.24239999999999998</baseRateOfReturn>
+    <omegaBaseMeasure>0.11</omegaBaseMeasure>
     <totalValue>1377522.93</totalValue>
+    <percentageStake>0.0</percentageStake>
   </private investment>
   <private investment>
     <code>2l34J3LE</code>
     <type>P</type>
     <label>Carlyle Offices</label>
     <quartDiv>16.87</quartDiv>
-    <baseRateOfReturn>32.12</baseRateOfReturn>
-    <omegaMeasure>0.37</omegaMeasure>
+    <baseRateOfReturn>0.3212</baseRateOfReturn>
+    <omegaBaseMeasure>0.37</omegaBaseMeasure>
     <totalValue>5955125.67</totalValue>
+    <percentageStake>0.0</percentageStake>
   </private investment>
   <private investment>
     <code>23LK4LK2</code>
     <type>P</type>
     <label>United West Corporation</label>
     <quartDiv>17.38</quartDiv>
-    <baseRateOfReturn>4.2</baseRateOfReturn>
-    <omegaMeasure>0.69</omegaMeasure>
+    <baseRateOfReturn>0.042</baseRateOfReturn>
+    <omegaBaseMeasure>0.69</omegaBaseMeasure>
     <totalValue>525600.32</totalValue>
+    <percentageStake>0.0</percentageStake>
   </private investment>
   <stock>
     <code>JFK12342</code>
     <type>S</type>
     <label>Spreetail</label>
     <quartDiv>5.4</quartDiv>
-    <baseRateOfReturn>0.0034200000000000003</baseRateOfReturn>
+    <baseRateOfReturn>0.342</baseRateOfReturn>
     <betaMeasure>0.33</betaMeasure>
     <stockSymbol>SPRTL</stockSymbol>
     <sharePrice>300.0</sharePrice>
+    <sharesOwned>0.0</sharesOwned>
   </stock>
   <private investment>
     <code>EIEIO12</code>
     <type>P</type>
     <label>Old McDonald Farm</label>
     <quartDiv>15.0</quartDiv>
-    <baseRateOfReturn>23.24</baseRateOfReturn>
-    <omegaMeasure>0.12</omegaMeasure>
+    <baseRateOfReturn>0.2324</baseRateOfReturn>
+    <omegaBaseMeasure>0.12</omegaBaseMeasure>
     <totalValue>100600.38</totalValue>
+    <percentageStake>0.0</percentageStake>
   </private investment>
   <deposit account>
     <code>JPII22</code>
     <type>D</type>
     <label>Gerber</label>
     <apr>2.16</apr>
+    <balance>0.0</balance>
   </deposit account>
   <deposit account>
     <code>NLU123</code>
     <type>D</type>
     <label>College Savings</label>
     <apr>3.5</apr>
+    <balance>0.0</balance>
   </deposit account>
   <private investment>
     <code>DC2EF13</code>
     <type>P</type>
     <label>Seattle Grace</label>
     <quartDiv>19.98</quartDiv>
-    <baseRateOfReturn>3.04</baseRateOfReturn>
-    <omegaMeasure>0.5</omegaMeasure>
+    <baseRateOfReturn>0.0304</baseRateOfReturn>
+    <omegaBaseMeasure>0.5</omegaBaseMeasure>
     <totalValue>421234.34</totalValue>
+    <percentageStake>0.0</percentageStake>
   </private investment>
   <deposit account>
     <code>F324JWJ</code>
     <type>D</type>
     <label>Life Savings</label>
     <apr>1.6</apr>
+    <balance>0.0</balance>
   </deposit account>
   <private investment>
     <code>JLKOP13</code>
     <type>P</type>
     <label>Doofenshmirtz Inc</label>
     <quartDiv>20.98</quartDiv>
-    <baseRateOfReturn>4.04</baseRateOfReturn>
-    <omegaMeasure>0.16</omegaMeasure>
+    <baseRateOfReturn>0.0404</baseRateOfReturn>
+    <omegaBaseMeasure>0.16</omegaBaseMeasure>
     <totalValue>421254.04</totalValue>
+    <percentageStake>0.0</percentageStake>
   </private investment>
   <private investment>
     <code>SPR342</code>
     <type>P</type>
     <label>Chum Bucket</label>
     <quartDiv>20.98</quartDiv>
-    <baseRateOfReturn>3.44</baseRateOfReturn>
-    <omegaMeasure>0.75</omegaMeasure>
+    <baseRateOfReturn>0.0344</baseRateOfReturn>
+    <omegaBaseMeasure>0.75</omegaBaseMeasure>
     <totalValue>250341.14</totalValue>
+    <percentageStake>0.0</percentageStake>
   </private investment>
   <stock>
     <code>CH1LL0</code>
     <type>S</type>
     <label>Netflix Inc</label>
     <quartDiv>2.34</quartDiv>
-    <baseRateOfReturn>9.8E-4</baseRateOfReturn>
+    <baseRateOfReturn>0.098</baseRateOfReturn>
     <betaMeasure>0.23</betaMeasure>
     <stockSymbol>NFLX</stockSymbol>
     <sharePrice>139.2</sharePrice>
+    <sharesOwned>0.0</sharesOwned>
   </stock>
   <stock>
     <code>4L23JRI</code>
     <type>S</type>
     <label>Facebook Inc</label>
     <quartDiv>1.5</quartDiv>
-    <baseRateOfReturn>4.6E-4</baseRateOfReturn>
+    <baseRateOfReturn>0.046</baseRateOfReturn>
     <betaMeasure>0.88</betaMeasure>
     <stockSymbol>FB</stockSymbol>
     <sharePrice>130.84</sharePrice>
+    <sharesOwned>0.0</sharesOwned>
   </stock>
 </assets>

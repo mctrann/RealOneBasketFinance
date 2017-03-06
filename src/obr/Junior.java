@@ -2,25 +2,24 @@ package obr;
 
 import java.util.List;
 
-
 public class Junior extends Persons {
-	
+
 	//creates private variables of class Junior
 	private String type;
 	private String secID;
-	
+
 	//constructor
 	public Junior(String personCode, String broker_position, String secID, String firstName, String lastName,Address address,List<String>email) {
 		super(personCode, firstName, lastName, address,email);
 		this.secID=secID;
 		this.type=broker_position;
 	}
-	
+
 	//method to return SEC ID
 	public String getSecID(){
 		return this.secID;
 	}
-	
+
 	//method to return type
 	public String getType(){
 		return this.type;
@@ -31,7 +30,7 @@ public class Junior extends Persons {
 		double commission = totalReturnValue * .02;
 		return commission;
 	}
-	
+
 	//method to calculate fees
 	public double getFees(List<Assets> arrayList) {
 		double fee = 0.0;

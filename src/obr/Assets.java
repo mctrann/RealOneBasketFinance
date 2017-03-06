@@ -27,7 +27,7 @@ public abstract class Assets {
 	public String getLabel() {
 		return label;
 	}
-
+	
 	//abstract method to calculate the risk measure
 	public abstract double getRiskMeasure();
 	
@@ -37,4 +37,6 @@ public abstract class Assets {
 	//abstract method to return the calculated value of an asset
 	public abstract double getCalcValue();
 
+	//abstract method to return the return rate of each asset
+	public abstract double getReturnRate();
 }

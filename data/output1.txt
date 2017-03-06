@@ -1,4 +1,5 @@
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 Porfolio Summary Report
 --------------------------------------------------------------------------------------------------------------------------------------
@@ -183,3 +184,5 @@ Beneficiary: none
 Code       Asset      Return Rate Risk       Annual Return Value     
 JPII22     Gerber     D          0.00       17075.64   1969.25   
 >>>>>>> jjfield3
+=======
+>>>>>>> TranM

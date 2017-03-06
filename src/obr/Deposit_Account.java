@@ -27,6 +27,7 @@ public class Deposit_Account extends Assets{
 		return 0;
 	}
 	
+<<<<<<< HEAD
 	//
 	public double getValue() {
 		return 0;
@@ -41,6 +42,12 @@ public class Deposit_Account extends Assets{
 	public void setBalance(double balance) {
 		this.balance = balance;
 >>>>>>> jjfield3
+=======
+
+	//method to set the balance, used to set portfolio.dat value of deposits
+	public void setBalance(double balance) {
+		this.balance = balance;
+>>>>>>> TranM
 	}
 	
 	//method to return the balance
@@ -56,7 +63,14 @@ public class Deposit_Account extends Assets{
 	//method to calculate the annual return
 	public double getAnnualReturn() {
 		double apy = 0.0;
-		apy = Math.pow(Math.E, getAPR()) - 1;
-		return (apy * getBalance()) + getBalance();
+		apy = Math.pow(Math.E, getAPR()/100) - 1;
+		return (apy * getBalance());
+	}
+	
+	//method to calculate the return rate
+	public double getReturnRate(){
+		double value = 0.0;
+		value = getAnnualReturn()/getCalcValue() * 100;
+		return value;
 	}
 }

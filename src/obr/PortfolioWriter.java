@@ -1,12 +1,11 @@
 package obr;
 
-import java.io.FileNotFoundException;
-import java.io.PrintWriter;
 import java.text.DecimalFormat;
-import java.util.ArrayList;
 import java.util.List;
 
+
 public class PortfolioWriter {
+<<<<<<< HEAD
 <<<<<<< HEAD
 	private double fees;
 	public void PortfolioWrite(List<Portfolios>portInfo, List<Persons> perInfo, List<Assets> assetInfo) {
@@ -75,14 +74,47 @@ public class PortfolioWriter {
 <<<<<<< HEAD
 			List<Double> annualReturn = new ArrayList<Double>();
 			double totalValue = 0;
+=======
+
+	//create private variables of class Portfolios
+	private static double totalFees = 0.0;
+	private static double totalCommissions = 0.0;
+	private static double totalReturnValue = 0.0;
+	private static double totalValue = 0.0; 
+
+	public static void PortfolioWrite(List<Portfolios>portInfo, List<Persons> perInfo) {
+		//formats decimals
+		DecimalFormat df = new DecimalFormat("0.00");
+		DecimalFormat dflong = new DecimalFormat("0.0000");
+		
+		//prints summary of portfolios
+		System.out.println("Porfolio Summary Report");
+		System.out.println("---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------");
+		System.out.println(String.format("%-12s %25s %24s %15s %15s %16s %15s %15s", "Portfolio", "Owner", "Manager", "Fees", "Comissions", "Weighted Risk", "Return", "Total"));
+		for(int i = 0; i < portInfo.size(); i++) {
+			double localTotalValue = portInfo.get(i).getTotalValue(portInfo.get(i).getAssetList());
+			totalValue = totalValue + localTotalValue;
+
+			double localReturnValue = portInfo.get(i).getTotalReturnValue(portInfo.get(i).getAssetList());
+			totalReturnValue = totalReturnValue + localReturnValue;
+>>>>>>> TranM
 			
-			//gets the type of the assets
+			double localFees = 0.0;
+			double localCommissions = 0.0;
 			
-			if(a < portInfo.size()) {
-				annualReturn.addAll(portInfo.get(a).getAnnualReturn(portInfo.get(a).getAssetList()));
-				a++;
+			//calculates total commissions and fees
+			for(int k = 0; k < perInfo.size(); k++	) {
+				 if(portInfo.get(i).getManagerCode().equals(perInfo.get(k).getPersonCode())) {
+					 
+				localFees = perInfo.get(k).getFees(portInfo.get(i).getAssetList());
+				totalFees = totalFees + localFees;
+				
+				localCommissions = perInfo.get(k).getCommissions(portInfo.get(i).getTotalReturnValue(portInfo.get(i).getAssetList()));
+				totalCommissions = totalCommissions + localCommissions;
+				}
 			}
 			
+<<<<<<< HEAD
 			
 			for(int q = 0; q < annualReturn.size(); q++) {
 				totalValue = totalValue + annualReturn.get(q);
@@ -98,30 +130,69 @@ public class PortfolioWriter {
 			write.println(String.format("%-30s %-30s %-30s %-30s %-30s %-30s %-30s %-30s", portInfo.get(i).getPortfolioCode(), ownerName, managerName, df.format(localFees), 
 					df.format(localCommissions), df.format(portInfo.get(i).getRisk(portInfo.get(i).getAssetList())), df.format(localReturnValue), df.format(localTotalValue)));  //use obj.get to access info and print
 >>>>>>> jjfield3
+=======
+			//prints each portfolio's calculations and persons involved
+			System.out.println(String.format("%-12s %25s %24s %15s %15s %16s %15s %15s", portInfo.get(i).getPortfolioCode(), portInfo.get(i).getName(portInfo.get(i).getOwnerCode(), perInfo), portInfo.get(i).getName(portInfo.get(i).getManagerCode(), perInfo), "$" +df.format(localFees), 
+					"$" + df.format(localCommissions), dflong.format(portInfo.get(i).getRisk(portInfo.get(i).getAssetList())), "$" + df.format(localReturnValue), "$" + df.format(localTotalValue))); 
+>>>>>>> TranM
 		}
+
 		
-		write.println(String.format("%-30s %-30s %-30s %-30s %-30s", "Totals", totalFees, totalCommissions, totalReturnValue, totalValue));
-		//writes the individual details of each portfolio
-		write.println();
-		write.println("Portfolio Details");
+		//prints total fees, commissions, return, and value of all portfolios
+		System.out.println("----------------------------------------------------------------------------------------------------------------------------------------------------");
+		System.out.println(String.format("%-12s %25s %24s %15s %15s %16s %15s %15s", "", "", "Totals", "$" + df.format(totalFees), "$" + df.format(totalCommissions), "", "$" + df.format(totalReturnValue), df.format(totalValue)));
+		
+		//System.outs the individual details of each portfolio
+		System.out.println();
+		System.out.println("Portfolio Details");
+		System.out.println("--------------------------------------------------------------------------------------------------------------------------------------");
+		//outputs portfolio code, manger, owner, and beneficiary's name
 		for (int z = 0; z < portInfo.size(); z++) {
+<<<<<<< HEAD
 			write.println("--------------------------------------------------------------------------------------------------------------------------------------");
 			write.println("Portfolio: " + portInfo.get(z).getPortfolioCode());
 			write.println("Owner: " + portInfo.get(z).getOwnerCode());
 			write.println("Manager: " + portInfo.get(z).getManagerCode());
 			write.println("Beneficiary: " + portInfo.get(z).getBeneficiaryCode());
 			write.println(String.format("%-10s %-10s %-10s %-10s %-10s %-10s", "Code", "Asset", "Return Rate", "Risk", "Annual Return", "Value"));
+=======
+			System.out.println("Portfolio: " + portInfo.get(z).getPortfolioCode());
+			
+			System.out.println("Owner: " + portInfo.get(z).getName(portInfo.get(z).getOwnerCode(), perInfo));
+			System.out.println("Manager: " + portInfo.get(z).getName(portInfo.get(z).getManagerCode(), perInfo));
+	
+			for(int j = 0; j < perInfo.size(); j++) {
+				if(portInfo.get(z).getBeneficiaryCode().equals(perInfo.get(j).getPersonCode()))  {
+					System.out.println("Beneficiary: " + perInfo.get(j).getLastName() + ", " + perInfo.get(j).getFirstName());
+					break;
+				}
+				else if(portInfo.get(z).getBeneficiaryCode().equals("none")) {
+					System.out.println("Beneficiary: " + portInfo.get(z).getBeneficiaryCode());
+					break;
+				}
+			}
+			//prints calculations for each asset in each portfolio
+			System.out.println(String.format("%-15s %-24s %-15s %-15s %-15s %-15s", "Code", "Asset", "Return Rate", "Risk", "Annual Return", "Value"));
+>>>>>>> TranM
 			try {
 				for(int t = 0; t < portInfo.get(z).getAssetList().size(); t++) {
-					write.println(String.format("%-10s %-10s %-10s %-10s %-10s %-10s", portInfo.get(z).getAssetList().get(t).getCode(),
-							portInfo.get(z).getAssetList().get(t).getLabel(), "D", df.format(portInfo.get(z).getAssetList().get(t).getRiskMeasure()),
-							df.format(portInfo.get(z).getAssetList().get(t).getAnnualReturn()), portInfo.get(z).getAssetList().get(t).getCalcValue()));
+					System.out.println(String.format("%-15s %-24s %-15s %-15s %-15s %-15s", portInfo.get(z).getAssetList().get(t).getCode(),
+							portInfo.get(z).getAssetList().get(t).getLabel(), df.format(portInfo.get(z).getAssetList().get(t).getReturnRate()) + "%", df.format(portInfo.get(z).getAssetList().get(t).getRiskMeasure()),
+							"$" + df.format(portInfo.get(z).getAssetList().get(t).getAnnualReturn()), "$" + df.format(portInfo.get(z).getAssetList().get(t).getCalcValue())));
 				}
 			}
 			catch (NullPointerException e) {
-				write.print("");
+				System.out.print("");
 			}
+			//prints the totals of a particular portfolio
+			System.out.println("----------------------------------------------------------------------------------------------------------------------------------------------------");
+			System.out.println(String.format("%-15s %-24s %-15s %-15s %-15s %-15s", "","","Totals", dflong.format(portInfo.get(z).getRisk(portInfo.get(z).getAssetList())), "$" + df.format(portInfo.get(z).getTotalReturnValue(portInfo.get(z).getAssetList())), "$" + df.format(portInfo.get(z).getTotalValue(portInfo.get(z).getAssetList()))));
 		}
-		write.close();
+	}
+	
+	public static void main(String args[]){	
+		Data_Converter dc = new Data_Converter(); 
+		dc.dataParser();
+		PortfolioWrite(dc.getPortInfo(), dc.getPerInfo());
 	}
 }

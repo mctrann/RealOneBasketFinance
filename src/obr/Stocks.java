@@ -71,7 +71,14 @@ public class Stocks extends Assets{
 	//method to calculate the annual return 
 	public double getAnnualReturn() {
 		double value = 0.0;
-		value = (getBRR() * getCalcValue()) + (4 * getQuartDiv());
+		value = (getBRR() * getCalcValue()) + (4 * getQuartDiv() * getSharesOwned());
+		return value;
+	}
+	
+	//method to calculate the return rate
+	public double getReturnRate(){
+		double value = 0.0;
+		value = (getAnnualReturn()/getCalcValue()) * 100;
 		return value;
 	}
 }

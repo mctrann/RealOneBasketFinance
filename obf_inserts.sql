@@ -4,6 +4,12 @@ insert into Portfolio (portCode,totalFee,commissions,weightedRisk,totalReturnVal
 insert into Portfolio (portCode,totalFee,commissions,weightedRisk,totalReturnVal,totalPortVal) value  
 ('PA100',100.00,1.27,0.5755,63.73,425.12);
 
+insert into Portfolio (portCode,totalFee,commissions,weightedRisk,totalReturnVal,totalPortVal) value
+('P34AS',234,345,234,345,2345); 
+
+insert into Portfolio (portCode,totalFee,commissions,weightedRisk,totalReturnVal,totalPortVal) value 
+('PF343',2234,35,234,63,2342);
+
 insert into Person (personCode,lastName,firstName,secID,personType) value 
 ('57IPQ9','Neal','Maryjane',null,null);
 
@@ -51,17 +57,17 @@ insert into EmailAddress (emailAddress,personID) value ('lol@yahoo.com',4);
 
 insert into EmailAddress (emailAddress,personID) value ('jField3@email.com',5);
 
-insert into Asset (assetCode,assetName,apr,quartDiv,BRR,beta,omega,stockSymbol,totalValue,sharePrice) value
-('CMRO1592','Apple',null,3.82,0.083,0.0022,null,'AAPL',null,128.75);
-insert into Asset (assetCode,assetName,apr,quartDiv,BRR,beta,omega,stockSymbol,totalValue,sharePrice) value
-('O3I4JTVJ','CD',0.0260,null,null,null,null,null,null,null);
-insert into Asset (assetCode,assetName,apr,quartDiv,BRR,beta,omega,stockSymbol,totalValue,sharePrice) value
-('EIEIO12','Old McDonald Farm',null,15.00,0.2324,null,0.0012,null,100600.38,null);
+insert into Asset (assetCode,assetName,assetType,apr,quartDiv,BRR,beta,omega,stockSymbol,totalValue,sharePrice) value
+('CMRO1592','Apple','S',null,3.82,0.083,0.0022,null,'AAPL',null,128.75);
+insert into Asset (assetCode,assetName,assetType,apr,quartDiv,BRR,beta,omega,stockSymbol,totalValue,sharePrice) value
+('O3I4JTVJ','CD','D',0.0260,null,null,null,null,null,null,null);
+insert into Asset (assetCode,assetName,assetType,apr,quartDiv,BRR,beta,omega,stockSymbol,totalValue,sharePrice) value
+('EIEIO12','Old McDonald Farm','P',null,15.00,0.2324,null,0.0012,null,100600.38,null);
 
-insert into Asset (assetCode,assetName,apr,quartDiv,BRR,beta,omega,stockSymbol,totalValue,sharePrice) value
-('GH59T5U3','Intel Corp',null,1.27,0.015,0.0123,null,'INTC',null,36.68);
-insert into Asset (assetCode,assetName,apr,quartDiv,BRR,beta,omega,stockSymbol,totalValue,sharePrice) value
-('CH1LL0','Netflix Inc',null,2.34,0.098,0.0023,null,'NFLX',null,139.20);
+insert into Asset (assetCode,assetName,assetType,apr,quartDiv,BRR,beta,omega,stockSymbol,totalValue,sharePrice) value
+('GH59T5U3','Intel Corp','S',null,1.27,0.015,0.0123,null,'INTC',null,36.68);
+insert into Asset (assetCode,assetName,assetType,apr,quartDiv,BRR,beta,omega,stockSymbol,totalValue,sharePrice) value
+('CH1LL0','Netflix Inc','S',null,2.34,0.098,0.0023,null,'NFLX',null,139.20);
 
 insert into PortAsset (assetID,portfolioID,portAssetVal) value (1,1,20);
 insert into PortAsset (assetID,portfolioID,portAssetVal) value (2,1,3000.25);
@@ -70,18 +76,30 @@ insert into PortAsset (assetID,portfolioID,portAssetVal) value (3,1,0.50);
 insert into PortAsset (assetID,portfolioID,portAssetVal) value (4,2,4);
 insert into PortAsset (assetID,portfolioID,portAssetVal) value (5,2,2);
 
-insert into PortPerson (personID,portfolioID) value (1,1);
-insert into PortPerson (personID,portfolioID) value (2,1);
-insert into PortPerson (personID,portfolioID) value (3,1);
+insert into PortAsset (assetID,portfolioID,portAssetVal) value (1,3,20);
+insert into PortAsset (assetID,portfolioID,portAssetVal) value (2,3,3000.25);
+insert into PortAsset (assetID,portfolioID,portAssetVal) value (3,3,0.50);
+insert into PortAsset (assetID,portfolioID,portAssetVal) value (5,3,2);
 
-insert into PortPerson (personID,portfolioID) value (4,2);
-insert into PortPerson (personID,portfolioID) value (5,2);
-insert into PortPerson (personID,portfolioID) value (6,2);
-
-
+insert into PortAsset (assetID,portfolioID,portAssetVal) value (4,4,4);
+insert into PortAsset (assetID,portfolioID,portAssetVal) value (5,4,2);
 
 
+insert into Owner (personID,portfolioID) value (1,1);
+insert into Manager (personID,portfolioID) value (2,1);
+insert into Beneficiary (personID,portfolioID) value (3,1);
 
+insert into Owner (personID,portfolioID) value (4,2);
+insert into Manager (personID,portfolioID) value (5,2);
+insert into Beneficiary (personID,portfolioID) value (6,2);
+
+insert into Owner (personID,portfolioID) value (1,3);
+insert into Manager (personID,portfolioID) value (2,3);
+insert into Beneficiary (personID,portfolioID) value (3,3);
+
+insert into Owner (personID,portfolioID) value (4,4);
+insert into Manager (personID,portfolioID) value (5,4);
+insert into Beneficiary (personID,portfolioID) value (6,4);
 
 
 

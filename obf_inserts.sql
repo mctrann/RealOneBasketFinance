@@ -28,23 +28,31 @@ insert into Person (personCode,lastName,firstName,secID,personType) value
 insert into Person (personCode,lastName,firstName,secID,personType) value
 ('01WR93','Braswell','Verna','sec897','E');
 
-insert into Address (personID,street,city,state,country,zipcode) value
-(1,'709 Diamond Cove','Providence','RI',null,null);
+insert into Countries (countryName) value ('United States');
+insert into States (stateName, countryID) value ('RI',1);
+insert into States (stateName, countryID) value ('NE',1);
+insert into States (stateName, countryID) value ('IL',1);
+insert into States (stateName, countryID) value ('FL',1);
+insert into States (stateName, countryID) value ('LA',1);
+insert into States (stateName, countryID) value ('CT',1);
 
-insert into Address (personID,street,city,state,country,zipcode) value
-(2,'1040 Van Dorn St','Lincoln','NE','United States','68512');
+insert into Address (personID,street,city,stateID,zipcode) value
+(1,'709 Diamond Cove', 'Providence' ,1,null);
 
-insert into Address (personID,street,city,state,country,zipcode) value
-(3,'3635 Simpson St','Green Rock','IL','United States','61244');
+insert into Address (personID,street,city,stateID, zipcode) value
+(2,'1040 Van Dorn St','Lincoln',2,'68512');
 
-insert into Address (personID,street,city,state,country,zipcode) value
-(4,'4095 Marion Drive','Tampa','FL','United States','33607');
+insert into Address (personID,street,city,stateID,zipcode) value
+(3,'3635 Simpson St','Green Rock',3,'61244');
 
-insert into Address (personID,street,city,state,country,zipcode) value
-(5,'3420 Grand Ave', 'Baton Rouge', 'LA', 'United States', '70810');
+insert into Address (personID,street,city,stateID,zipcode) value
+(4,'4095 Marion Drive','Tampa',4,'33607');
 
-insert into Address (personID,street,city,state,country,zipcode) value
-(6,'2554 Whitman Court','Wallinford','CT','United States','06492');
+insert into Address (personID,street,city,stateID,zipcode) value
+(5,'3420 Grand Ave', 'Baton Rouge', 5, '70810');
+
+insert into Address (personID,street,city,stateID,zipcode) value
+(6,'2554 Whitman Court','Wallinford',6,'06492');
 
 insert into EmailAddress (emailAddress,personID) value ('MJ_Oneal@yahoo.com',1);
 insert into EmailAddress (emailAddress,personID) value ('mj@yahoo.com',1);
@@ -84,24 +92,10 @@ insert into PortAsset (assetID,portfolioID,portAssetVal) value (5,3,2);
 insert into PortAsset (assetID,portfolioID,portAssetVal) value (4,4,4);
 insert into PortAsset (assetID,portfolioID,portAssetVal) value (5,4,2);
 
-
-insert into Owner (personID,portfolioID) value (1,1);
-insert into Manager (personID,portfolioID) value (2,1);
-insert into Beneficiary (personID,portfolioID) value (3,1);
-
-insert into Owner (personID,portfolioID) value (4,2);
-insert into Manager (personID,portfolioID) value (5,2);
-insert into Beneficiary (personID,portfolioID) value (6,2);
-
-insert into Owner (personID,portfolioID) value (1,3);
-insert into Manager (personID,portfolioID) value (2,3);
-insert into Beneficiary (personID,portfolioID) value (3,3);
-
-insert into Owner (personID,portfolioID) value (4,4);
-insert into Manager (personID,portfolioID) value (5,4);
-insert into Beneficiary (personID,portfolioID) value (6,4);
-
-
+insert into PortPerson(portfolioID, managerID, ownerID, beneficiaryID) value (1, 2,1,3);
+insert into PortPerson(portfolioID, managerID, ownerID, beneficiaryID) value (2,5,4,6);
+insert into PortPerson(portfolioID, managerID, ownerID, beneficiaryID) value (3,2,1,3);
+insert into PortPerson(portfolioID, managerID, ownerID, beneficiaryID) value (4,5,4,6);
 
 
 

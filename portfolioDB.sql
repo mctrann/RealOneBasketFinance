@@ -1,8 +1,6 @@
 #version 1.0 of DataTables 
 drop table if exists EmailAddress;
 drop table if exists Address;
-drop table if exists States;
-drop table if exists Countries;
 drop table if exists PortPerson;
 drop table if exists Person;
 drop table if exists PortAsset;
@@ -34,28 +32,16 @@ constraint uniqueValues unique (assetCode,assetName,stockSymbol),
 totalValue double,
 sharePrice double
 )engine=InnoDB,collate=latin1_general_cs; 
-
-create table Countries (
-countryID integer not null primary key auto_increment unique,
-countryName varchar(200) not null
-)engine=InnoDB,collate=latin1_general_cs; 
-
- create table States (
-stateID integer not null primary key auto_increment unique,
-countryID integer not null,
-stateName varchar(200),
-foreign key (countryID) references Countries(countryID)
-)engine=InnoDB,collate=latin1_general_cs; 
-
+ 
 create table Address ( 
 addressID integer not null primary key auto_increment unique, 
 personID Integer not null, 
 street varchar(255),
 city varchar(100) , 
-stateID integer not null, 
+state varchar(100), 
+country varchar(100), 
 zipcode int, 
-foreign key (personID) references Person(personID),
-foreign key (stateID) references States(stateID)
+foreign key (personID) references Person(personID) 
 )engine=InnoDB,collate=latin1_general_cs; 
 
 create table Portfolio ( 

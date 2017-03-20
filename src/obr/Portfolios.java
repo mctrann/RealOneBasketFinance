@@ -20,14 +20,6 @@ public class Portfolios {
 		this.managerCode = managerCode;
 		this.beneficiaryCode = beneficiaryCode;
 		this.assetList = assetList;
-<<<<<<< HEAD
-<<<<<<< HEAD
-		this.perInfo = perInfo;
-		this.assetInfo = assetInfo;
-=======
->>>>>>> jjfield3
-=======
->>>>>>> TranM
 	}
 
 	//method for returning the portfolio code
@@ -54,13 +46,8 @@ public class Portfolios {
 	public List<Assets> getAssetList() {
 		return assetList;
 	}
-<<<<<<< HEAD
-	
-	//method to calculate to get total annual return value
-=======
 
 	//method to calculate to get total annual return value 
->>>>>>> TranM
 	public double getTotalReturnValue(List<Assets> assetList) {
 		double totalReturnValue = 0.0;
 
@@ -89,71 +76,23 @@ public class Portfolios {
 
 		return totalValue;
 	}
-	
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
->>>>>>> TranM
-//	public double getCommisions() {
-//		for()
-//	}
-//
-//	
-//	public double getReturn() {
-//		
-//	}
-//	
-	public List<Double> getAnnualReturn(HashMap<String, Double> assetList) {
 
-<<<<<<< HEAD
-		List<Double> annualReturn = new ArrayList<Double>();
-		for(Map.Entry<String, Double> key : assetList.entrySet()) {
-			for(int i = 0; i < assetInfo.size(); i++) {
-				if(key.getKey().equals(assetInfo.get(i).getCode())) {
-					if(assetInfo.get(i).getType().equals("S")) {
-						annualReturn.add(assetInfo.get(i).getBRR() * (assetInfo.get(i).getValue() * key.getValue()));
-						break;
-					}
-					else if(assetInfo.get(i).getType().equals("D")) {
-						annualReturn.add(assetInfo.get(i).getBRR() * (key.getValue()));
-						break;
-					}
-					else{
-						annualReturn.add(assetInfo.get(i).getBRR() * (assetInfo.get(i).getValue() * key.getValue()));
-						break;
-					}
-					
-				}
-=======
-	//method to calculate risk
-	public double getRisk(List<Assets> assetList) {
-		double totalValue = 0.0;
-=======
 	//method to calculate total risk of portfolio
 	public double getRisk(List<Assets> assetList) {
 		double totalValue = 0.0;
 		
 		//calculate totalValue of all assets in one portfolio
->>>>>>> TranM
 		for(int i = 0; i < assetList.size(); i++) {
 			if(assetList.get(i) == (null)) {
 				totalValue = 0.0;
 			}
 			else {
 				totalValue = totalValue + assetList.get(i).getCalcValue();
-<<<<<<< HEAD
->>>>>>> jjfield3
-			}
-			
-		}
-		
-=======
 			}
 
 		}
 
 		//calculates aggregate risk measure with total value calculated above
->>>>>>> TranM
 		double riskMeasure = 0.0;
 		for(int i = 0; i < assetList.size(); i++) {
 			if(totalValue == 0) {

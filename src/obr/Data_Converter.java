@@ -5,9 +5,12 @@ import java.io.BufferedReader;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
-
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.PreparedStatement;
+import java.sql.SQLException;
+import java.sql.Types;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
 
 
@@ -134,44 +137,8 @@ public class Data_Converter {
 			while((line2 = reader2.readLine()) != null) {
 				if (counter2 > startLine2) {
 					String assets_arr[] = line2.split(";");
-<<<<<<< HEAD
-					String code = assets_arr[0];
-					String type = assets_arr[1];
-					String label;
-					double quartDiv;
-					double BRR;
-					double omegaMeasure;
-					double totalValue;
-					double betaMeasure;
-					String stockSymbol;
-					double sharePrice;
-					double apr;										
-
-					//adds assets to appropriate accounts
-
-					if (type.equals("S")){
-						Stocks b;
-						label = assets_arr[2];
-						quartDiv = Double.parseDouble(assets_arr[3]);
-						double tempBRR = Double.parseDouble(assets_arr[4]);
-						BRR=tempBRR;
-						betaMeasure = Double.parseDouble(assets_arr[5]);
-						stockSymbol = assets_arr[6];
-						sharePrice = Double.parseDouble(assets_arr[7]);
-						assetInfo.add(b = new Stocks(code, type, label,quartDiv,BRR,betaMeasure,stockSymbol,sharePrice));
-					}
-					else if (type.equals("P")){
-						Private_Investments b;
-						label = assets_arr[2];
-						quartDiv = Double.parseDouble(assets_arr[3]);
-						BRR = Double.parseDouble(assets_arr[4]);
-						omegaMeasure = Double.parseDouble(assets_arr[5]);
-						totalValue = Double.parseDouble(assets_arr[6]);
-						assetInfo.add(b = new Private_Investments(code, type, label,quartDiv,BRR,omegaMeasure,totalValue));
-=======
 					if(assets_arr.length <= 1) {
 
->>>>>>> TranM
 					}
 					else {
 						String code = assets_arr[0];
@@ -237,7 +204,8 @@ public class Data_Converter {
 		int startLine3 = 1;
 		int counter3 = startLine3;
 
-		//parses through Portfolio.dat
+		//parses through Portfolio.dat 
+		//stores codes in appropriate variables
 		try {
 			while((line3 = reader3.readLine()) != null) {
 				if (counter3 > startLine3) {
@@ -257,30 +225,6 @@ public class Data_Converter {
 							benCode = "none";
 						}
 
-<<<<<<< HEAD
-					//Splits the asset list
-					List<Assets> assetNewInfo = new ArrayList<Assets>();
-					try {
-						String assetList[] = portArr[4].split(",");
-						for(int i = 0; i < assetList.length; i++) {
-							for(int j = 0; j < assetInfo.size(); j++) {
-								String tempAsset[] = assetList[i].split(":");
-								if(tempAsset[0].equals(assetInfo.get(j).getCode())) {
-									if(assetInfo.get(j).getType().equals("S")) {
-										Stocks newStock = new Stocks((Stocks) assetInfo.get(j));
-										newStock.setSharesOwned(Double.parseDouble(tempAsset[1]));
-										assetNewInfo.add(newStock);
-									}
-									else if(assetInfo.get(j).getType().equals("D")) {
-										Deposit_Account newDP = new Deposit_Account((Deposit_Account) assetInfo.get(j));
-										newDP.setBalance(Double.parseDouble(tempAsset[1]));
-										assetNewInfo.add(newDP);
-									}
-									else{
-										Private_Investments newPI = new Private_Investments((Private_Investments) assetInfo.get(j));
-										newPI.setPercentageStake(Double.parseDouble(tempAsset[1]));
-										assetNewInfo.add(newPI);
-=======
 
 						List<Assets> assetNewInfo = new ArrayList<Assets>();
 						try {
@@ -318,7 +262,6 @@ public class Data_Converter {
 											newPI.setPercentageStake(Double.parseDouble(tempAsset[1]));
 											assetNewInfo.add(newPI);
 										}
->>>>>>> TranM
 									}
 								}
 							}
@@ -343,9 +286,9 @@ public class Data_Converter {
 		}
 		catch (IOException e){
 			e.printStackTrace();
-		}
+		}	
 	}
-
+    
 	public List<Assets> getAssetInfo() {
 		return assetInfo;
 	}
@@ -361,27 +304,13 @@ public class Data_Converter {
 	//runs program
 	public static void main(String args[]){	
 		dataParser();
-		JSONWriter thing = new JSONWriter();
-		thing.JSONConverterP(perInfo);
-		XMLWriter thing2= new XMLWriter();
-		thing2.xmlPersonConverter(perInfo);
-		thing.JSONconverterA(assetInfo);
-<<<<<<< HEAD
-		thing2.xmlAssetConverter(assetInfo);
-		PortfolioWriter thing3 = new PortfolioWriter();
-<<<<<<< HEAD
-		thing3.PortfolioWrite(portInfo, perInfo, assetInfo);	
-		}
-		
-=======
-		thing3.PortfolioWrite(portInfo, perInfo);	
+//		JSONWriter thing = new JSONWriter();
+//		thing.JSONConverterP(perInfo);
+//		XMLWriter thing2= new XMLWriter();
+//		thing2.xmlPersonConverter(perInfo);
+//		thing.JSONconverterA(assetInfo);
+//		thing2.xmlAssetConverter(assetInfo);	
 	}
-
->>>>>>> jjfield3
-=======
-		thing2.xmlAssetConverter(assetInfo);	
-	}
->>>>>>> TranM
 }
 
 

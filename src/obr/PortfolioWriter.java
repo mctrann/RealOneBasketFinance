@@ -94,9 +94,7 @@ public class PortfolioWriter {
 	
 	public static void main(String args[]){	
 		Data_Converter dc = new Data_Converter();
-		DataTrans dt = new DataTrans();
 		dc.dataParser();
-		dt.dataTransfer();
 		PortfolioWrite(dc.getPortInfo(), dc.getPerInfo());
 	}
 }

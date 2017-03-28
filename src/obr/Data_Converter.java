@@ -13,17 +13,38 @@ import java.sql.Types;
 import java.util.ArrayList;
 import java.util.List;
 
-
 public class Data_Converter {
 
-	//creates list of objects
-	private static List<Persons> perInfo= new ArrayList<Persons>(); 
-	private static List <Assets> assetInfo= new ArrayList<Assets>();
-	private static List<Portfolios> portInfo = new ArrayList<Portfolios>();
-
-	//parse persons and assets files
+	//parse persons and assets files and connects to the database
 	public static void dataParser(){
+		
+		//Connects to the database
+		try {
+			Class.forName("com.mysql.jdbc.Driver").newInstance();
+		} catch (InstantiationException e) {
+			System.out.println("InstantiationException: ");
+			e.printStackTrace();
+			throw new RuntimeException(e);
+		} catch (IllegalAccessException e) {
+			System.out.println("IllegalAccessException: ");
+			e.printStackTrace();
+			throw new RuntimeException(e);
+		} catch (ClassNotFoundException e) {
+			System.out.println("ClassNotFoundException: ");
+			e.printStackTrace();
+			throw new RuntimeException(e);
+		}
 
+		Connection conn = null;
+
+		try {
+			conn = DriverManager.getConnection(DatabaseInfo.url, DatabaseInfo.username, DatabaseInfo.password);
+		} catch (SQLException e) {
+			System.out.println("SQLException: ");
+			e.printStackTrace();
+			throw new RuntimeException(e);
+		}
+		
 		//reads file
 		BufferedReader reader = null;
 		try {
@@ -32,7 +53,10 @@ public class Data_Converter {
 		catch(FileNotFoundException e) {
 			System.out.println("File not found");
 		}
-
+		
+		//Creates a PorfolioData object
+		PortfolioData pd = new PortfolioData();
+		
 		//skips first line that is an integer
 		String line1 = null;
 		int startLine = 1;
@@ -47,18 +71,18 @@ public class Data_Converter {
 
 					}
 					else {
-						String code = persons_arr[0];
+						String personCode = persons_arr[0];
 						String broker_data[];
-						String brokerPosition;
+						String brokerType;
 						String secID;
 						if (persons_arr[1].contains(",")){
 							broker_data = persons_arr[1].split(",");
-							brokerPosition = broker_data[0];
+							brokerType = broker_data[0];
 							secID = broker_data[1];
 						}
 						else{
-							brokerPosition="";
-							secID="";
+							brokerType= null;
+							secID= null;
 						}
 						//parsing in persons info
 						String name[] = persons_arr[2].split(",");
@@ -86,22 +110,24 @@ public class Data_Converter {
 							}
 						}
 						else{
-							email.add("");
+							email.add(null);
 						}
 
 						//puts new parsed info into appropriate persons object
-						if (brokerPosition.equals("J")){
-							Junior j;
-							perInfo.add(j = new Junior(code,brokerPosition,secID,firstName,lastName, address,email));
-						}
-						else if (brokerPosition.equals("E")){
-							Expert e;
-							perInfo.add(e = new Expert(code, brokerPosition, secID,firstName,lastName,address,email));
-						}
-						else if (brokerPosition.equals("")){
-							Customer c;
-							perInfo.add(c = new Customer(code,   firstName,  lastName, address, email));
-						} 
+//						if (brokerPosition.equals("J")){
+//							Junior j;
+//							perInfo.add(j = new Junior(code,brokerPosition,secID,firstName,lastName, address,email));
+//						}
+//						else if (brokerPosition.equals("E")){
+//							Expert e;
+//							perInfo.add(e = new Expert(code, brokerPosition, secID,firstName,lastName,address,email));
+//						}
+//						else if (brokerPosition.equals("")){
+//							Customer c;
+//							perInfo.add(c = new Customer(code,   firstName,  lastName, address, email));
+//						}
+						pd.addPerson(personCode, firstName, lastName, street, city, state, zipCode, country, brokerType, secID);
+						pd.addEmail(personCode, email);
 					}
 				}
 				counter++;
@@ -141,10 +167,10 @@ public class Data_Converter {
 
 					}
 					else {
-						String code = assets_arr[0];
+						String assetCode = assets_arr[0];
 						String type = assets_arr[1];
 						String label;
-						double quartDiv;
+						double quarterlyDividend;
 						double BRR;
 						double omegaMeasure;
 						double totalValue;
@@ -158,29 +184,29 @@ public class Data_Converter {
 						if (type.equals("S")){
 							Stocks b;
 							label = assets_arr[2];
-							quartDiv = Double.parseDouble(assets_arr[3]);
+							quarterlyDividend = Double.parseDouble(assets_arr[3]);
 							double tempBRR = Double.parseDouble(assets_arr[4]);
 							BRR=(tempBRR)/100;
 							betaMeasure = Double.parseDouble(assets_arr[5]);
 							stockSymbol = assets_arr[6];
 							sharePrice = Double.parseDouble(assets_arr[7]);
-							assetInfo.add(b = new Stocks(code, type, label,quartDiv,BRR,betaMeasure,stockSymbol,sharePrice));
+							pd.addStock(assetCode, label, quarterlyDividend, BRR, betaMeasure, stockSymbol, sharePrice);
 						}
 						else if (type.equals("P")){
 							Private_Investments b;
 							label = assets_arr[2];
-							quartDiv = Double.parseDouble(assets_arr[3]);
+							quarterlyDividend = Double.parseDouble(assets_arr[3]);
 							double tempBRR = Double.parseDouble(assets_arr[4]);
 							BRR=(tempBRR)/100;
 							omegaMeasure = Double.parseDouble(assets_arr[5]);
 							totalValue = Double.parseDouble(assets_arr[6]);
-							assetInfo.add(b = new Private_Investments(code, type, label,quartDiv,BRR,omegaMeasure,totalValue));
+							pd.addPrivateInvestment(assetCode, label, quarterlyDividend, BRR, omegaMeasure, totalValue);
 						}
 						else if (type.equals("D")){
 							Deposit_Account b;
 							label = assets_arr[2];
 							apr = Double.parseDouble(assets_arr[3]);
-							assetInfo.add(b = new Deposit_Account(code, type, label,apr));
+							pd.addDepositAccount(assetCode, label, apr);
 						}
 					}
 				}
@@ -222,57 +248,22 @@ public class Data_Converter {
 							benCode = portArr[3];
 						}
 						else {
-							benCode = "none";
+							benCode = null;
 						}
 
-
-						List<Assets> assetNewInfo = new ArrayList<Assets>();
-						try {
+				
 							//Splits the asset list
 							String assetList[] = portArr[4].split(",");
 							//parses through assetList
 							for(int i = 0; i < assetList.length; i++) {
-								for(int j = 0; j < assetInfo.size(); j++) {
 									//splits each asset at its type and value
 									String tempAsset[] = assetList[i].split(":");
-									//finds code from assetInfo list that equals code from assetList
-									if(tempAsset[0].equals(assetInfo.get(j).getCode())) {
-										//if asset type is Stock
-										if(assetInfo.get(j).getType().equals("S")) {
-											//creates new stock object with info from assetInfo + info from portfolio
-											Stocks newStock = new Stocks((Stocks) assetInfo.get(j));
-											//stores amount of shares owned itno sharesOwn variable
-											newStock.setSharesOwned(Double.parseDouble(tempAsset[1]));
-											//adds newStock into list of assetNewInfo
-											assetNewInfo.add(newStock);
-										}
-										//if asset type is Deposit
-										else if(assetInfo.get(j).getType().equals("D")) {
-											//creates new deposit object with info from assetInfo + info from portfolio
-											Deposit_Account newDP = new Deposit_Account((Deposit_Account) assetInfo.get(j));
-											//parses balance in portfolio into balance of deposit
-											newDP.setBalance(Double.parseDouble(tempAsset[1]));
-											//adds deposit account to list of assetNewInfo
-											assetNewInfo.add(newDP);
-										}
-										//if asset type is private investment
-										else{
-											//creates new private investment object with info from assetInfo + info from portfolio
-											Private_Investments newPI = new Private_Investments((Private_Investments) assetInfo.get(j));
-											newPI.setPercentageStake(Double.parseDouble(tempAsset[1]));
-											assetNewInfo.add(newPI);
-										}
-									}
-								}
+									double value = Double.parseDouble(tempAsset[1]);
+									pd.addAsset(portCode, tempAsset[0], value);
 							}
-						}
-						catch (ArrayIndexOutOfBoundsException e) {
-							assetNewInfo.add(null);
-						}
-
+						
 						//Adds the information to a list of Portfolios
-						Portfolios port;
-						portInfo.add(port = new Portfolios(portCode, ownerCode, managerCode, benCode, assetNewInfo ));
+							pd.addPortfolio(portCode, ownerCode, managerCode, benCode);
 					}
 				}
 				counter3++;
@@ -288,18 +279,7 @@ public class Data_Converter {
 			e.printStackTrace();
 		}	
 	}
-    
-	public List<Assets> getAssetInfo() {
-		return assetInfo;
-	}
-	
-	public List<Persons> getPerInfo() {
-		return perInfo;
-	}
-	
-	public List<Portfolios> getPortInfo() {
-		return portInfo;
-	}
+
 	
 	//runs program
 	public static void main(String args[]){	

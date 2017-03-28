@@ -7,6 +7,7 @@ drop table if exists Asset;
 drop table if exists Portfolio;
 drop table if exists Person;
 
+
 create table Person ( 
 personID Integer auto_increment not null primary key unique,
 personCode varchar(20), 

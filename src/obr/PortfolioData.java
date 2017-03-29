@@ -15,18 +15,166 @@ import java.util.List;
  */
 public class PortfolioData {
 
+	static Connection conn = null; 
 
+	public static void connection() {
+		try {
+			Class.forName("com.mysql.jdbc.Driver").newInstance();
+		} catch (InstantiationException e) {
+			System.out.println("InstantiationException: ");
+			e.printStackTrace();
+			throw new RuntimeException(e);
+		} catch (IllegalAccessException e) {
+			System.out.println("IllegalAccessException: ");
+			e.printStackTrace();
+			throw new RuntimeException(e);
+		} catch (ClassNotFoundException e) {
+			System.out.println("ClassNotFoundException: ");
+			e.printStackTrace();
+			throw new RuntimeException(e);
+		}
+
+		try {
+			conn = DriverManager.getConnection(DatabaseInfo.url, DatabaseInfo.username, DatabaseInfo.password);
+		} catch (SQLException e) {
+			System.out.println("SQLException: ");
+			e.printStackTrace();
+			throw new RuntimeException(e);
+		}
+	}
 	/**
 	 * Method that removes every person record from the database
 	 */
-	public static void removeAllPersons() {}
+	public static void removeAllPersons() {
+		connection();
+
+		PreparedStatement ps = null;
+
+		String query = "DELETE FROM Portfolio";
+
+		try{
+			ps = conn.prepareStatement(query);
+			ps.executeUpdate();
+		}catch (SQLException e) {
+			System.out.println("SQLException: ");
+			e.printStackTrace();
+			throw new RuntimeException(e);
+		}
+
+		String query2 = "DELETE * FROM Person";
+
+		try{
+			ps = conn.prepareStatement(query2);
+			ps.executeUpdate();
+
+		}catch(SQLException e) {
+			System.out.println("SQLException: ");
+			e.printStackTrace();
+			throw new RuntimeException();
+		}
+
+		String query3 = "DELETE FROM Address";
+
+		try{
+			ps = conn.prepareStatement(query3);
+			ps.executeUpdate();
+		}catch(SQLException e) {
+			System.out.println("SQLException: ");
+			e.printStackTrace();
+			throw new RuntimeException();
+		}
+
+		String query4 = "DELETE FROM EmailAddress";
+
+		try{
+			ps = conn.prepareStatement(query4);
+			ps.executeUpdate();
+			ps.close();
+		}catch(SQLException e) {
+			System.out.println("SQLException: ");
+			e.printStackTrace();
+			throw new RuntimeException();
+		}
+	}
 
 	/**
 	 * Removes the person record from the database corresponding to the
 	 * provided <code>personCode</code>
 	 * @param personCode
 	 */
-	public static void removePerson(String personCode) {}
+	public static void removePerson(String personCode) {
+		connection();
+
+		PreparedStatement ps = null;
+
+		String query = "DELETE FROM Portfolio WHERE managerID =? ";
+
+		try{
+			ps = conn.prepareStatement(query);
+			ps.setString(1, personCode);
+			ps.executeUpdate();
+		}catch (SQLException e) {
+			System.out.println("SQLException: ");
+			e.printStackTrace();
+			throw new RuntimeException(e);
+		}
+		String query2 = "DELETE FROM Portfolio WHERE ownerID =? ";
+
+		try{
+			ps = conn.prepareStatement(query2);
+			ps.setString(1, personCode);
+			ps.executeUpdate();
+		}catch (SQLException e) {
+			System.out.println("SQLException: ");
+			e.printStackTrace();
+			throw new RuntimeException(e);
+		}
+		String query3 = "DELETE FROM Portfolio WHERE beneficiaryID =? ";
+
+		try{
+			ps = conn.prepareStatement(query3);
+			ps.setString(1, personCode);
+			ps.executeUpdate();
+		}catch (SQLException e) {
+			System.out.println("SQLException: ");
+			e.printStackTrace();
+			throw new RuntimeException(e);
+		}
+		String query4 = "DELETE FROM Person WHERE personID =? ";
+
+		try{
+			ps = conn.prepareStatement(query4);
+			ps.setString(1, personCode);
+			ps.executeUpdate();
+		}catch (SQLException e) {
+			System.out.println("SQLException: ");
+			e.printStackTrace();
+			throw new RuntimeException(e);
+		}
+		String query5 = "DELETE FROM Address WHERE personID =? ";
+
+		try{
+			ps = conn.prepareStatement(query5);
+			ps.setString(1, personCode);
+			ps.executeUpdate();
+		}catch (SQLException e) {
+			System.out.println("SQLException: ");
+			e.printStackTrace();
+			throw new RuntimeException(e);
+		}
+		String query6 = "DELETE FROM EmailAddress WHERE  =? ";
+
+		try{
+			ps = conn.prepareStatement(query6);
+			ps.setString(1, personCode);
+			ps.executeUpdate();
+			ps.close();
+		}catch (SQLException e) {
+			System.out.println("SQLException: ");
+			e.printStackTrace();
+			throw new RuntimeException(e);
+		}
+	}
 
 	/**
 	 * Method to add a person record to the database with the provided data. The
@@ -44,32 +192,7 @@ public class PortfolioData {
 	 */
 	@SuppressWarnings("null")
 	public static void addPerson(String personCode, String firstName, String lastName, String street, String city, String state, String zip, String country, String brokerType, String secBrokerId) {
-
-		try {
-			Class.forName("com.mysql.jdbc.Driver").newInstance();
-		} catch (InstantiationException e) {
-			System.out.println("InstantiationException: ");
-			e.printStackTrace();
-			throw new RuntimeException(e);
-		} catch (IllegalAccessException e) {
-			System.out.println("IllegalAccessException: ");
-			e.printStackTrace();
-			throw new RuntimeException(e);
-		} catch (ClassNotFoundException e) {
-			System.out.println("ClassNotFoundException: ");
-			e.printStackTrace();
-			throw new RuntimeException(e);
-		}
-
-		Connection conn = null;
-
-		try {
-			conn = DriverManager.getConnection(DatabaseInfo.url, DatabaseInfo.username, DatabaseInfo.password);
-		} catch (SQLException e) {
-			System.out.println("SQLException: ");
-			e.printStackTrace();
-			throw new RuntimeException(e);
-		}
+		connection();
 
 
 		PreparedStatement ps = null;
@@ -83,8 +206,18 @@ public class PortfolioData {
 			ps.setString(1, personCode);
 			ps.setString(2, lastName);
 			ps.setString(3, firstName);
-			ps.setString(4, secBrokerId);
-			ps.setString(5, brokerType);
+			if(secBrokerId.equals("")) {
+				ps.setNull(4, Types.VARCHAR);
+			}
+			else {
+				ps.setString(4, secBrokerId);
+			}
+			if(brokerType.equals("")) {
+				ps.setNull(5, Types.VARCHAR);
+			}
+			else{
+				ps.setString(5, brokerType);
+			}
 			ps.executeUpdate();
 		}
 		catch (SQLException e) {
@@ -95,9 +228,9 @@ public class PortfolioData {
 
 		try{
 			ps = conn.prepareStatement("SELECT LAST_INSERT_ID()");
-			ps.executeQuery();
+			rs = ps.executeQuery();
 			while(rs.next()) {
-				personID = rs.getInt("LAST_INSERT_ID();");
+				personID = rs.getInt("LAST_INSERT_ID()");
 			}
 		}catch (SQLException e) {
 			System.out.println("SQLException: ");
@@ -106,7 +239,7 @@ public class PortfolioData {
 		}
 
 
-		String query2 = "SELECT stateID FROM States where stateName = ?";
+		String query2 = "SELECT stateID FROM States WHERE stateAbbreviation = ?";
 
 		int stateID = 0;
 
@@ -125,16 +258,43 @@ public class PortfolioData {
 			throw new RuntimeException(e);
 		}
 
+		String query3 = "SELECT countryID FROM Country WHERE countryID = ?";
 
-		String query3 = "INSERT INTO Address(personID, street, city, stateID, zipcode) VALUES (?,?,?,?,?)";
+		int countryID = 0;
+
 		try{
 			ps = conn.prepareStatement(query3);
+			if(country.equals("")){
+			}
+			else{
+				ps.setString(1, country);
+				rs = ps.executeQuery();
+				while(rs.next()){
+					countryID = rs.getInt("countryID");
+				}
+			}
+
+		}catch (SQLException e) {
+			System.out.println("SQLException: ");
+			e.printStackTrace();
+			throw new RuntimeException(e);
+		}
+
+		String query4 = "INSERT INTO Address(personID, stateID, countryID, street, city, zipcode) VALUES (?,?,?,?,?,?)";
+		try{
+			ps = conn.prepareStatement(query4);
 
 			ps.setInt(1, personID);
-			ps.setString(2, street);
-			ps.setString(3, city);
-			ps.setInt(4, stateID);
-			ps.setString(5, zip);
+			ps.setInt(2, stateID);
+			if(countryID == 0) {
+				ps.setNull(3, Types.INTEGER);
+			}
+			else {
+				ps.setInt(3, countryID);
+			}
+			ps.setString(4, street);
+			ps.setString(5, city);
+			ps.setString(6, zip);
 			ps.executeUpdate();
 			ps.close();
 		}
@@ -153,69 +313,45 @@ public class PortfolioData {
 	 */
 	public static void addEmail(String personCode, List<String> email) {
 
-		try {
-			Class.forName("com.mysql.jdbc.Driver").newInstance();
-		} catch (InstantiationException e) {
-			System.out.println("InstantiationException: ");
-			e.printStackTrace();
-			throw new RuntimeException(e);
-		} catch (IllegalAccessException e) {
-			System.out.println("IllegalAccessException: ");
-			e.printStackTrace();
-			throw new RuntimeException(e);
-		} catch (ClassNotFoundException e) {
-			System.out.println("ClassNotFoundException: ");
-			e.printStackTrace();
-			throw new RuntimeException(e);
-		}
-
-		Connection conn = null;
-
-		try {
-			conn = DriverManager.getConnection(DatabaseInfo.url, DatabaseInfo.username, DatabaseInfo.password);
-		} catch (SQLException e) {
-			System.out.println("SQLException: ");
-			e.printStackTrace();
-			throw new RuntimeException(e);
-		}
+		connection();
 
 
 		PreparedStatement ps = null;
 		ResultSet rs = null;
 
+		String query = "SELECT personID FROM Person WHERE personCode = ?";
+		int personID = 0;
 
-		if(email.contains(null)) {
+		try {
+			ps = conn.prepareStatement(query);
+
+			ps.setString(1, personCode);
+			rs = ps.executeQuery();
+
+
+			while(rs.next()) {
+				personID = rs.getInt("personID");
+			}
 
 		}
-		else {
-			String query = "SELECT personID FROM Person WHERE personCode = ?";
-			int personID = 0;
-			for(String em: email) {
+		catch (SQLException e) {
+			System.out.println("SQLException: ");
+			e.printStackTrace();
+			throw new RuntimeException(e);
+		}
 
-				try {
-					ps = conn.prepareStatement(query);
-
-					ps.setString(1, personCode);
-					rs = ps.executeQuery();
-
-
-					while(rs.next()) {
-						personID = rs.getInt("personID");
-					}
-
-				}
-				catch (SQLException e) {
-					System.out.println("SQLException: ");
-					e.printStackTrace();
-					throw new RuntimeException(e);
-				}
+		for(String em: email) {
+			if(em.equals("")) {
+			}
+			else{
 				String query2 = "INSERT INTO EmailAddress (emailAddress, personID) VALUES (?,?)";
 
 				try{
-					ps = conn.prepareStatement(query);
+					ps = conn.prepareStatement(query2);
 
 					ps.setString(1, em);
 					ps.setInt(2, personID);
+					ps.executeUpdate();
 				}
 				catch (SQLException e) {
 					System.out.println("SQLException: ");
@@ -224,19 +360,81 @@ public class PortfolioData {
 				}
 			}
 		}
+		
+		try{
+			ps.close();
+		}catch (SQLException e) {
+			System.out.println("SQLException: ");
+			e.printStackTrace();
+			throw new RuntimeException(e);
+		}
 	}
 
 	/**
 	 * Removes all asset records from the database
 	 */
-	public static void removeAllAssets() {}
+	public static void removeAllAssets() {
+		connection();
+
+		PreparedStatement ps = null;
+
+		String query = "DELETE FROM Asset";
+
+		try{
+			ps = conn.prepareStatement(query);
+			ps.executeUpdate();
+		}catch (SQLException e) {
+			System.out.println("SQLException: ");
+			e.printStackTrace();
+			throw new RuntimeException(e);
+		}
+		String query2 = "DELETE FROM PortAsset";
+
+		try{
+			ps = conn.prepareStatement(query);
+			ps.executeUpdate();
+			ps.close();
+		}catch (SQLException e) {
+			System.out.println("SQLException: ");
+			e.printStackTrace();
+			throw new RuntimeException(e);
+		}
+	}
 
 	/**
 	 * Removes the asset record from the database corresponding to the
 	 * provided <code>assetCode</code>
 	 * @param assetCode
 	 */
-	public static void removeAsset(String assetCode) {}
+	public static void removeAsset(String assetCode) {
+		connection();
+
+		PreparedStatement ps = null;
+
+		String query = "DELETE FROM Asset where assetID=?";
+
+		try{
+			ps = conn.prepareStatement(query);
+			ps.setString(1, assetCode);
+			ps.executeUpdate();
+		}catch (SQLException e) {
+			System.out.println("SQLException: ");
+			e.printStackTrace();
+			throw new RuntimeException(e);
+		}
+		String query2 = "DELETE FROM PortAsset where assetID=?";
+
+		try{
+			ps = conn.prepareStatement(query2);
+			ps.setString(1, assetCode);
+			ps.executeUpdate();
+			ps.close();
+		}catch (SQLException e) {
+			System.out.println("SQLException: ");
+			e.printStackTrace();
+			throw new RuntimeException(e);
+		}
+	}
 
 	/**
 	 * Adds a deposit account asset record to the database with the
@@ -245,33 +443,9 @@ public class PortfolioData {
 	 * @param label
 	 * @param apr
 	 */
+
 	public static void addDepositAccount(String assetCode, String label, double apr) {
-
-		try {
-			Class.forName("com.mysql.jdbc.Driver").newInstance();
-		} catch (InstantiationException e) {
-			System.out.println("InstantiationException: ");
-			e.printStackTrace();
-			throw new RuntimeException(e);
-		} catch (IllegalAccessException e) {
-			System.out.println("IllegalAccessException: ");
-			e.printStackTrace();
-			throw new RuntimeException(e);
-		} catch (ClassNotFoundException e) {
-			System.out.println("ClassNotFoundException: ");
-			e.printStackTrace();
-			throw new RuntimeException(e);
-		}
-
-		Connection conn = null;
-
-		try {
-			conn = DriverManager.getConnection(DatabaseInfo.url, DatabaseInfo.username, DatabaseInfo.password);
-		} catch (SQLException e) {
-			System.out.println("SQLException: ");
-			e.printStackTrace();
-			throw new RuntimeException(e);
-		}
+		connection();
 
 		String query = "INSERT INTO Asset (assetCode, assetName, assetType, apr, quartDiv, BRR, beta, omega, stockSymbol, totalValue, sharePrice) VALUES (?,?,?,?,?,?,?,?,?,?,?)";
 
@@ -315,32 +489,7 @@ public class PortfolioData {
 	public static void addPrivateInvestment(String assetCode, String label, Double quarterlyDividend, 
 			Double baseRateOfReturn, Double baseOmega, Double totalValue) {
 
-		try {
-			Class.forName("com.mysql.jdbc.Driver").newInstance();
-		} catch (InstantiationException e) {
-			System.out.println("InstantiationException: ");
-			e.printStackTrace();
-			throw new RuntimeException(e);
-		} catch (IllegalAccessException e) {
-			System.out.println("IllegalAccessException: ");
-			e.printStackTrace();
-			throw new RuntimeException(e);
-		} catch (ClassNotFoundException e) {
-			System.out.println("ClassNotFoundException: ");
-			e.printStackTrace();
-			throw new RuntimeException(e);
-		}
-
-		Connection conn = null;
-
-		try {
-			conn = DriverManager.getConnection(DatabaseInfo.url, DatabaseInfo.username, DatabaseInfo.password);
-		} catch (SQLException e) {
-			System.out.println("SQLException: ");
-			e.printStackTrace();
-			throw new RuntimeException(e);
-		}
-
+		connection();
 		String query = "INSERT INTO Asset (assetCode, assetName, assetType, apr, quartDiv, BRR, beta, omega, stockSymbol, totalValue, sharePrice) VALUES (?,?,?,?,?,?,?,?,?,?,?)";
 
 		PreparedStatement ps = null;
@@ -387,31 +536,7 @@ public class PortfolioData {
 
 	public static void addStock(String assetCode, String label, Double quarterlyDividend, 
 			Double baseRateOfReturn, Double beta, String stockSymbol, Double sharePrice) {
-		try {
-			Class.forName("com.mysql.jdbc.Driver").newInstance();
-		} catch (InstantiationException e) {
-			System.out.println("InstantiationException: ");
-			e.printStackTrace();
-			throw new RuntimeException(e);
-		} catch (IllegalAccessException e) {
-			System.out.println("IllegalAccessException: ");
-			e.printStackTrace();
-			throw new RuntimeException(e);
-		} catch (ClassNotFoundException e) {
-			System.out.println("ClassNotFoundException: ");
-			e.printStackTrace();
-			throw new RuntimeException(e);
-		}
-
-		Connection conn = null;
-
-		try {
-			conn = DriverManager.getConnection(DatabaseInfo.url, DatabaseInfo.username, DatabaseInfo.password);
-		} catch (SQLException e) {
-			System.out.println("SQLException: ");
-			e.printStackTrace();
-			throw new RuntimeException(e);
-		}
+		connection();
 
 		String query = "INSERT INTO Asset (assetCode, assetName, assetType, apr, quartDiv, BRR, beta, omega, stockSymbol, totalValue, sharePrice) VALUES (?,?,?,?,?,?,?,?,?,?,?)";
 
@@ -461,31 +586,7 @@ public class PortfolioData {
 	 * @param beneficiaryCode
 	 */
 	public static void addPortfolio(String portfolioCode, String ownerCode, String managerCode, String beneficiaryCode) {
-		try {
-			Class.forName("com.mysql.jdbc.Driver").newInstance();
-		} catch (InstantiationException e) {
-			System.out.println("InstantiationException: ");
-			e.printStackTrace();
-			throw new RuntimeException(e);
-		} catch (IllegalAccessException e) {
-			System.out.println("IllegalAccessException: ");
-			e.printStackTrace();
-			throw new RuntimeException(e);
-		} catch (ClassNotFoundException e) {
-			System.out.println("ClassNotFoundException: ");
-			e.printStackTrace();
-			throw new RuntimeException(e);
-		}
-
-		Connection conn = null;
-
-		try {
-			conn = DriverManager.getConnection(DatabaseInfo.url, DatabaseInfo.username, DatabaseInfo.password);
-		} catch (SQLException e) {
-			System.out.println("SQLException: ");
-			e.printStackTrace();
-			throw new RuntimeException(e);
-		}
+		connection();
 
 		PreparedStatement ps = null;
 		ResultSet rs = null;
@@ -570,31 +671,7 @@ public class PortfolioData {
 	 * @param value
 	 */
 	public static void addAsset(String portfolioCode, String assetCode, double value) {
-		try {
-			Class.forName("com.mysql.jdbc.Driver").newInstance();
-		} catch (InstantiationException e) {
-			System.out.println("InstantiationException: ");
-			e.printStackTrace();
-			throw new RuntimeException(e);
-		} catch (IllegalAccessException e) {
-			System.out.println("IllegalAccessException: ");
-			e.printStackTrace();
-			throw new RuntimeException(e);
-		} catch (ClassNotFoundException e) {
-			System.out.println("ClassNotFoundException: ");
-			e.printStackTrace();
-			throw new RuntimeException(e);
-		}
-
-		Connection conn = null;
-
-		try {
-			conn = DriverManager.getConnection(DatabaseInfo.url, DatabaseInfo.username, DatabaseInfo.password);
-		} catch (SQLException e) {
-			System.out.println("SQLException: ");
-			e.printStackTrace();
-			throw new RuntimeException(e);
-		}
+		connection();
 
 		PreparedStatement ps = null;
 		ResultSet rs = null;

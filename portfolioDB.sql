@@ -1,7 +1,7 @@
 drop table if exists EmailAddress;
 drop table if exists Address;
 drop table if exists States;
-drop table if exists Countries;
+drop table if exists Country;
 drop table if exists PortAsset;
 drop table if exists Asset;
 drop table if exists Portfolio;
@@ -46,7 +46,7 @@ portCode varchar(20) not null,
 constraint uniqueValues unique (portCode)
 )engine=InnoDB,collate=latin1_general_cs;  
  
-create table Countries (
+create table Country (
 countryID integer not null primary key auto_increment unique,
 countryName varchar(200) not null
 )engine=InnoDB,collate=latin1_general_cs; 
@@ -61,13 +61,13 @@ create table Address (
 addressID integer not null primary key auto_increment unique, 
 personID Integer not null, 
 stateID integer not null, 
-countryID integer not null,
+countryID integer,
 street varchar(255),
 city varchar(100) , 
-zipcode integer, 
+zipcode varchar(100), 
 foreign key (personID) references Person(personID),
 foreign key (stateID) references States(stateID),
-foreign key (countryID) references Countries(countryID)
+foreign key (countryID) references Country(countryID)
 )engine=InnoDB,collate=latin1_general_cs;  
 
 
@@ -138,7 +138,7 @@ insert into States (stateAbbreviation, stateName) value ('WA', 'Washington');
 insert into States (stateAbbreviation, stateName) value ('WV', 'West Virgina');
 insert into States (stateAbbreviation, stateName) value ('WI', 'Wisconsin');
 insert into States (stateAbbreviation, stateName) value ('WY', 'Wyoming');
-
+insert into Country (countryName) value ('United States');
 
 
 

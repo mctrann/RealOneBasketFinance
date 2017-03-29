@@ -81,21 +81,21 @@ public class Data_Converter {
 							secID = broker_data[1];
 						}
 						else{
-							brokerType= null;
-							secID= null;
+							brokerType= "";
+							secID= "";
 						}
 						//parsing in persons info
 						String name[] = persons_arr[2].split(",");
-						String firstName=name[1];
-						String lastName=name[0];
+						String firstName=name[1].trim();
+						String lastName=name[0].trim();
 						String addressArr[] = persons_arr[3].split(",");
 
-						String street=addressArr[0];
-						String city=addressArr[1];
-						String state=addressArr[2];
-						String zipCode=addressArr[3];
-						String country=addressArr[4];
-						Address address = new Address(street, city,state,country, zipCode);
+						String street=addressArr[0].trim();
+						String city=addressArr[1].trim();
+						String state=addressArr[2].trim();
+						String zipCode= addressArr[3].trim();
+						
+						String country=addressArr[4].trim();
 
 						List<String>email=new ArrayList<String>();
 						if(persons_arr.length == 5) {
@@ -110,22 +110,9 @@ public class Data_Converter {
 							}
 						}
 						else{
-							email.add(null);
+							email.add("");
 						}
 
-						//puts new parsed info into appropriate persons object
-//						if (brokerPosition.equals("J")){
-//							Junior j;
-//							perInfo.add(j = new Junior(code,brokerPosition,secID,firstName,lastName, address,email));
-//						}
-//						else if (brokerPosition.equals("E")){
-//							Expert e;
-//							perInfo.add(e = new Expert(code, brokerPosition, secID,firstName,lastName,address,email));
-//						}
-//						else if (brokerPosition.equals("")){
-//							Customer c;
-//							perInfo.add(c = new Customer(code,   firstName,  lastName, address, email));
-//						}
 						pd.addPerson(personCode, firstName, lastName, street, city, state, zipCode, country, brokerType, secID);
 						pd.addEmail(personCode, email);
 					}

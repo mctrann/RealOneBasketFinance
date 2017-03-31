@@ -15,8 +15,8 @@ import java.util.List;
  */
 public class PortfolioData {
 
-	static Connection conn = null; 
-
+	static Connection conn=null;
+	
 	public static void connection() {
 		try {
 			Class.forName("com.mysql.jdbc.Driver").newInstance();
@@ -42,6 +42,8 @@ public class PortfolioData {
 			throw new RuntimeException(e);
 		}
 	}
+	
+
 	/**
 	 * Method that removes every person record from the database
 	 */
@@ -258,7 +260,7 @@ public class PortfolioData {
 			throw new RuntimeException(e);
 		}
 
-		String query3 = "SELECT countryID FROM Country WHERE countryID = ?";
+		String query3 = "SELECT countryID FROM Country WHERE countryName = ?";
 
 		int countryID = 0;
 
@@ -297,6 +299,7 @@ public class PortfolioData {
 			ps.setString(6, zip);
 			ps.executeUpdate();
 			ps.close();
+			conn.close();
 		}
 		catch (SQLException e) {
 			System.out.println("SQLException: ");
@@ -360,9 +363,10 @@ public class PortfolioData {
 				}
 			}
 		}
-		
+
 		try{
 			ps.close();
+			conn.close();
 		}catch (SQLException e) {
 			System.out.println("SQLException: ");
 			e.printStackTrace();
@@ -394,6 +398,7 @@ public class PortfolioData {
 			ps = conn.prepareStatement(query);
 			ps.executeUpdate();
 			ps.close();
+			conn.close();
 		}catch (SQLException e) {
 			System.out.println("SQLException: ");
 			e.printStackTrace();
@@ -429,6 +434,7 @@ public class PortfolioData {
 			ps.setString(1, assetCode);
 			ps.executeUpdate();
 			ps.close();
+			conn.close();
 		}catch (SQLException e) {
 			System.out.println("SQLException: ");
 			e.printStackTrace();
@@ -447,7 +453,7 @@ public class PortfolioData {
 	public static void addDepositAccount(String assetCode, String label, double apr) {
 		connection();
 
-		String query = "INSERT INTO Asset (assetCode, assetName, assetType, apr, quartDiv, BRR, beta, omega, stockSymbol, totalValue, sharePrice) VALUES (?,?,?,?,?,?,?,?,?,?,?)";
+		String query = "INSERT INTO Asset (assetCode, assetName, assetType, apr, quarterlyDividend, baseRateReturn, beta, omega, stockSymbol, totalValue, sharePrice) VALUES (?,?,?,?,?,?,?,?,?,?,?)";
 
 		PreparedStatement ps = null;
 		try{
@@ -467,6 +473,7 @@ public class PortfolioData {
 			ps.setNull(11, Types.DOUBLE);
 			ps.executeUpdate();
 			ps.close();
+			conn.close();
 		}
 		catch (SQLException e) {
 			System.out.println("SQLException: ");
@@ -490,7 +497,7 @@ public class PortfolioData {
 			Double baseRateOfReturn, Double baseOmega, Double totalValue) {
 
 		connection();
-		String query = "INSERT INTO Asset (assetCode, assetName, assetType, apr, quartDiv, BRR, beta, omega, stockSymbol, totalValue, sharePrice) VALUES (?,?,?,?,?,?,?,?,?,?,?)";
+		String query = "INSERT INTO Asset (assetCode, assetName, assetType, apr, quarterlyDividend, baseRateReturn, beta, omega, stockSymbol, totalValue, sharePrice) VALUES (?,?,?,?,?,?,?,?,?,?,?)";
 
 		PreparedStatement ps = null;
 
@@ -511,6 +518,7 @@ public class PortfolioData {
 			ps.setNull(11, Types.DOUBLE);
 			ps.executeUpdate();
 			ps.close();
+			conn.close();
 		}
 		catch (SQLException e) {
 			System.out.println("SQLException: ");
@@ -538,7 +546,7 @@ public class PortfolioData {
 			Double baseRateOfReturn, Double beta, String stockSymbol, Double sharePrice) {
 		connection();
 
-		String query = "INSERT INTO Asset (assetCode, assetName, assetType, apr, quartDiv, BRR, beta, omega, stockSymbol, totalValue, sharePrice) VALUES (?,?,?,?,?,?,?,?,?,?,?)";
+		String query = "INSERT INTO Asset (assetCode, assetName, assetType, apr, quarterlyDividend, baseRateReturn, beta, omega, stockSymbol, totalValue, sharePrice) VALUES (?,?,?,?,?,?,?,?,?,?,?)";
 
 		PreparedStatement ps = null;
 		try {
@@ -557,6 +565,7 @@ public class PortfolioData {
 			ps.setDouble(11, sharePrice);
 			ps.executeUpdate();
 			ps.close();
+			conn.close();
 		}
 		catch (SQLException e) {
 			System.out.println("SQLException: ");
@@ -591,7 +600,7 @@ public class PortfolioData {
 		PreparedStatement ps = null;
 		ResultSet rs = null;
 
-		String query = "SELECT personID FROM PERSON where personCode = ?";
+		String query = "SELECT personID FROM Person WHERE personCode = ?";
 		int ownerID = 0;
 		try{
 			ps = conn.prepareStatement(query);
@@ -608,10 +617,10 @@ public class PortfolioData {
 			throw new RuntimeException(e);
 		}
 
-		String query2 = "SELECT personID FROM PERSON where personCode = ?";
+		String query2 = "SELECT personID FROM Person where personCode = ?";
 		int managerID = 0;
 		try{
-			ps = conn.prepareStatement(query);
+			ps = conn.prepareStatement(query2);
 
 			ps.setString(1, managerCode);
 			rs = ps.executeQuery();
@@ -625,21 +634,26 @@ public class PortfolioData {
 			throw new RuntimeException(e);
 		}
 
-		String query3 = "SELECT personID FROM PERSON where personCode = ?";
+		String query3 = "SELECT personID FROM Person where personCode = ?";
 		int beneficiaryID = 0;
-		try{
-			ps = conn.prepareStatement(query3);
+		if(beneficiaryCode.equals("")) {
+	
+		}
+		else{
+			try{
+				ps = conn.prepareStatement(query3);
 
-			ps.setString(1, beneficiaryCode);
-			rs = ps.executeQuery();
+				ps.setString(1, beneficiaryCode);
+				rs = ps.executeQuery();
 
-			while(rs.next()) {
-				beneficiaryID = rs.getInt("personID");
+				while(rs.next()) {
+					beneficiaryID = rs.getInt("personID");
+				}
+			} catch (SQLException e) {
+				System.out.println("SQLException: ");
+				e.printStackTrace();
+				throw new RuntimeException(e);
 			}
-		} catch (SQLException e) {
-			System.out.println("SQLException: ");
-			e.printStackTrace();
-			throw new RuntimeException(e);
 		}
 
 		String query4 = "INSERT INTO Portfolio (managerID, ownerID, beneficiaryID, portCode) VALUES (?,?,?,?)";
@@ -649,10 +663,16 @@ public class PortfolioData {
 
 			ps.setInt(1, managerID);
 			ps.setInt(2, ownerID);
-			ps.setInt(3, beneficiaryID);
+			if(beneficiaryID==0) {
+				ps.setNull(3, Types.INTEGER);
+			}
+			else{
+				ps.setInt(3, beneficiaryID);
+			}
 			ps.setString(4, portfolioCode);
 			ps.executeUpdate();
 			ps.close();
+			conn.close();
 		}catch (SQLException e) {
 			System.out.println("SQLException: ");
 			e.printStackTrace();
@@ -704,7 +724,7 @@ public class PortfolioData {
 			rs = ps.executeQuery();
 
 			while(rs.next()) {
-				portfolioID = rs.getInt("assetID");
+				assetID = rs.getInt("assetID");
 			}
 		} catch (SQLException e) {
 			System.out.println("SQLException: ");
@@ -722,6 +742,7 @@ public class PortfolioData {
 			ps.setDouble(3, value);
 			ps.executeUpdate();
 			ps.close();
+			conn.close();
 		} catch (SQLException e) {
 			System.out.println("SQLException: ");
 			e.printStackTrace();

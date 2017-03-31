@@ -1,17 +1,51 @@
 package obr;
 
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.SQLException;
 import java.text.DecimalFormat;
+import java.util.ArrayList;
 import java.util.List;
 
 
 public class PortfolioWriter {
-
+	private List<Portfolios> portInfo= new ArrayList<Portfolios>();
+	private List<Portfolios> perInfo= new ArrayList<Portfolios>();
 	//create private variables of class Portfolios
 	private static double totalFees = 0.0;
 	private static double totalCommissions = 0.0;
 	private static double totalReturnValue = 0.0;
 	private static double totalValue = 0.0; 
+	
+	public static void createObject (){
+	/*	try {
+			Class.forName("com.mysql.jdbc.Driver").newInstance();
+		} catch (InstantiationException e) {
+			System.out.println("InstantiationException: ");
+			e.printStackTrace();
+			throw new RuntimeException(e);
+		} catch (IllegalAccessException e) {
+			System.out.println("IllegalAccessException: ");
+			e.printStackTrace();
+			throw new RuntimeException(e);
+		} catch (ClassNotFoundException e) {
+			System.out.println("ClassNotFoundException: ");
+			e.printStackTrace();
+			throw new RuntimeException(e);
+		}
 
+		Connection conn = null;
+
+		try {
+			conn = DriverManager.getConnection(DatabaseInfo.url, DatabaseInfo.username, DatabaseInfo.password);
+		} catch (SQLException e) {
+			System.out.println("SQLException: ");
+			e.printStackTrace();
+			throw new RuntimeException(e);
+		}
+	*/
+	}
+	
 	public static void PortfolioWrite(List<Portfolios>portInfo, List<Persons> perInfo) {
 		//formats decimals
 		DecimalFormat df = new DecimalFormat("0.00");

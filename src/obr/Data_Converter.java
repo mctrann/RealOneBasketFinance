@@ -16,7 +16,7 @@ import java.util.List;
 public class Data_Converter {
 
 	//parse persons and assets files and connects to the database
-	public static void dataParser(){
+	public void dataParser(){
 		
 		//Connects to the database
 		try {
@@ -36,7 +36,7 @@ public class Data_Converter {
 		}
 
 		Connection conn = null;
-
+ 
 		try {
 			conn = DriverManager.getConnection(DatabaseInfo.url, DatabaseInfo.username, DatabaseInfo.password);
 		} catch (SQLException e) {
@@ -281,15 +281,15 @@ public class Data_Converter {
 
 	
 	//runs program
-	public static void main(String args[]){	
-		dataParser();
-//		JSONWriter thing = new JSONWriter();
-//		thing.JSONConverterP(perInfo);
-//		XMLWriter thing2= new XMLWriter();
-//		thing2.xmlPersonConverter(perInfo);
-//		thing.JSONconverterA(assetInfo);
-//		thing2.xmlAssetConverter(assetInfo);	
-	}
+//	public static void main(String args[]){	
+//		dataParser();
+////		JSONWriter thing = new JSONWriter();
+////		thing.JSONConverterP(perInfo);
+////		XMLWriter thing2= new XMLWriter();
+////		thing2.xmlPersonConverter(perInfo);
+////		thing.JSONconverterA(assetInfo);
+////		thing2.xmlAssetConverter(assetInfo);	
+//	}
 }
 
 

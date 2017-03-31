@@ -1,4 +1,4 @@
-use tttran;
+use ele;
 drop table if exists EmailAddress;
 drop table if exists Address;
 drop table if exists States;
@@ -76,7 +76,7 @@ create table PortAsset (
 portAssetID Integer not null primary key auto_increment unique,
 assetID integer not null,
 portfolioID integer not null,
-portAssetValue double not null, #for share price or percent investment or totalval of deposit
+portAssetValue double not null, # of shares or percent investment owned or balance
 foreign key (assetID) references Asset(assetID),
 foreign key (portfolioID) references Portfolio(portfolioID)
 ) engine=InnoDB,collate=latin1_general_cs; 

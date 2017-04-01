@@ -9,8 +9,10 @@ import java.util.List;
 
 
 public class PortfolioWriter {
+	//lists writer uses to make portfolio summary, a portfolio list and a person list
 	private static List<Portfolios> portInfo= new ArrayList<Portfolios>();
 	private static List<Persons> perInfo= new ArrayList<Persons>();
+	
 	//create private variables of class Portfolios
 	private static double totalFees = 0.0;
 	private static double totalCommissions = 0.0;
@@ -98,11 +100,11 @@ public class PortfolioWriter {
 	}
 	
 	public static void main(String args[]){	
-		
+		//retrieves data information through DataReceiver class
 		DataReceiver dr = new DataReceiver();
-		
 		perInfo.addAll(dr.getPerson());
 		portInfo.addAll(dr.getPortfolio());
+		//writes the portfolio summary 
 		PortfolioWrite(portInfo,perInfo);
 	}
 }

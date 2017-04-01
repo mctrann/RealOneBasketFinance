@@ -5,7 +5,6 @@ import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.sql.Types;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -40,7 +39,7 @@ public class DataReceiver {
 			throw new RuntimeException(e);
 		}
 	}
-	//used by getPortfolio
+	//used by getPortfolio to retrieve asset data and create asset objects
 	public static void getAsset(){
 		String assetCode;
 		String label;
@@ -53,8 +52,8 @@ public class DataReceiver {
 		double omega;
 		double totalValue;
 		connection();
+		//retrieves deposit assets
 		String queryD = "SELECT assetCode, assetName, apr FROM Asset WHERE assetType = 'D'";
-
 		PreparedStatement ps = null;
 		ResultSet rs=null;
 		try{
@@ -75,10 +74,8 @@ public class DataReceiver {
 			e.printStackTrace();
 			throw new RuntimeException(e);
 		}
-
+		//retrieves stock assets
 		String queryS = "SELECT assetCode, assetName, quarterlyDividend, baseRateReturn,beta,stockSymbol,sharePrice FROM Asset WHERE assetType = 'S'";
-
-
 		try{
 			ps = conn.prepareStatement(queryS);
 			rs = ps.executeQuery();
@@ -94,15 +91,13 @@ public class DataReceiver {
 				Stocks st = new Stocks (assetCode, "S", label,quartDiv,bRR,beta,stockSymbol,sharePrice);
 				asset.add(st);
 			}
-
-
 		}
 		catch (SQLException e) {
 			System.out.println("SQLException: ");
 			e.printStackTrace();
 			throw new RuntimeException(e);
 		}
-
+		//retrieves private investment asset
 		String queryP = "SELECT assetCode, assetName, quarterlyDividend, baseRateReturn,omega,totalValue FROM Asset WHERE assetType = 'P'";
 		try{
 			ps = conn.prepareStatement(queryP);
@@ -118,7 +113,6 @@ public class DataReceiver {
 				Private_Investments pi = new Private_Investments (assetCode, "P", label,quartDiv,bRR,omega,totalValue);
 				asset.add(pi);
 			}
-
 			ps.close();
 			conn.close();
 		}
@@ -128,7 +122,7 @@ public class DataReceiver {
 			throw new RuntimeException(e);
 		}
 	}
-
+//retrieves Person and makes person objects
 	public List<Persons> getPerson() {
 
 		String personCode = null;
@@ -161,8 +155,7 @@ public class DataReceiver {
 			e.printStackTrace();
 			throw new RuntimeException(e);
 		}
-
-		String queryp = "SELECT personCode, lastName, firstName, secID, personType FROM Person WHERE personID = ?";
+		String query1 = "SELECT personCode, lastName, firstName, secID, personType FROM Person WHERE personID = ?";
 		String query2 = "SELECT addressID FROM Address WHERE personID = ?";
 		String query3 = "SELECT stateID, countryID, street, city, zipcode FROM Address WHERE addressID = ?";
 		int addressID=0;
@@ -176,9 +169,8 @@ public class DataReceiver {
 		Address a = null;
 
 		for(Integer t: temp) {
-
 			try{
-				ps = conn.prepareStatement(queryp);
+				ps = conn.prepareStatement(query1);
 				ps.setInt(1, t);
 				rs = ps.executeQuery();
 				while(rs.next()) {
@@ -227,7 +219,7 @@ public class DataReceiver {
 				e.printStackTrace();
 				throw new RuntimeException(e);
 			}
-
+			//retrieves state corresponding to a person's address
 			String query4 = "SELECT stateAbbreviation FROM States WHERE stateID = ?";
 			try{
 				ps= conn.prepareStatement(query4);
@@ -242,7 +234,7 @@ public class DataReceiver {
 				e.printStackTrace();
 				throw new RuntimeException(e);
 			}
-
+			//retrieves country corresponding to a person's address
 			String query5= "SELECT countryName FROM Country WHERE countryID=?";
 			try{
 				ps=conn.prepareStatement(query5);
@@ -263,7 +255,10 @@ public class DataReceiver {
 				throw new RuntimeException(e);
 
 			}
+			//creates address object from retrieved data
 			a= new Address(street, city, state, country, Integer.toString(zipcode));
+			
+			//retrieves email address
 			String query6= "SELECT emailAddress FROM EmailAddress WHERE personID=?";
 			try{
 				ps=conn.prepareStatement(query6);
@@ -276,9 +271,8 @@ public class DataReceiver {
 				System.out.println("SQLException: ");
 				e.printStackTrace();
 				throw new RuntimeException(e);
-
 			}
-
+			//creates person object
 			if(personType.equals("J")) {
 				Junior j = new Junior(personCode, personType, secID, firstName, lastName, a, Email);
 				pr.add(j);
@@ -302,13 +296,9 @@ public class DataReceiver {
 			System.out.println("SQLException: ");
 			e.printStackTrace();
 			throw new RuntimeException(e);
-
 		}
-
 		return pr;
-
 	}
-
 
 	public List<Portfolios> getPortfolio() {
 		getAsset();		
@@ -364,7 +354,7 @@ public class DataReceiver {
 
 		}
 
-
+//retrieves data from Portfolio table to create a portfolio object
 		for(Integer pt: temp) {
 			String query2 = "SELECT portCode, ownerID, managerID, beneficiaryID FROM Portfolio WHERE portfolioID = ?";
 			try {
@@ -400,7 +390,7 @@ public class DataReceiver {
 				throw new RuntimeException(e);
 			}
 
-			//Finds the personCode of the owner
+			//Finds the personCode of the manager
 			String query4 = "SELECT personCode FROM Person WHERE personID = ?";
 			try{
 				ps = conn.prepareStatement(query4);
@@ -416,7 +406,7 @@ public class DataReceiver {
 				throw new RuntimeException(e);
 			}
 
-			//Finds the personCode of the owner
+			//Finds the personCode of the beneficiary
 			String query5 = "SELECT personCode FROM Person WHERE personID = ?";
 			try{
 				ps = conn.prepareStatement(query5);
@@ -451,9 +441,8 @@ public class DataReceiver {
 				e.printStackTrace();
 				throw new RuntimeException(e);
 			}
-			//
+			//retrieves asset data, puts data into asset 'a' list
 			List<Assets> a = new ArrayList<Assets>();
-
 			for(Entry<Integer, Double> entry : assetIDtemp.entrySet()) {
 				String query7 = "SELECT assetCode, assetName, assetType, apr, quarterlyDividend, baseRateReturn, beta, omega, stockSymbol, totalValue, sharePrice FROM Asset WHERE assetID=?";
 				try{
@@ -472,6 +461,7 @@ public class DataReceiver {
 						stockSymbol = rs.getString("stockSymbol");
 						assetVal = rs.getDouble("totalValue");
 						sharePrice = rs.getDouble("sharePrice");
+						//creates new asset objects
 						for(int i=0; i<asset.size();i++){
 							if(asset.get(i).getCode().equals(assetCode)) {
 								if (assetType.equals("D")){
@@ -500,13 +490,12 @@ public class DataReceiver {
 					throw new RuntimeException(e);
 				}
 			}
+			//creates portfolio objects
 			Portfolios pf = new Portfolios(portCode,ownerCode,managerCode,beneficiaryCode,a);
 			p.add(pf);
 			assetIDtemp.clear();
 		}
-
+		//returns list of portfolio objects
 		return p;
-
-
 	}
 }

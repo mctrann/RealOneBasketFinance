@@ -16,7 +16,7 @@ import java.util.List;
 public class Data_Converter {
 
 	//parse persons and assets files and connects to the database
-	public static void dataParser(){
+	public void dataParser(){
 		
 		//Connects to the database
 		try {
@@ -36,7 +36,7 @@ public class Data_Converter {
 		}
 
 		Connection conn = null;
-
+ 
 		try {
 			conn = DriverManager.getConnection(DatabaseInfo.url, DatabaseInfo.username, DatabaseInfo.password);
 		} catch (SQLException e) {
@@ -216,7 +216,7 @@ public class Data_Converter {
 		String line3 = null;
 		int startLine3 = 1;
 		int counter3 = startLine3;
-
+		String assetList[];
 		//parses through Portfolio.dat 
 		//stores codes in appropriate variables
 		try {
@@ -235,22 +235,31 @@ public class Data_Converter {
 							benCode = portArr[3];
 						}
 						else {
-							benCode = null;
+							benCode = "";
 						}
 
 				
 							//Splits the asset list
-							String assetList[] = portArr[4].split(",");
+			
+							assetList = portArr[4].split(",");
+							
 							//parses through assetList
-							for(int i = 0; i < assetList.length; i++) {
-									//splits each asset at its type and value
-									String tempAsset[] = assetList[i].split(":");
-									double value = Double.parseDouble(tempAsset[1]);
-									pd.addAsset(portCode, tempAsset[0], value);
-							}
+							
 						
 						//Adds the information to a list of Portfolios
 							pd.addPortfolio(portCode, ownerCode, managerCode, benCode);
+							
+							for(int i = 0; i < assetList.length; i++) {
+								//splits each asset at its type and value
+								String tempAsset[] = assetList[i].split(":");
+								if(tempAsset[0].equals("")){
+									
+								}
+								else{
+									double value = Double.parseDouble(tempAsset[1]);
+									pd.addAsset(portCode, tempAsset[0], value);
+								}
+						}
 					}
 				}
 				counter3++;
@@ -261,23 +270,26 @@ public class Data_Converter {
 		}
 		try {
 			reader3.close();
+			
 		}
 		catch (IOException e){
 			e.printStackTrace();
-		}	
+		}
+		
+	
 	}
 
 	
 	//runs program
-	public static void main(String args[]){	
-		dataParser();
-//		JSONWriter thing = new JSONWriter();
-//		thing.JSONConverterP(perInfo);
-//		XMLWriter thing2= new XMLWriter();
-//		thing2.xmlPersonConverter(perInfo);
-//		thing.JSONconverterA(assetInfo);
-//		thing2.xmlAssetConverter(assetInfo);	
-	}
+//	public static void main(String args[]){	
+//		dataParser();
+////		JSONWriter thing = new JSONWriter();
+////		thing.JSONConverterP(perInfo);
+////		XMLWriter thing2= new XMLWriter();
+////		thing2.xmlPersonConverter(perInfo);
+////		thing.JSONconverterA(assetInfo);
+////		thing2.xmlAssetConverter(assetInfo);	
+//	}
 }
 
 

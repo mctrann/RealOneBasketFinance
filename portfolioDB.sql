@@ -1,10 +1,11 @@
+use ele;
 drop table if exists EmailAddress;
 drop table if exists Address;
 drop table if exists States;
 drop table if exists Country;
 drop table if exists PortAsset;
-drop table if exists Asset;
 drop table if exists Portfolio;
+drop table if exists Asset;
 drop table if exists Person;
 
 
@@ -48,8 +49,9 @@ constraint uniqueValues unique (portCode)
  
 create table Country (
 countryID integer not null primary key auto_increment unique,
-countryName varchar(200) not null
-)engine=InnoDB,collate=latin1_general_cs; 
+countryName varchar(200) not null,
+countryAbbreviation varchar(2) not null
+)engine=InnoDB, collate=latin1_general_cs;
 
  create table States (
 stateID integer not null primary key auto_increment unique,
@@ -64,10 +66,10 @@ stateID integer not null,
 countryID integer,
 street varchar(255),
 city varchar(100) , 
-zipcode varchar(100), 
+zipcode varchar(20), 
 foreign key (personID) references Person(personID),
 foreign key (stateID) references States(stateID),
-foreign key (countryID) references Country(countryID)
+foreign key (countryID) references Countries(countryID)
 )engine=InnoDB,collate=latin1_general_cs;  
 
 
@@ -75,7 +77,7 @@ create table PortAsset (
 portAssetID Integer not null primary key auto_increment unique,
 assetID integer not null,
 portfolioID integer not null,
-portAssetValue double not null, #for share price or percent investment or totalval of deposit
+portAssetValue double not null, # of shares or percent investment owned or balance
 foreign key (assetID) references Asset(assetID),
 foreign key (portfolioID) references Portfolio(portfolioID)
 ) engine=InnoDB,collate=latin1_general_cs; 
@@ -138,10 +140,8 @@ insert into States (stateAbbreviation, stateName) value ('WA', 'Washington');
 insert into States (stateAbbreviation, stateName) value ('WV', 'West Virgina');
 insert into States (stateAbbreviation, stateName) value ('WI', 'Wisconsin');
 insert into States (stateAbbreviation, stateName) value ('WY', 'Wyoming');
-insert into Country (countryName) value ('United States');
 
-
-
+insert into Country (countryName, countryAbbreviation) value ('United States', 'US');
 
 
 

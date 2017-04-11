@@ -1,4 +1,4 @@
-package obr; //DO NOT CHANGE THIS
+package com.sdb; //DO NOT CHANGE THIS
 //com.sdb
 import java.sql.Connection;
 import java.sql.DriverManager;
@@ -35,7 +35,7 @@ public class PortfolioData {
 		}
 
 		try {
-			conn = DriverManager.getConnection(DatabaseInfo.url, DatabaseInfo.username, DatabaseInfo.password);
+			conn = DriverManager.getConnection(obr.DatabaseInfo.url, obr.DatabaseInfo.username, obr.DatabaseInfo.password);
 		} catch (SQLException e) {
 			System.out.println("SQLException: ");
 			e.printStackTrace();
@@ -51,30 +51,6 @@ public class PortfolioData {
 		connection();
 
 		PreparedStatement ps = null;
-
-		String query = "DELETE FROM Portfolio";
-
-		try{
-			ps = conn.prepareStatement(query);
-			ps.executeUpdate();
-		}catch (SQLException e) {
-			System.out.println("SQLException: ");
-			e.printStackTrace();
-			throw new RuntimeException(e);
-		}
-
-		String query2 = "DELETE * FROM Person";
-
-		try{
-			ps = conn.prepareStatement(query2);
-			ps.executeUpdate();
-
-		}catch(SQLException e) {
-			System.out.println("SQLException: ");
-			e.printStackTrace();
-			throw new RuntimeException();
-		}
-
 		String query3 = "DELETE FROM Address";
 
 		try{
@@ -85,7 +61,7 @@ public class PortfolioData {
 			e.printStackTrace();
 			throw new RuntimeException();
 		}
-
+		
 		String query4 = "DELETE FROM EmailAddress";
 
 		try{
@@ -97,6 +73,33 @@ public class PortfolioData {
 			e.printStackTrace();
 			throw new RuntimeException();
 		}
+		
+		String query = "DELETE FROM Portfolio";
+
+		try{
+			ps = conn.prepareStatement(query);
+			ps.executeUpdate();
+		}catch (SQLException e) {
+			System.out.println("SQLException: ");
+			e.printStackTrace();
+			throw new RuntimeException(e);
+		}
+
+		String query2 = "DELETE FROM Person";
+
+		try{
+			ps = conn.prepareStatement(query2);
+			ps.executeUpdate();
+
+		}catch(SQLException e) {
+			System.out.println("SQLException: ");
+			e.printStackTrace();
+			throw new RuntimeException();
+		}
+
+	
+
+
 	}
 
 	/**
@@ -206,13 +209,13 @@ public class PortfolioData {
 			ps.setString(1, personCode);
 			ps.setString(2, lastName);
 			ps.setString(3, firstName);
-			if(secBrokerId.equals("")) {
+			if(secBrokerId.equals("") || secBrokerId == null) {
 				ps.setNull(4, Types.VARCHAR);
 			}
 			else {
 				ps.setString(4, secBrokerId);
 			}
-			if(brokerType.equals("")) {
+			if(brokerType.equals("") || brokerType == null) {
 				ps.setNull(5, Types.VARCHAR);
 			}
 			else{
@@ -226,20 +229,35 @@ public class PortfolioData {
 			throw new RuntimeException(e);
 		}
 		//retrieves personID to insert person information into Person table
+//		try{
+//			ps = conn.prepareStatement("SELECT LAST_INSERT_ID()");
+//			rs = ps.executeQuery();
+//			while(rs.next()) {
+//				personID = rs.getInt("LAST_INSERT_ID()");
+//			}
+//		}catch (SQLException e) {
+//			System.out.println("SQLException: ");
+//			e.printStackTrace();
+//			throw new RuntimeException(e);
+//		}
+		
+		String queryt = "SELECT personID FROM Person WHERE personCode = ?";
+		
 		try{
-			ps = conn.prepareStatement("SELECT LAST_INSERT_ID()");
+			ps = conn.prepareStatement(queryt);
+			ps.setString(1, personCode);
 			rs = ps.executeQuery();
 			while(rs.next()) {
-				personID = rs.getInt("LAST_INSERT_ID()");
+				personID = rs.getInt("personID");
 			}
-		}catch (SQLException e) {
+		}catch(SQLException e) {
 			System.out.println("SQLException: ");
 			e.printStackTrace();
 			throw new RuntimeException(e);
 		}
-
+		
 		//retrieves state for address
-		String query2 = "SELECT stateID FROM States WHERE stateAbbreviation = ?";
+		String query2 = "SELECT stateID FROM States WHERE stateName = ?";
 
 		int stateID = 0;
 
@@ -312,7 +330,7 @@ public class PortfolioData {
 	 * @param personCode
 	 * @param email
 	 */
-	public static void addEmail(String personCode, List<String> email) {
+	public static void addEmail(String personCode, String email) {
 
 		connection();
 
@@ -341,8 +359,8 @@ public class PortfolioData {
 			throw new RuntimeException(e);
 		}
 		//inserts emailAddresses into EmailAddress table
-		for(String em: email) {
-			if(em.equals("")) {
+//		for(String em: email) {
+			if(email.equals("")) {
 			}
 			else{
 				String query2 = "INSERT INTO EmailAddress (emailAddress, personID) VALUES (?,?)";
@@ -350,7 +368,7 @@ public class PortfolioData {
 				try{
 					ps = conn.prepareStatement(query2);
 
-					ps.setString(1, em);
+					ps.setString(1, email);
 					ps.setInt(2, personID);
 					ps.executeUpdate();
 				}
@@ -360,7 +378,7 @@ public class PortfolioData {
 					throw new RuntimeException(e);
 				}
 			}
-		}
+//		}
 
 		try{
 			ps.close();
@@ -379,21 +397,22 @@ public class PortfolioData {
 		connection();
 
 		PreparedStatement ps = null;
-
-		String query = "DELETE FROM Asset";
+		String query2 = "DELETE FROM PortAsset";
 
 		try{
-			ps = conn.prepareStatement(query);
+			ps = conn.prepareStatement(query2);
 			ps.executeUpdate();
+			
 		}catch (SQLException e) {
 			System.out.println("SQLException: ");
 			e.printStackTrace();
 			throw new RuntimeException(e);
 		}
-		String query2 = "DELETE FROM PortAsset";
+		
+		String query = "DELETE FROM Asset";
 
 		try{
-			ps = conn.prepareStatement(query2);
+			ps = conn.prepareStatement(query);
 			ps.executeUpdate();
 			ps.close();
 			conn.close();
@@ -402,6 +421,7 @@ public class PortfolioData {
 			e.printStackTrace();
 			throw new RuntimeException(e);
 		}
+	
 	}
 
 	/**

@@ -44,6 +44,13 @@ public class Data_Converter {
 			e.printStackTrace();
 			throw new RuntimeException(e);
 		}
+		try { 
+			conn.close();
+		} catch (SQLException e) {
+			System.out.println("SQLException: ");
+			e.printStackTrace();
+			throw new RuntimeException(e);
+		}
 		
 		//reads file
 		BufferedReader reader = null;
@@ -113,8 +120,8 @@ public class Data_Converter {
 							email.add("");
 						}
 
-						pd.addPerson(personCode, firstName, lastName, street, city, state, zipCode, country, brokerType, secID);
-						pd.addEmail(personCode, email);
+						//pd.addPerson(personCode, firstName, lastName, street, city, state, zipCode, country, brokerType, secID);
+						//pd.addEmail(personCode, email);
 					}
 				}
 				counter++;
@@ -177,7 +184,7 @@ public class Data_Converter {
 							betaMeasure = Double.parseDouble(assets_arr[5]);
 							stockSymbol = assets_arr[6];
 							sharePrice = Double.parseDouble(assets_arr[7]);
-							pd.addStock(assetCode, label, quarterlyDividend, BRR, betaMeasure, stockSymbol, sharePrice);
+							//pd.addStock(assetCode, label, quarterlyDividend, BRR, betaMeasure, stockSymbol, sharePrice);
 						}
 						else if (type.equals("P")){
 							Private_Investments b;
@@ -187,13 +194,13 @@ public class Data_Converter {
 							BRR=(tempBRR)/100;
 							omegaMeasure = Double.parseDouble(assets_arr[5]);
 							totalValue = Double.parseDouble(assets_arr[6]);
-							pd.addPrivateInvestment(assetCode, label, quarterlyDividend, BRR, omegaMeasure, totalValue);
+							//pd.addPrivateInvestment(assetCode, label, quarterlyDividend, BRR, omegaMeasure, totalValue);
 						}
 						else if (type.equals("D")){
 							Deposit_Account b;
 							label = assets_arr[2];
 							apr = Double.parseDouble(assets_arr[3]);
-							pd.addDepositAccount(assetCode, label, apr);
+							//pd.addDepositAccount(assetCode, label, apr);
 						}
 					}
 				}
@@ -244,6 +251,7 @@ public class Data_Converter {
 							assetList = portArr[4].split(",");
 							
 							//parses through assetList
+
 							
 						
 						//Adds the information to a list of Portfolios
@@ -260,6 +268,17 @@ public class Data_Converter {
 									pd.addAsset(portCode, tempAsset[0], value);
 								}
 						}
+
+							for(int i = 0; i < assetList.length; i++) {
+									//splits each asset at its type and value
+									String tempAsset[] = assetList[i].split(":");
+									double value = Double.parseDouble(tempAsset[1]);
+									//pd.addAsset(portCode, tempAsset[0], value);
+							}
+						
+						//Adds the information to a list of Portfolios
+							//pd.addPortfolio(portCode, ownerCode, managerCode, benCode);
+
 					}
 				}
 				counter3++;
@@ -281,6 +300,7 @@ public class Data_Converter {
 
 	
 	//runs program
+
 //	public static void main(String args[]){	
 //		dataParser();
 ////		JSONWriter thing = new JSONWriter();
@@ -291,6 +311,18 @@ public class Data_Converter {
 ////		thing2.xmlAssetConverter(assetInfo);	
 //	}
 }
+
+	//public static void main(String args[]){	
+		//dataParser();
+//		JSONWriter thing = new JSONWriter();
+//		thing.JSONConverterP(perInfo);
+//		XMLWriter thing2= new XMLWriter();
+//		thing2.xmlPersonConverter(perInfo);
+//		thing.JSONconverterA(assetInfo);
+//		thing2.xmlAssetConverter(assetInfo);	
+	
+//}
+
 
 
 

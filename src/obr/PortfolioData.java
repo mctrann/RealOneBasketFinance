@@ -92,6 +92,7 @@ public class PortfolioData {
 			ps = conn.prepareStatement(query4);
 			ps.executeUpdate();
 			ps.close();
+			conn.close();
 		}catch(SQLException e) {
 			System.out.println("SQLException: ");
 			e.printStackTrace();
@@ -298,6 +299,10 @@ public class PortfolioData {
 			ps.executeUpdate();
 			ps.close();
 			conn.close();
+<<<<<<< Updated upstream
+=======
+			rs.close();
+>>>>>>> Stashed changes
 		}
 		catch (SQLException e) {
 			System.out.println("SQLException: ");
@@ -365,6 +370,10 @@ public class PortfolioData {
 		try{
 			ps.close();
 			conn.close();
+<<<<<<< Updated upstream
+=======
+			rs.close();
+>>>>>>> Stashed changes
 		}catch (SQLException e) {
 			System.out.println("SQLException: ");
 			e.printStackTrace();
@@ -766,7 +775,7 @@ public class PortfolioData {
 		try{
 			ps = conn.prepareStatement(query3);
 			ps.setInt(1, assetID);
-			ps.setInt(2, portfolioID);
+			ps.setInt(2, portfolioID);2
 			ps.setDouble(3, value);
 			ps.executeUpdate();
 			ps.close();

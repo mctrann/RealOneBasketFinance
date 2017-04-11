@@ -14,6 +14,7 @@ import java.util.Map.Entry;
 public class DataReceiver {
 	static Connection conn=null;
 	private static List<Assets> asset= new ArrayList<Assets>();
+	
 	public static void connection() {
 		try {
 			Class.forName("com.mysql.jdbc.Driver").newInstance();
@@ -479,6 +480,7 @@ public class DataReceiver {
 									Stocks s = new Stocks ((Stocks) asset.get(i));
 									s.setSharesOwned(entry.getValue());
 									a.add(s);	
+									PortfolioData d = new PortfolioData();
 
 								}
 							}

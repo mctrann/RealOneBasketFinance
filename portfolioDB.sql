@@ -49,7 +49,8 @@ constraint uniqueValues unique (portCode)
  
 create table Country (
 countryID integer not null primary key auto_increment unique,
-countryName varchar(200) not null
+countryName varchar(200) not null,
+countryAbbreviation varchar(2) not null
 )engine=InnoDB, collate=latin1_general_cs;
 
  create table States (
@@ -140,7 +141,7 @@ insert into States (stateAbbreviation, stateName) value ('WV', 'West Virgina');
 insert into States (stateAbbreviation, stateName) value ('WI', 'Wisconsin');
 insert into States (stateAbbreviation, stateName) value ('WY', 'Wyoming');
 
-insert into Country (countryName) value ('United States');
+insert into Country (countryName, countryAbbreviation) value ('United States', 'US');
 
 
 

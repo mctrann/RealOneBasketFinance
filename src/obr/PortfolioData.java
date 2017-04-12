@@ -193,6 +193,7 @@ public class PortfolioData {
 	 * @param country
 	 * @param brokerType
 	 */
+	
 	@SuppressWarnings("null")
 	public static void addPerson(String personCode, String firstName, String lastName, String street, String city, String state, String zip, String country, String brokerType, String secBrokerId) {
 		connection();
@@ -207,13 +208,13 @@ public class PortfolioData {
 			ps.setString(1, personCode);
 			ps.setString(2, lastName);
 			ps.setString(3, firstName);
-			if(secBrokerId.equals("")) {
+			if(secBrokerId.equals("") || secBrokerId == null) {
 				ps.setNull(4, Types.VARCHAR);
 			}
 			else {
 				ps.setString(4, secBrokerId);
 			}
-			if(brokerType.equals("")) {
+			if(brokerType.equals("") || brokerType == null) {
 				ps.setNull(5, Types.VARCHAR);
 			}
 			else{
@@ -240,13 +241,22 @@ public class PortfolioData {
 		}
 
 		//retrieves state for address
-		String query2 = "SELECT stateID FROM States WHERE stateAbbreviation = ?";
-
+		String query2 = "SELECT stateID FROM States WHERE stateAbbreviation = ? OR stateName = ?";
+		String newState;
+		if(state.length() <= 2) {
+			newState = state.toUpperCase();
+		}
+		else {
+			newState = Character.toUpperCase(state.charAt(0)) + state.substring(1);
+			
+		}
+		
 		int stateID = 0;
 
 		try {
 			ps = conn.prepareStatement(query2);
-			ps.setString(1, state);
+			ps.setString(1, newState);
+			ps.setString(2,newState);
 			rs = ps.executeQuery();
 
 			while(rs.next()) {
@@ -299,10 +309,8 @@ public class PortfolioData {
 			ps.executeUpdate();
 			ps.close();
 			conn.close();
-<<<<<<< Updated upstream
-=======
 			rs.close();
->>>>>>> Stashed changes
+
 		}
 		catch (SQLException e) {
 			System.out.println("SQLException: ");
@@ -370,10 +378,9 @@ public class PortfolioData {
 		try{
 			ps.close();
 			conn.close();
-<<<<<<< Updated upstream
-=======
+
 			rs.close();
->>>>>>> Stashed changes
+
 		}catch (SQLException e) {
 			System.out.println("SQLException: ");
 			e.printStackTrace();
@@ -775,7 +782,7 @@ public class PortfolioData {
 		try{
 			ps = conn.prepareStatement(query3);
 			ps.setInt(1, assetID);
-			ps.setInt(2, portfolioID);2
+			ps.setInt(2, portfolioID);
 			ps.setDouble(3, value);
 			ps.executeUpdate();
 			ps.close();

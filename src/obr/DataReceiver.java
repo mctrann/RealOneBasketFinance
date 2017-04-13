@@ -480,8 +480,6 @@ public class DataReceiver {
 									Stocks s = new Stocks ((Stocks) asset.get(i));
 									s.setSharesOwned(entry.getValue());
 									a.add(s);	
-									PortfolioData d = new PortfolioData();
-
 								}
 							}
 						}

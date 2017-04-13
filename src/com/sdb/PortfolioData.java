@@ -109,7 +109,6 @@ public class PortfolioData {
 	 */
 	public static void removePerson(String personCode) {
 		connection();
-
 		PreparedStatement ps = null;
 
 		String query = "DELETE FROM Portfolio WHERE managerID =? ";
@@ -195,11 +194,13 @@ public class PortfolioData {
 	 * @param country
 	 * @param brokerType
 	 */
-	@SuppressWarnings("null")
+	
 	public static void addPerson(String personCode, String firstName, String lastName, String street, String city, String state, String zip, String country, String brokerType, String secBrokerId) {
 		connection();
+		System.out.println("AddPerson");
 		PreparedStatement ps = null;
 		ResultSet rs = null;
+		System.out.println(personCode + " " + lastName + " " + firstName);
 
 		String query = "INSERT INTO Person (personCode, lastName, firstName, secID, personType) VALUES (?,?,?,?,?)";
 		int personID = 0;
@@ -209,13 +210,15 @@ public class PortfolioData {
 			ps.setString(1, personCode);
 			ps.setString(2, lastName);
 			ps.setString(3, firstName);
-			if(secBrokerId.equals("") || secBrokerId == null) {
+			
+			
+			if(secBrokerId == null) {
 				ps.setNull(4, Types.VARCHAR);
 			}
 			else {
 				ps.setString(4, secBrokerId);
 			}
-			if(brokerType.equals("") || brokerType == null) {
+			if(brokerType == null) {
 				ps.setNull(5, Types.VARCHAR);
 			}
 			else{
@@ -229,17 +232,18 @@ public class PortfolioData {
 			throw new RuntimeException(e);
 		}
 		//retrieves personID to insert person information into Person table
-//		try{
-//			ps = conn.prepareStatement("SELECT LAST_INSERT_ID()");
-//			rs = ps.executeQuery();
-//			while(rs.next()) {
-//				personID = rs.getInt("LAST_INSERT_ID()");
-//			}
-//		}catch (SQLException e) {
-//			System.out.println("SQLException: ");
-//			e.printStackTrace();
-//			throw new RuntimeException(e);
-//		}
+		try{
+			ps = conn.prepareStatement("SELECT LAST_INSERT_ID()");
+			rs = ps.executeQuery();
+			while(rs.next()) {
+				personID = rs.getInt("LAST_INSERT_ID()");
+				System.out.println(personID);
+		}
+		}catch (SQLException e) {
+			System.out.println("SQLException: ");
+			e.printStackTrace();
+			throw new RuntimeException(e);
+		}
 		
 		String queryt = "SELECT personID FROM Person WHERE personCode = ?";
 		
@@ -257,24 +261,65 @@ public class PortfolioData {
 		}
 		
 		//retrieves state for address
-		String query2 = "SELECT stateID FROM States WHERE stateName = ?";
-
 		int stateID = 0;
+		boolean notExist=true;
+		while(notExist){
+			String query2 = "SELECT stateID FROM States WHERE stateAbbreviation = ? OR stateName = ?";
+			
+			String newState;
+			//captializes state to match up table
+			newState = state.toUpperCase();		
+			try {
+				ps = conn.prepareStatement(query2);
+				ps.setString(1, newState);
+				ps.setString(2, newState);
+				rs = ps.executeQuery();
 
-		try {
-			ps = conn.prepareStatement(query2);
-			ps.setString(1, state);
-			rs = ps.executeQuery();
+				while(rs.next()) {
+					stateID = rs.getInt("stateID");
+				}
+			}
+			catch (SQLException e) {
+//				System.out.println("SQLException: ");
+//				e.printStackTrace();
+//				throw new RuntimeException(e);
+				if (stateID==0){
+					if (newState.length()<=2){
+						String queryInState="INSERT into States (stateAbbreviation) VALUE (?)";
+						try {
+							ps = conn.prepareStatement(queryInState);
+							ps.setString(1, newState);
+							ps.executeUpdate();
+						}
+						catch (SQLException D) {
+							System.out.println("SQLException: ");
+							D.printStackTrace();
+							throw new RuntimeException(D);
+						}	
+					}
+					else{
+						String queryInState="INSERT INTO States (stateName) value ?";
+						try {
+							ps = conn.prepareStatement(queryInState);
+							ps.setString(1, newState);
+							ps.executeUpdate();
+						}
+						catch (SQLException d) {
+							System.out.println("SQLException: ");
+							d.printStackTrace();
+							throw new RuntimeException(d);
+						}
+				
+					}
 
-			while(rs.next()) {
-				stateID = rs.getInt("stateID");
+				}
+			}
+			if (stateID>0){
+				notExist=false;
 			}
 		}
-		catch (SQLException e) {
-			System.out.println("SQLException: ");
-			e.printStackTrace();
-			throw new RuntimeException(e);
-		}
+		
+		
 		//retrieves country for address
 		String query3 = "SELECT countryID FROM Country WHERE countryName = ?";
 
@@ -298,6 +343,7 @@ public class PortfolioData {
 			throw new RuntimeException(e);
 		}
 		//inserts address information into address table
+		
 		String query4 = "INSERT INTO Address(personID, stateID, countryID, street, city, zipcode) VALUES (?,?,?,?,?,?)";
 		try{
 			ps = conn.prepareStatement(query4);

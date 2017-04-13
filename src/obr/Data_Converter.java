@@ -62,8 +62,7 @@ public class Data_Converter {
 		}
 		
 		//Creates a PorfolioData object
-		PortfolioData pd = new PortfolioData();
-		
+		//PortfolioData pd = new PortfolioData();
 		//skips first line that is an integer
 		String line1 = null;
 		int startLine = 1;
@@ -255,7 +254,7 @@ public class Data_Converter {
 							
 						
 						//Adds the information to a list of Portfolios
-							pd.addPortfolio(portCode, ownerCode, managerCode, benCode);
+							//pd.addPortfolio(portCode, ownerCode, managerCode, benCode);
 							
 							for(int i = 0; i < assetList.length; i++) {
 								//splits each asset at its type and value
@@ -265,7 +264,7 @@ public class Data_Converter {
 								}
 								else{
 									double value = Double.parseDouble(tempAsset[1]);
-									pd.addAsset(portCode, tempAsset[0], value);
+									//pd.addAsset(portCode, tempAsset[0], value);
 								}
 						}
 

@@ -173,10 +173,8 @@ public class PortfolioData {
 
 	public static void addPerson(String personCode, String firstName, String lastName, String street, String city, String state, String zip, String country, String brokerType, String secBrokerId) {
 		Connection conn = ConnectionInfo.connection();
-		System.out.println("AddPerson");
 		PreparedStatement ps = null;
 		ResultSet rs = null;
-		System.out.println(personCode + " " + lastName + " " + firstName);
 
 		String query = "INSERT INTO Person (personCode, lastName, firstName, secID, personType) VALUES (?,?,?,?,?)";
 		int personID = 0;

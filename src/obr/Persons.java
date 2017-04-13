@@ -39,6 +39,9 @@ public abstract class Persons {
 		return email;
 	}
 	
+	public Address getAddress() {
+		return address;
+	}
 	//
 	public abstract String getSecID();
 	

@@ -8,6 +8,8 @@ import java.sql.SQLException;
 import java.sql.Types;
 import java.util.List;
 
+import obr.ConnectionInfo;
+
 /**
  * This is a collection of utility methods that define a general API for
  * interacting with the database supporting this application.
@@ -15,40 +17,14 @@ import java.util.List;
  */
 public class PortfolioData {
 	//makes connection throughout class
-	static Connection conn=null;
-	//connection method
-	public static void connection() {
-		try {
-			Class.forName("com.mysql.jdbc.Driver").newInstance();
-		} catch (InstantiationException e) {
-			System.out.println("InstantiationException: ");
-			e.printStackTrace();
-			throw new RuntimeException(e);
-		} catch (IllegalAccessException e) {
-			System.out.println("IllegalAccessException: ");
-			e.printStackTrace();
-			throw new RuntimeException(e);
-		} catch (ClassNotFoundException e) {
-			System.out.println("ClassNotFoundException: ");
-			e.printStackTrace();
-			throw new RuntimeException(e);
-		}
-
-		try {
-			conn = DriverManager.getConnection(obr.DatabaseInfo.url, obr.DatabaseInfo.username, obr.DatabaseInfo.password);
-		} catch (SQLException e) {
-			System.out.println("SQLException: ");
-			e.printStackTrace();
-			throw new RuntimeException(e);
-		}
-	}
+	//static Connection conn=null;
 
 
 	/**
 	 * Method that removes every person record from the database
 	 */
 	public static void removeAllPersons() {
-		connection();
+		Connection conn = ConnectionInfo.connection();
 
 		PreparedStatement ps = null;
 		String query3 = "DELETE FROM Address";
@@ -108,7 +84,7 @@ public class PortfolioData {
 	 * @param personCode
 	 */
 	public static void removePerson(String personCode) {
-		connection();
+		Connection conn = ConnectionInfo.connection();
 		PreparedStatement ps = null;
 
 		String query = "DELETE FROM Portfolio WHERE managerID =? ";
@@ -196,7 +172,7 @@ public class PortfolioData {
 	 */
 
 	public static void addPerson(String personCode, String firstName, String lastName, String street, String city, String state, String zip, String country, String brokerType, String secBrokerId) {
-		connection();
+		Connection conn = ConnectionInfo.connection();
 		System.out.println("AddPerson");
 		PreparedStatement ps = null;
 		ResultSet rs = null;
@@ -378,7 +354,7 @@ public class PortfolioData {
 	 */
 	public static void addEmail(String personCode, String email) {
 
-		connection();
+		Connection conn = ConnectionInfo.connection();
 
 
 		PreparedStatement ps = null;
@@ -440,7 +416,7 @@ public class PortfolioData {
 	 * Removes all asset records from the database
 	 */
 	public static void removeAllAssets() {
-		connection();
+		Connection conn  = ConnectionInfo.connection();
 
 		PreparedStatement ps = null;
 		String query2 = "DELETE FROM PortAsset";
@@ -476,7 +452,7 @@ public class PortfolioData {
 	 * @param assetCode
 	 */
 	public static void removeAsset(String assetCode) {
-		connection();
+		Connection conn = ConnectionInfo.connection();
 
 		PreparedStatement ps = null;
 
@@ -515,7 +491,7 @@ public class PortfolioData {
 	 */
 
 	public static void addDepositAccount(String assetCode, String label, double apr) {
-		connection();
+		Connection conn = ConnectionInfo.connection();
 
 		String query = "INSERT INTO Asset (assetCode, assetName, assetType, apr, quarterlyDividend, baseRateReturn, beta, omega, stockSymbol, totalValue, sharePrice) VALUES (?,?,?,?,?,?,?,?,?,?,?)";
 
@@ -560,7 +536,7 @@ public class PortfolioData {
 	public static void addPrivateInvestment(String assetCode, String label, Double quarterlyDividend, 
 			Double baseRateOfReturn, Double baseOmega, Double totalValue) {
 
-		connection();
+		Connection conn = ConnectionInfo.connection();
 		String query = "INSERT INTO Asset (assetCode, assetName, assetType, apr, quarterlyDividend, baseRateReturn, beta, omega, stockSymbol, totalValue, sharePrice) VALUES (?,?,?,?,?,?,?,?,?,?,?)";
 
 		PreparedStatement ps = null;
@@ -608,7 +584,7 @@ public class PortfolioData {
 
 	public static void addStock(String assetCode, String label, Double quarterlyDividend, 
 			Double baseRateOfReturn, Double beta, String stockSymbol, Double sharePrice) {
-		connection();
+		Connection conn = ConnectionInfo.connection();
 
 		String query = "INSERT INTO Asset (assetCode, assetName, assetType, apr, quarterlyDividend, baseRateReturn, beta, omega, stockSymbol, totalValue, sharePrice) VALUES (?,?,?,?,?,?,?,?,?,?,?)";
 
@@ -642,13 +618,24 @@ public class PortfolioData {
 	 * Removes all portfolio records from the database
 	 */
 	public static void removeAllPortfolios() {
-		connection();
+		Connection conn = ConnectionInfo.connection();
 		PreparedStatement ps=null;
-
-		String query = "DELETE FROM Portfolio";
+		
+		String query2 = "Delete FROM PortAsset";
+		try{
+			ps = conn.prepareStatement(query2);
+			ps.executeUpdate();
+			ps.close();
+		}catch(SQLException e) {
+			System.out.println("SQLException: ");
+			e.printStackTrace();
+			throw new RuntimeException(e);
+		}
+		String query3 = "DELETE FROM Portfolio";
 
 		try{
-			ps = conn.prepareStatement(query);
+			ps = conn.prepareStatement(query3);
+			ps.executeUpdate();
 			ps.close();
 			conn.close();
 		}catch (SQLException e) {
@@ -664,7 +651,7 @@ public class PortfolioData {
 	 * @param portfolioCode
 	 */
 	public static void removePortfolio(String portfolioCode) {
-		connection();
+		Connection conn = ConnectionInfo.connection();
 
 		PreparedStatement ps = null;
 
@@ -690,7 +677,7 @@ public class PortfolioData {
 	 * @param beneficiaryCode
 	 */
 	public static void addPortfolio(String portfolioCode, String ownerCode, String managerCode, String beneficiaryCode) {
-		connection();
+		Connection conn = ConnectionInfo.connection();
 
 		PreparedStatement ps = null;
 		ResultSet rs = null;
@@ -787,7 +774,7 @@ public class PortfolioData {
 	 * @param value
 	 */
 	public static void addAsset(String portfolioCode, String assetCode, double value) {
-		connection();
+		Connection conn = ConnectionInfo.connection();
 
 		PreparedStatement ps = null;
 		ResultSet rs = null;

@@ -1,14 +1,9 @@
 package obr;
 
-import java.sql.Connection;
-import java.sql.DriverManager;
-import java.sql.SQLException;
+
 import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.List;
-
-import com.sdb.PortfolioData;
-
 
 public class PortfolioWriter {
 	//lists writer uses to make portfolio summary, a portfolio list and a person list
@@ -112,7 +107,6 @@ public class PortfolioWriter {
 		perInfo.addAll(dr.getPerson());
 		portInfo.addAll(dr.getPortfolio());
 		//writes the portfolio summary 
-
 		PortfolioWrite(portInfo,perInfo);
 
 

@@ -46,7 +46,7 @@ public class Deposit_Account extends Assets{
 	//method to calculate the annual return
 	public double getAnnualReturn() {
 		double apy = 0.0;
-		apy = Math.pow(Math.E, getAPR()/100) - 1;
+		apy = Math.pow(Math.E, getAPR()) - 1;
 		return (apy * getBalance());
 	}
 	

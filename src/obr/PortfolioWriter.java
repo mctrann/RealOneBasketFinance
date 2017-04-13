@@ -1,14 +1,9 @@
 package obr;
 
-import java.sql.Connection;
-import java.sql.DriverManager;
-import java.sql.SQLException;
+
 import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.List;
-
-import com.sdb.PortfolioData;
-
 
 public class PortfolioWriter {
 	//lists writer uses to make portfolio summary, a portfolio list and a person list
@@ -56,7 +51,6 @@ public class PortfolioWriter {
 			System.out.println(String.format("%-12s %25s %24s %15s %15s %16s %15s %15s", portInfo.get(i).getPortfolioCode(), portInfo.get(i).getName(portInfo.get(i).getOwnerCode(), perInfo), portInfo.get(i).getName(portInfo.get(i).getManagerCode(), perInfo), "$" +df.format(localFees), 
 					"$" + df.format(localCommissions), dflong.format(portInfo.get(i).getRisk(portInfo.get(i).getAssetList())), "$" + df.format(localReturnValue), "$" + df.format(localTotalValue))); 
 		}
-
 		
 		//prints total fees, commissions, return, and value of all portfolios
 		System.out.println("----------------------------------------------------------------------------------------------------------------------------------------------------");
@@ -108,6 +102,7 @@ public class PortfolioWriter {
 		portInfo.addAll(dr.getPortfolio());
 		//writes the portfolio summary 
 		PortfolioWrite(portInfo,perInfo);
+
 
 	}
 }

@@ -17,15 +17,15 @@ import obr.ConnectionInfo;
  */
 public class PortfolioData {
 	//makes connection throughout class
-	
-	static Connection conn=null;
-	//connection method
+	//static Connection conn=null;
+
 
 	/**
 	 * Method that removes every person record from the database
 	 */
 	public static void removeAllPersons() {
-		ConnectionInfo.connection();
+		Connection conn = ConnectionInfo.connection();
+
 		PreparedStatement ps = null;
 		String query3 = "DELETE FROM Address";
 
@@ -37,7 +37,7 @@ public class PortfolioData {
 			e.printStackTrace();
 			throw new RuntimeException();
 		}
-		
+
 		String query4 = "DELETE FROM EmailAddress";
 
 		try{
@@ -49,7 +49,7 @@ public class PortfolioData {
 			e.printStackTrace();
 			throw new RuntimeException();
 		}
-		
+
 		String query = "DELETE FROM Portfolio";
 
 		try{
@@ -72,6 +72,10 @@ public class PortfolioData {
 			e.printStackTrace();
 			throw new RuntimeException();
 		}
+
+
+
+
 	}
 
 	/**
@@ -80,7 +84,7 @@ public class PortfolioData {
 	 * @param personCode
 	 */
 	public static void removePerson(String personCode) {
-		ConnectionInfo.connection();
+		Connection conn = ConnectionInfo.connection();
 		PreparedStatement ps = null;
 		String query = "DELETE FROM Portfolio WHERE managerID =? ";
 
@@ -165,12 +169,11 @@ public class PortfolioData {
 	 * @param country
 	 * @param brokerType
 	 */
-	
+
 	public static void addPerson(String personCode, String firstName, String lastName, String street, String city, String state, String zip, String country, String brokerType, String secBrokerId) {
-		ConnectionInfo.connection();
+		Connection conn = ConnectionInfo.connection();
 		PreparedStatement ps = null;
 		ResultSet rs = null;
-		System.out.println(personCode + " " + lastName + " " + firstName);
 
 		String query = "INSERT INTO Person (personCode, lastName, firstName, secID, personType) VALUES (?,?,?,?,?)";
 		int personID = 0;
@@ -180,8 +183,8 @@ public class PortfolioData {
 			ps.setString(1, personCode);
 			ps.setString(2, lastName);
 			ps.setString(3, firstName);
-			
-			
+
+
 			if(secBrokerId == null) {
 				ps.setNull(4, Types.VARCHAR);
 			}
@@ -208,15 +211,15 @@ public class PortfolioData {
 			while(rs.next()) {
 				personID = rs.getInt("LAST_INSERT_ID()");
 				System.out.println(personID);
-		}
+			}
 		}catch (SQLException e) {
 			System.out.println("SQLException: ");
 			e.printStackTrace();
 			throw new RuntimeException(e);
 		}
-		
+
 		String queryt = "SELECT personID FROM Person WHERE personCode = ?";
-		
+
 		try{
 			ps = conn.prepareStatement(queryt);
 			ps.setString(1, personCode);
@@ -229,13 +232,13 @@ public class PortfolioData {
 			e.printStackTrace();
 			throw new RuntimeException(e);
 		}
-		
+
 		//retrieves state for address
 		int stateID = 0;
 		boolean notExist=true;
 		while(notExist){
 			String query2 = "SELECT stateID FROM States WHERE stateAbbreviation = ? OR stateName = ?";
-			
+
 			String newState;
 			//captializes state to match up table
 			newState = state.toUpperCase();		
@@ -245,17 +248,12 @@ public class PortfolioData {
 				ps.setString(2, newState);
 				rs = ps.executeQuery();
 
-				while(rs.next()) {
+				if(rs.next()) {
 					stateID = rs.getInt("stateID");
 				}
-			}
-			catch (SQLException e) {
-//				System.out.println("SQLException: ");
-//				e.printStackTrace();
-//				throw new RuntimeException(e);
-				if (stateID==0){
+				else{
 					if (newState.length()<=2){
-						String queryInState="INSERT into States (stateAbbreviation) VALUE (?)";
+						String queryInState="INSERT INTO States (stateAbbreviation) VALUE (?)";
 						try {
 							ps = conn.prepareStatement(queryInState);
 							ps.setString(1, newState);
@@ -268,7 +266,7 @@ public class PortfolioData {
 						}	
 					}
 					else{
-						String queryInState="INSERT INTO States (stateName) value ?";
+						String queryInState="INSERT INTO States (stateName) VALUE (?)";
 						try {
 							ps = conn.prepareStatement(queryInState);
 							ps.setString(1, newState);
@@ -279,17 +277,22 @@ public class PortfolioData {
 							d.printStackTrace();
 							throw new RuntimeException(d);
 						}
-				
+
 					}
 
 				}
+			}
+			catch (SQLException e) {
+				System.out.println("SQLException: ");
+				e.printStackTrace();
+				throw new RuntimeException(e);
 			}
 			if (stateID>0){
 				notExist=false;
 			}
 		}
-		
-		
+
+
 		//retrieves country for address
 		String query3 = "SELECT countryID FROM Country WHERE countryName = ?";
 
@@ -313,7 +316,7 @@ public class PortfolioData {
 			throw new RuntimeException(e);
 		}
 		//inserts address information into address table
-		
+
 		String query4 = "INSERT INTO Address(personID, stateID, countryID, street, city, zipcode) VALUES (?,?,?,?,?,?)";
 		try{
 			ps = conn.prepareStatement(query4);
@@ -347,7 +350,10 @@ public class PortfolioData {
 	 * @param email
 	 */
 	public static void addEmail(String personCode, String email) {
-		ConnectionInfo.connection();
+
+		Connection conn = ConnectionInfo.connection();
+
+
 		PreparedStatement ps = null;
 		ResultSet rs = null;
 		//retrieves personID to locate email(s)
@@ -372,26 +378,26 @@ public class PortfolioData {
 			throw new RuntimeException(e);
 		}
 		//inserts emailAddresses into EmailAddress table
-//		for(String em: email) {
-			if(email.equals("")) {
-			}
-			else{
-				String query2 = "INSERT INTO EmailAddress (emailAddress, personID) VALUES (?,?)";
+		//		for(String em: email) {
+		if(email.equals("")) {
+		}
+		else{
+			String query2 = "INSERT INTO EmailAddress (emailAddress, personID) VALUES (?,?)";
 
-				try{
-					ps = conn.prepareStatement(query2);
+			try{
+				ps = conn.prepareStatement(query2);
 
-					ps.setString(1, email);
-					ps.setInt(2, personID);
-					ps.executeUpdate();
-				}
-				catch (SQLException e) {
-					System.out.println("SQLException: ");
-					e.printStackTrace();
-					throw new RuntimeException(e);
-				}
+				ps.setString(1, email);
+				ps.setInt(2, personID);
+				ps.executeUpdate();
 			}
-//		}
+			catch (SQLException e) {
+				System.out.println("SQLException: ");
+				e.printStackTrace();
+				throw new RuntimeException(e);
+			}
+		}
+		//		}
 
 		try{
 			ps.close();
@@ -407,7 +413,7 @@ public class PortfolioData {
 	 * Removes all asset records from the database
 	 */
 	public static void removeAllAssets() {
-		ConnectionInfo.connection();
+		Connection conn  = ConnectionInfo.connection();
 
 		PreparedStatement ps = null;
 		String query2 = "DELETE FROM PortAsset";
@@ -415,13 +421,13 @@ public class PortfolioData {
 		try{
 			ps = conn.prepareStatement(query2);
 			ps.executeUpdate();
-			
+
 		}catch (SQLException e) {
 			System.out.println("SQLException: ");
 			e.printStackTrace();
 			throw new RuntimeException(e);
 		}
-		
+
 		String query = "DELETE FROM Asset";
 
 		try{
@@ -434,7 +440,7 @@ public class PortfolioData {
 			e.printStackTrace();
 			throw new RuntimeException(e);
 		}
-	
+
 	}
 
 	/**
@@ -443,7 +449,7 @@ public class PortfolioData {
 	 * @param assetCode
 	 */
 	public static void removeAsset(String assetCode) {
-		ConnectionInfo.connection();
+		Connection conn = ConnectionInfo.connection();
 
 		PreparedStatement ps = null;
 
@@ -482,7 +488,7 @@ public class PortfolioData {
 	 */
 
 	public static void addDepositAccount(String assetCode, String label, double apr) {
-		ConnectionInfo.connection();
+		Connection conn = ConnectionInfo.connection();
 
 		String query = "INSERT INTO Asset (assetCode, assetName, assetType, apr, quarterlyDividend, baseRateReturn, beta, omega, stockSymbol, totalValue, sharePrice) VALUES (?,?,?,?,?,?,?,?,?,?,?)";
 
@@ -527,7 +533,7 @@ public class PortfolioData {
 	public static void addPrivateInvestment(String assetCode, String label, Double quarterlyDividend, 
 			Double baseRateOfReturn, Double baseOmega, Double totalValue) {
 
-		ConnectionInfo.connection();
+		Connection conn = ConnectionInfo.connection();
 		String query = "INSERT INTO Asset (assetCode, assetName, assetType, apr, quarterlyDividend, baseRateReturn, beta, omega, stockSymbol, totalValue, sharePrice) VALUES (?,?,?,?,?,?,?,?,?,?,?)";
 
 		PreparedStatement ps = null;
@@ -575,7 +581,7 @@ public class PortfolioData {
 
 	public static void addStock(String assetCode, String label, Double quarterlyDividend, 
 			Double baseRateOfReturn, Double beta, String stockSymbol, Double sharePrice) {
-		ConnectionInfo.connection();
+		Connection conn = ConnectionInfo.connection();
 
 		String query = "INSERT INTO Asset (assetCode, assetName, assetType, apr, quarterlyDividend, baseRateReturn, beta, omega, stockSymbol, totalValue, sharePrice) VALUES (?,?,?,?,?,?,?,?,?,?,?)";
 
@@ -609,13 +615,24 @@ public class PortfolioData {
 	 * Removes all portfolio records from the database
 	 */
 	public static void removeAllPortfolios() {
-		ConnectionInfo.connection();
+		Connection conn = ConnectionInfo.connection();
 		PreparedStatement ps=null;
-	
-		String query = "DELETE FROM Portfolio";
+		
+		String query2 = "Delete FROM PortAsset";
+		try{
+			ps = conn.prepareStatement(query2);
+			ps.executeUpdate();
+			ps.close();
+		}catch(SQLException e) {
+			System.out.println("SQLException: ");
+			e.printStackTrace();
+			throw new RuntimeException(e);
+		}
+		String query3 = "DELETE FROM Portfolio";
 
 		try{
-			ps = conn.prepareStatement(query);
+			ps = conn.prepareStatement(query3);
+			ps.executeUpdate();
 			ps.close();
 			conn.close();
 		}catch (SQLException e) {
@@ -631,7 +648,7 @@ public class PortfolioData {
 	 * @param portfolioCode
 	 */
 	public static void removePortfolio(String portfolioCode) {
-		ConnectionInfo.connection();
+		Connection conn = ConnectionInfo.connection();
 
 		PreparedStatement ps = null;
 
@@ -657,7 +674,7 @@ public class PortfolioData {
 	 * @param beneficiaryCode
 	 */
 	public static void addPortfolio(String portfolioCode, String ownerCode, String managerCode, String beneficiaryCode) {
-		ConnectionInfo.connection();
+		Connection conn = ConnectionInfo.connection();
 
 		PreparedStatement ps = null;
 		ResultSet rs = null;
@@ -698,7 +715,8 @@ public class PortfolioData {
 		//retrieves personID to find beneficiary of a portfolio
 		String query3 = "SELECT personID FROM Person where personCode = ?";
 		int beneficiaryID = 0;
-		if(beneficiaryCode.equals("")) {
+		//for portfolios who don't have a beneficiary
+		if(beneficiaryCode==null) {
 
 		}
 		else{
@@ -753,7 +771,8 @@ public class PortfolioData {
 	 * @param value
 	 */
 	public static void addAsset(String portfolioCode, String assetCode, double value) {
-		ConnectionInfo.connection();
+		Connection conn = ConnectionInfo.connection();
+
 		PreparedStatement ps = null;
 		ResultSet rs = null;
 		//retrieves portfolioID
@@ -777,7 +796,7 @@ public class PortfolioData {
 		//retrieves assetID  
 		String query2 = "SELECT assetID FROM Asset WHERE assetCode = ?";
 		int assetID = 0;
-		
+
 		try{
 			ps = conn.prepareStatement(query2);
 

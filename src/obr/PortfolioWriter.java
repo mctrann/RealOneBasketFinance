@@ -7,10 +7,14 @@ import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.apache.log4j.BasicConfigurator;
+import org.apache.log4j.Logger;
+
 import com.sdb.PortfolioData;
 
 
 public class PortfolioWriter {
+	static Logger logger = Logger.getLogger(PortfolioWriter.class);
 	//lists writer uses to make portfolio summary, a portfolio list and a person list
 	private static List<Portfolios> portInfo= new ArrayList<Portfolios>();
 	private static List<Persons> perInfo= new ArrayList<Persons>();
@@ -22,6 +26,7 @@ public class PortfolioWriter {
 	private static double totalValue = 0.0; 
 	
 	public static void PortfolioWrite(List<Portfolios>portInfo, List<Persons> perInfo) {
+		logger.info("Portfolio info written to console.");
 		//formats decimals
 		DecimalFormat df = new DecimalFormat("0.00");
 		DecimalFormat dflong = new DecimalFormat("0.0000");
@@ -114,6 +119,8 @@ public class PortfolioWriter {
 		//writes the portfolio summary 
 
 		PortfolioWrite(portInfo,perInfo);
+		
+
 
 
 	}

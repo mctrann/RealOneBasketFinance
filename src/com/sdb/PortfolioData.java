@@ -8,6 +8,10 @@ import java.sql.SQLException;
 import java.sql.Types;
 import java.util.List;
 
+import org.apache.log4j.Logger;
+
+import obr.PortfolioWriter;
+
 /**
  * This is a collection of utility methods that define a general API for
  * interacting with the database supporting this application.
@@ -16,20 +20,22 @@ import java.util.List;
 public class PortfolioData {
 	//makes connection throughout class
 	static Connection conn=null;
+	 static Logger logger = Logger.getLogger(PortfolioData.class);
 	//connection method
 	public static void connection() {
+		logger.info("Connection established");
 		try {
 			Class.forName("com.mysql.jdbc.Driver").newInstance();
 		} catch (InstantiationException e) {
-			System.out.println("InstantiationException: ");
+			logger.error("InstantiationException: ",e);
 			e.printStackTrace();
 			throw new RuntimeException(e);
 		} catch (IllegalAccessException e) {
-			System.out.println("IllegalAccessException: ");
+			logger.error("IllegalAccessException: ",e);
 			e.printStackTrace();
 			throw new RuntimeException(e);
 		} catch (ClassNotFoundException e) {
-			System.out.println("ClassNotFoundException: ");
+			logger.error("ClassNotFoundException: ",e);
 			e.printStackTrace();
 			throw new RuntimeException(e);
 		}
@@ -37,7 +43,7 @@ public class PortfolioData {
 		try {
 			conn = DriverManager.getConnection(obr.DatabaseInfo.url, obr.DatabaseInfo.username, obr.DatabaseInfo.password);
 		} catch (SQLException e) {
-			System.out.println("SQLException: ");
+			logger.error("SQLException: ",e);
 			e.printStackTrace();
 			throw new RuntimeException(e);
 		}
@@ -48,6 +54,7 @@ public class PortfolioData {
 	 * Method that removes every person record from the database
 	 */
 	public static void removeAllPersons() {
+		logger.info("Persons removed.");
 		connection();
 
 		PreparedStatement ps = null;
@@ -57,7 +64,7 @@ public class PortfolioData {
 			ps = conn.prepareStatement(query3);
 			ps.executeUpdate();
 		}catch(SQLException e) {
-			System.out.println("SQLException: ");
+			logger.error("SQLException: ",e);
 			e.printStackTrace();
 			throw new RuntimeException();
 		}
@@ -69,7 +76,7 @@ public class PortfolioData {
 			ps.executeUpdate();
 			ps.close();
 		}catch(SQLException e) {
-			System.out.println("SQLException: ");
+			logger.error("SQLException: ",e);
 			e.printStackTrace();
 			throw new RuntimeException();
 		}
@@ -80,7 +87,7 @@ public class PortfolioData {
 			ps = conn.prepareStatement(query);
 			ps.executeUpdate();
 		}catch (SQLException e) {
-			System.out.println("SQLException: ");
+			logger.error("SQLException: ",e);
 			e.printStackTrace();
 			throw new RuntimeException(e);
 		}
@@ -92,7 +99,7 @@ public class PortfolioData {
 			ps.executeUpdate();
 
 		}catch(SQLException e) {
-			System.out.println("SQLException: ");
+			logger.error("SQLException: ",e);
 			e.printStackTrace();
 			throw new RuntimeException();
 		}
@@ -108,6 +115,7 @@ public class PortfolioData {
 	 * @param personCode
 	 */
 	public static void removePerson(String personCode) {
+		logger.info("Person removed.");
 		connection();
 		PreparedStatement ps = null;
 
@@ -118,7 +126,7 @@ public class PortfolioData {
 			ps.setString(1, personCode);
 			ps.executeUpdate();
 		}catch (SQLException e) {
-			System.out.println("SQLException: ");
+			logger.error("SQLException: ",e);
 			e.printStackTrace();
 			throw new RuntimeException(e);
 		}
@@ -129,7 +137,7 @@ public class PortfolioData {
 			ps.setString(1, personCode);
 			ps.executeUpdate();
 		}catch (SQLException e) {
-			System.out.println("SQLException: ");
+			logger.error("SQLException: ");
 			e.printStackTrace();
 			throw new RuntimeException(e);
 		}
@@ -140,7 +148,7 @@ public class PortfolioData {
 			ps.setString(1, personCode);
 			ps.executeUpdate();
 		}catch (SQLException e) {
-			System.out.println("SQLException: ");
+			logger.error("SQLException: ");
 			e.printStackTrace();
 			throw new RuntimeException(e);
 		}
@@ -151,7 +159,7 @@ public class PortfolioData {
 			ps.setString(1, personCode);
 			ps.executeUpdate();
 		}catch (SQLException e) {
-			System.out.println("SQLException: ");
+			logger.error("SQLException: ");
 			e.printStackTrace();
 			throw new RuntimeException(e);
 		}
@@ -162,7 +170,7 @@ public class PortfolioData {
 			ps.setString(1, personCode);
 			ps.executeUpdate();
 		}catch (SQLException e) {
-			System.out.println("SQLException: ");
+			logger.error("SQLException: ");
 			e.printStackTrace();
 			throw new RuntimeException(e);
 		}
@@ -174,7 +182,7 @@ public class PortfolioData {
 			ps.executeUpdate();
 			ps.close();
 		}catch (SQLException e) {
-			System.out.println("SQLException: ");
+			logger.error("SQLException: ");
 			e.printStackTrace();
 			throw new RuntimeException(e);
 		}
@@ -196,11 +204,11 @@ public class PortfolioData {
 	 */
 
 	public static void addPerson(String personCode, String firstName, String lastName, String street, String city, String state, String zip, String country, String brokerType, String secBrokerId) {
+		logger.info("Person added.");
 		connection();
-		System.out.println("AddPerson");
 		PreparedStatement ps = null;
 		ResultSet rs = null;
-		System.out.println(personCode + " " + lastName + " " + firstName);
+		logger.error(personCode + " " + lastName + " " + firstName);
 
 		String query = "INSERT INTO Person (personCode, lastName, firstName, secID, personType) VALUES (?,?,?,?,?)";
 		int personID = 0;
@@ -227,7 +235,7 @@ public class PortfolioData {
 			ps.executeUpdate();
 		}
 		catch (SQLException e) {
-			System.out.println("SQLException: ");
+			logger.error("SQLException: ");
 			e.printStackTrace();
 			throw new RuntimeException(e);
 		}
@@ -237,10 +245,10 @@ public class PortfolioData {
 			rs = ps.executeQuery();
 			while(rs.next()) {
 				personID = rs.getInt("LAST_INSERT_ID()");
-				System.out.println(personID);
+				logger.error(personID);
 			}
 		}catch (SQLException e) {
-			System.out.println("SQLException: ");
+			logger.error("SQLException: ");
 			e.printStackTrace();
 			throw new RuntimeException(e);
 		}
@@ -255,7 +263,7 @@ public class PortfolioData {
 				personID = rs.getInt("personID");
 			}
 		}catch(SQLException e) {
-			System.out.println("SQLException: ");
+			logger.error("SQLException: ");
 			e.printStackTrace();
 			throw new RuntimeException(e);
 		}
@@ -287,7 +295,7 @@ public class PortfolioData {
 							ps.executeUpdate();
 						}
 						catch (SQLException D) {
-							System.out.println("SQLException: ");
+							logger.error("SQLException: ");
 							D.printStackTrace();
 							throw new RuntimeException(D);
 						}	
@@ -300,7 +308,7 @@ public class PortfolioData {
 							ps.executeUpdate();
 						}
 						catch (SQLException d) {
-							System.out.println("SQLException: ");
+							logger.error("SQLException: ");
 							d.printStackTrace();
 							throw new RuntimeException(d);
 						}
@@ -310,7 +318,7 @@ public class PortfolioData {
 				}
 			}
 			catch (SQLException e) {
-				System.out.println("SQLException: ");
+				logger.error("SQLException: ");
 				e.printStackTrace();
 				throw new RuntimeException(e);
 			}
@@ -338,7 +346,7 @@ public class PortfolioData {
 			}
 
 		}catch (SQLException e) {
-			System.out.println("SQLException: ");
+			logger.error("SQLException: ");
 			e.printStackTrace();
 			throw new RuntimeException(e);
 		}
@@ -364,7 +372,7 @@ public class PortfolioData {
 			conn.close();
 		}
 		catch (SQLException e) {
-			System.out.println("SQLException: ");
+			logger.error("SQLException: ");
 			e.printStackTrace();
 			throw new RuntimeException(e);
 		}
@@ -377,6 +385,7 @@ public class PortfolioData {
 	 * @param email
 	 */
 	public static void addEmail(String personCode, String email) {
+		logger.info("Email added.");
 
 		connection();
 
@@ -400,7 +409,7 @@ public class PortfolioData {
 
 		}
 		catch (SQLException e) {
-			System.out.println("SQLException: ");
+			logger.error("SQLException: ");
 			e.printStackTrace();
 			throw new RuntimeException(e);
 		}
@@ -419,7 +428,7 @@ public class PortfolioData {
 				ps.executeUpdate();
 			}
 			catch (SQLException e) {
-				System.out.println("SQLException: ");
+				logger.error("SQLException: ");
 				e.printStackTrace();
 				throw new RuntimeException(e);
 			}
@@ -430,7 +439,7 @@ public class PortfolioData {
 			ps.close();
 			conn.close();
 		}catch (SQLException e) {
-			System.out.println("SQLException: ");
+			logger.error("SQLException: ");
 			e.printStackTrace();
 			throw new RuntimeException(e);
 		}
@@ -440,6 +449,7 @@ public class PortfolioData {
 	 * Removes all asset records from the database
 	 */
 	public static void removeAllAssets() {
+		logger.info("All assets removed.");
 		connection();
 
 		PreparedStatement ps = null;
@@ -450,7 +460,7 @@ public class PortfolioData {
 			ps.executeUpdate();
 
 		}catch (SQLException e) {
-			System.out.println("SQLException: ");
+			logger.error("SQLException: ");
 			e.printStackTrace();
 			throw new RuntimeException(e);
 		}
@@ -463,7 +473,7 @@ public class PortfolioData {
 			ps.close();
 			conn.close();
 		}catch (SQLException e) {
-			System.out.println("SQLException: ");
+			logger.error("SQLException: ");
 			e.printStackTrace();
 			throw new RuntimeException(e);
 		}
@@ -476,6 +486,7 @@ public class PortfolioData {
 	 * @param assetCode
 	 */
 	public static void removeAsset(String assetCode) {
+		logger.info("Asset removed.");
 		connection();
 
 		PreparedStatement ps = null;
@@ -487,7 +498,7 @@ public class PortfolioData {
 			ps.setString(1, assetCode);
 			ps.executeUpdate();
 		}catch (SQLException e) {
-			System.out.println("SQLException: ");
+			logger.error("SQLException: ");
 			e.printStackTrace();
 			throw new RuntimeException(e);
 		}
@@ -500,7 +511,7 @@ public class PortfolioData {
 			ps.close();
 			conn.close();
 		}catch (SQLException e) {
-			System.out.println("SQLException: ");
+			logger.error("SQLException: ");
 			e.printStackTrace();
 			throw new RuntimeException(e);
 		}
@@ -515,6 +526,7 @@ public class PortfolioData {
 	 */
 
 	public static void addDepositAccount(String assetCode, String label, double apr) {
+		logger.info("Deposit Account added.");
 		connection();
 
 		String query = "INSERT INTO Asset (assetCode, assetName, assetType, apr, quarterlyDividend, baseRateReturn, beta, omega, stockSymbol, totalValue, sharePrice) VALUES (?,?,?,?,?,?,?,?,?,?,?)";
@@ -540,7 +552,7 @@ public class PortfolioData {
 			conn.close();
 		}
 		catch (SQLException e) {
-			System.out.println("SQLException: ");
+			logger.error("SQLException: ");
 			e.printStackTrace();
 			throw new RuntimeException(e);
 		}
@@ -559,7 +571,7 @@ public class PortfolioData {
 	 */
 	public static void addPrivateInvestment(String assetCode, String label, Double quarterlyDividend, 
 			Double baseRateOfReturn, Double baseOmega, Double totalValue) {
-
+		logger.info("Private Investment added.");
 		connection();
 		String query = "INSERT INTO Asset (assetCode, assetName, assetType, apr, quarterlyDividend, baseRateReturn, beta, omega, stockSymbol, totalValue, sharePrice) VALUES (?,?,?,?,?,?,?,?,?,?,?)";
 
@@ -585,7 +597,7 @@ public class PortfolioData {
 			conn.close();
 		}
 		catch (SQLException e) {
-			System.out.println("SQLException: ");
+			logger.error("SQLException: ");
 			e.printStackTrace();
 			throw new RuntimeException(e);
 		}
@@ -608,6 +620,7 @@ public class PortfolioData {
 
 	public static void addStock(String assetCode, String label, Double quarterlyDividend, 
 			Double baseRateOfReturn, Double beta, String stockSymbol, Double sharePrice) {
+		logger.info("Stock added.");
 		connection();
 
 		String query = "INSERT INTO Asset (assetCode, assetName, assetType, apr, quarterlyDividend, baseRateReturn, beta, omega, stockSymbol, totalValue, sharePrice) VALUES (?,?,?,?,?,?,?,?,?,?,?)";
@@ -632,7 +645,7 @@ public class PortfolioData {
 			conn.close();
 		}
 		catch (SQLException e) {
-			System.out.println("SQLException: ");
+			logger.error("SQLException: ");
 			e.printStackTrace();
 			throw new RuntimeException(e);
 		}
@@ -642,6 +655,7 @@ public class PortfolioData {
 	 * Removes all portfolio records from the database
 	 */
 	public static void removeAllPortfolios() {
+		logger.info("All portfolios removed.");
 		connection();
 		PreparedStatement ps=null;
 
@@ -652,7 +666,7 @@ public class PortfolioData {
 			ps.close();
 			conn.close();
 		}catch (SQLException e) {
-			System.out.println("SQLException: ");
+			logger.error("SQLException: ");
 			e.printStackTrace();
 			throw new RuntimeException(e);
 		}
@@ -664,6 +678,7 @@ public class PortfolioData {
 	 * @param portfolioCode
 	 */
 	public static void removePortfolio(String portfolioCode) {
+		logger.info("Portfolio removed.");
 		connection();
 
 		PreparedStatement ps = null;
@@ -675,7 +690,7 @@ public class PortfolioData {
 			ps.setString(1, portfolioCode);
 			ps.executeUpdate();
 		}catch (SQLException e) {
-			System.out.println("SQLException: ");
+			logger.error("SQLException: ");
 			e.printStackTrace();
 			throw new RuntimeException(e);
 		}
@@ -690,6 +705,7 @@ public class PortfolioData {
 	 * @param beneficiaryCode
 	 */
 	public static void addPortfolio(String portfolioCode, String ownerCode, String managerCode, String beneficiaryCode) {
+		logger.info("Portfolio added.");
 		connection();
 
 		PreparedStatement ps = null;
@@ -707,7 +723,7 @@ public class PortfolioData {
 				ownerID = rs.getInt("personID");
 			}
 		} catch (SQLException e) {
-			System.out.println("SQLException: ");
+			logger.error("SQLException: ");
 			e.printStackTrace();
 			throw new RuntimeException(e);
 		}
@@ -724,7 +740,7 @@ public class PortfolioData {
 				managerID = rs.getInt("personID");
 			}
 		} catch (SQLException e) {
-			System.out.println("SQLException: ");
+			logger.error("SQLException: ");
 			e.printStackTrace();
 			throw new RuntimeException(e);
 		}
@@ -746,7 +762,7 @@ public class PortfolioData {
 					beneficiaryID = rs.getInt("personID");
 				}
 			} catch (SQLException e) {
-				System.out.println("SQLException: ");
+				logger.error("SQLException: ");
 				e.printStackTrace();
 				throw new RuntimeException(e);
 			}
@@ -770,7 +786,7 @@ public class PortfolioData {
 			ps.close();
 			conn.close();
 		}catch (SQLException e) {
-			System.out.println("SQLException: ");
+			logger.error("SQLException: ");
 			e.printStackTrace();
 			throw new RuntimeException(e);
 		}
@@ -787,6 +803,7 @@ public class PortfolioData {
 	 * @param value
 	 */
 	public static void addAsset(String portfolioCode, String assetCode, double value) {
+		logger.info("Asset added.");
 		connection();
 
 		PreparedStatement ps = null;
@@ -805,7 +822,7 @@ public class PortfolioData {
 				portfolioID = rs.getInt("portfolioID");
 			}
 		} catch (SQLException e) {
-			System.out.println("SQLException: ");
+			logger.error("SQLException: ");
 			e.printStackTrace();
 			throw new RuntimeException(e);
 		}
@@ -823,7 +840,7 @@ public class PortfolioData {
 				assetID = rs.getInt("assetID");
 			}
 		} catch (SQLException e) {
-			System.out.println("SQLException: ");
+			logger.error("SQLException: ");
 			e.printStackTrace();
 			throw new RuntimeException(e);
 		}
@@ -839,7 +856,7 @@ public class PortfolioData {
 			ps.close();
 			conn.close();
 		} catch (SQLException e) {
-			System.out.println("SQLException: ");
+			logger.error("SQLException: ");
 			e.printStackTrace();
 			throw new RuntimeException(e);
 		}

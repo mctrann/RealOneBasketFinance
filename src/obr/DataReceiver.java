@@ -12,34 +12,10 @@ import java.util.Map;
 import java.util.Map.Entry;
 
 public class DataReceiver {
-	static Connection conn=null;
-	private static List<Assets> asset= new ArrayList<Assets>();
 	
-	public static void connection() {
-		try {
-			Class.forName("com.mysql.jdbc.Driver").newInstance();
-		} catch (InstantiationException e) {
-			System.out.println("InstantiationException: ");
-			e.printStackTrace();
-			throw new RuntimeException(e);
-		} catch (IllegalAccessException e) {
-			System.out.println("IllegalAccessException: ");
-			e.printStackTrace();
-			throw new RuntimeException(e);
-		} catch (ClassNotFoundException e) {
-			System.out.println("ClassNotFoundException: ");
-			e.printStackTrace();
-			throw new RuntimeException(e);
-		}
+	static Connection conn = null;
+	private static List<Assets> asset	= new ArrayList<Assets>();
 
-		try {
-			conn = DriverManager.getConnection(DatabaseInfo.url, DatabaseInfo.username, DatabaseInfo.password);
-		} catch (SQLException e) {
-			System.out.println("SQLException: ");
-			e.printStackTrace();
-			throw new RuntimeException(e);
-		}
-	}
 	//used by getPortfolio to retrieve asset data and create asset objects
 	public static void getAsset(){
 		String assetCode;
@@ -52,7 +28,7 @@ public class DataReceiver {
 		double sharePrice;
 		double omega;
 		double totalValue;
-		connection();
+		ConnectionInfo.connection();
 		//retrieves deposit assets
 		String queryD = "SELECT assetCode, assetName, apr FROM Asset WHERE assetType = 'D'";
 		PreparedStatement ps = null;
@@ -137,7 +113,7 @@ public class DataReceiver {
 
 		List <Persons> pr = new ArrayList<Persons>();
 		List<Integer> temp = new ArrayList<Integer>();
-		connection();
+		ConnectionInfo.connection();
 		String query = "SELECT personID FROM Person";
 		PreparedStatement ps = null;
 		ResultSet rs=null;
@@ -303,7 +279,7 @@ public class DataReceiver {
 
 	public List<Portfolios> getPortfolio() {
 		getAsset();		
-		connection();
+		ConnectionInfo.connection();
 
 		List<Portfolios> p = new ArrayList<Portfolios>();
 		List<Integer> temp = new ArrayList<Integer>();
@@ -474,13 +450,11 @@ public class DataReceiver {
 									Private_Investments pi = new Private_Investments((Private_Investments) asset.get(i));
 									pi.setPercentageStake(entry.getValue());
 									a.add(pi);
-
 								}
 								else {
 									Stocks s = new Stocks ((Stocks) asset.get(i));
 									s.setSharesOwned(entry.getValue());
 									a.add(s);	
-									PortfolioData d = new PortfolioData();
 
 								}
 							}

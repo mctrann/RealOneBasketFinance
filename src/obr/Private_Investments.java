@@ -62,14 +62,14 @@ public class Private_Investments extends Assets{
 	public double getCalcValue() {
 		double totalValue = 0;
 		
-		totalValue = getPVValue() * (getPercentageStake()/100);
+		totalValue = getPVValue() * (getPercentageStake());
 		return totalValue;
 	}
 	
 	//method to calculate the annual return
 	public double getAnnualReturn() {
 		double value = 0.0;
-		value = ((getBRR() * getPVValue()) + (4 * getQuartDiv()))  * (getPercentageStake()/100);
+		value = ((getBRR() * getPVValue()) + (4 * getQuartDiv()))  * (getPercentageStake());
 		return value;
 	}
 	

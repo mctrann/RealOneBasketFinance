@@ -57,7 +57,12 @@ public class PortfolioWriter {
 					"$" + df.format(localCommissions), dflong.format(portInfo.get(i).getRisk(portInfo.get(i).getAssetList())), "$" + df.format(localReturnValue), "$" + df.format(localTotalValue))); 
 		}
 
-		
+		for (int i=0; i<portInfo.size(); i++){
+			for(int j=0; j<portInfo.get(i).getAssetList().size();j++){
+				System.out.println(portInfo.get(i).getAssetList().get(j).getLabel()+": "+portInfo.get(i).getAssetList().get(j).getType());
+
+			}
+		}
 		//prints total fees, commissions, return, and value of all portfolios
 		System.out.println("----------------------------------------------------------------------------------------------------------------------------------------------------");
 		System.out.println(String.format("%-12s %25s %24s %15s %15s %16s %15s %15s", "", "", "Totals", "$" + df.format(totalFees), "$" + df.format(totalCommissions), "", "$" + df.format(totalReturnValue), df.format(totalValue)));
@@ -107,7 +112,9 @@ public class PortfolioWriter {
 		perInfo.addAll(dr.getPerson());
 		portInfo.addAll(dr.getPortfolio());
 		//writes the portfolio summary 
+
 		PortfolioWrite(portInfo,perInfo);
+
 
 	}
 }

@@ -164,7 +164,7 @@ public class DataReceiver {
 		int countryID=0;
 		String street = null;
 		String city = null;
-		int zipcode=0;
+		String zipcode=null;
 		String country=null;
 		String state = null;
 		Address a = null;
@@ -212,7 +212,7 @@ public class DataReceiver {
 					countryID = rs.getInt("countryID");
 					street = rs.getString("street");
 					city = rs.getString("city");
-					zipcode = rs.getInt("zipcode");
+					zipcode = rs.getString("zipcode");
 				}
 			}
 			catch (SQLException e) {
@@ -257,7 +257,7 @@ public class DataReceiver {
 
 			}
 			//creates address object from retrieved data
-			a= new Address(street, city, state, country, Integer.toString(zipcode));
+			a= new Address(street, city, state, country, zipcode);
 			
 			//retrieves email address
 			String query6= "SELECT emailAddress FROM EmailAddress WHERE personID=?";

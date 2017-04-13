@@ -22,9 +22,9 @@ personType varchar(1)
 
 create table Asset( 
 assetID integer not null primary key auto_increment unique, 
-assetCode varchar(20) not null,
-assetName varchar(50) not null,
-assetType varchar(1) not null,
+assetCode varchar(50) not null,
+assetName varchar(100) not null,
+assetType varchar(3) not null,
 apr double,
 quarterlyDividend double,
 baseRateReturn double,
@@ -57,7 +57,7 @@ countryName varchar(200) not null
 stateID integer not null primary key auto_increment unique,
 stateAbbreviation varchar(3),
 stateName varchar(200)
-)engine=InnoDB,collate=latin1_general_cs; 
+);
 
 create table Address ( 
 addressID integer not null primary key auto_increment unique, 

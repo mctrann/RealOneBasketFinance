@@ -13,9 +13,11 @@ import java.util.Map.Entry;
 
 public class DataReceiver {
 	
-	
+
+	private static List<Assets> asset  = new ArrayList<Assets>();
 	//used by getPortfolio to retrieve asset data and create asset objects
 	public static void getAsset(){
+		  
 		String assetCode;
 		String label;
 		double apr;

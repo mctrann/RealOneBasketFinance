@@ -11,13 +11,53 @@ import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
 
-public class DataReceiver {
-	
+import org.apache.log4j.Logger;
 
+public class DataReceiver {
+	static Logger logger = Logger.getLogger(DataReceiver.class);
+	private static List<Assets> asset= new ArrayList<Assets>();
+	
+<<<<<<<
+
+=======
+	public static void connection() {
+		logger.info("Connection established.");
+		try {
+			Class.forName("com.mysql.jdbc.Driver").newInstance();
+		} catch (InstantiationException e) {
+			logger.error("InstantiationException: ");
+			e.printStackTrace();
+			throw new RuntimeException(e);
+		} catch (IllegalAccessException e) {
+			logger.error("IllegalAccessException: ");
+			e.printStackTrace();
+			throw new RuntimeException(e);
+		} catch (ClassNotFoundException e) {
+			logger.error("ClassNotFoundException: ");
+			e.printStackTrace();
+			throw new RuntimeException(e);
+		}
+>>>>>>>
+
+<<<<<<<
 	private static List<Assets> asset  = new ArrayList<Assets>();
+=======
+		try {
+			conn = DriverManager.getConnection(DatabaseInfo.url, DatabaseInfo.username, DatabaseInfo.password);
+		} catch (SQLException e) {
+			logger.error("SQLException: ");
+			e.printStackTrace();
+			throw new RuntimeException(e);
+		}
+	}
+>>>>>>>
 	//used by getPortfolio to retrieve asset data and create asset objects
 	public static void getAsset(){
+<<<<<<<
 		  
+=======
+		logger.info("Asset retrieved.");
+>>>>>>>
 		String assetCode;
 		String label;
 		double apr;
@@ -47,7 +87,7 @@ public class DataReceiver {
 
 		}
 		catch (SQLException e) {
-			System.out.println("SQLException: ");
+			logger.error("SQLException: ");
 			e.printStackTrace();
 			throw new RuntimeException(e);
 		}
@@ -70,7 +110,7 @@ public class DataReceiver {
 			}
 		}
 		catch (SQLException e) {
-			System.out.println("SQLException: ");
+			logger.error("SQLException: ");
 			e.printStackTrace();
 			throw new RuntimeException(e);
 		}
@@ -94,13 +134,14 @@ public class DataReceiver {
 			conn.close();
 		}
 		catch (SQLException e) {
-			System.out.println("SQLException: ");
+			logger.error("SQLException: ");
 			e.printStackTrace();
 			throw new RuntimeException(e);
 		}
 	}
 //retrieves Person and makes person objects
 	public List<Persons> getPerson() {
+		logger.info("Person retrieved.");
 
 		String personCode = null;
 		int personID = 0;
@@ -128,7 +169,7 @@ public class DataReceiver {
 			}
 		}
 		catch (SQLException e) {
-			System.out.println("SQLException: ");
+			logger.error("SQLException: ");
 			e.printStackTrace();
 			throw new RuntimeException(e);
 		}
@@ -161,7 +202,7 @@ public class DataReceiver {
 					}
 				}
 			}catch (SQLException e) {
-				System.out.println("SQLException: ");
+				logger.error("SQLException: ");
 				e.printStackTrace();
 				throw new RuntimeException(e);
 			}
@@ -174,7 +215,7 @@ public class DataReceiver {
 					addressID = rs.getInt("addressID");
 				}
 			}catch (SQLException e) {
-				System.out.println("SQLException: ");
+				logger.error("SQLException: ");
 				e.printStackTrace();
 				throw new RuntimeException(e);
 			}
@@ -192,7 +233,7 @@ public class DataReceiver {
 				}
 			}
 			catch (SQLException e) {
-				System.out.println("SQLException: ");
+				logger.error("SQLException: ");
 				e.printStackTrace();
 				throw new RuntimeException(e);
 			}
@@ -207,7 +248,7 @@ public class DataReceiver {
 					state = rs.getString("stateAbbreviation");
 				}
 			}catch (SQLException e) {
-				System.out.println("SQLException: ");
+				logger.error("SQLException: ");
 				e.printStackTrace();
 				throw new RuntimeException(e);
 			}
@@ -227,7 +268,7 @@ public class DataReceiver {
 				}
 
 			}catch (SQLException e) {
-				System.out.println("SQLException: ");
+				logger.error("SQLException: ");
 				e.printStackTrace();
 				throw new RuntimeException(e);
 
@@ -245,7 +286,7 @@ public class DataReceiver {
 					Email.add(rs.getString("emailAddress"));
 				}
 			}catch (SQLException e) {
-				System.out.println("SQLException: ");
+				logger.error("SQLException: ");
 				e.printStackTrace();
 				throw new RuntimeException(e);
 			}
@@ -270,7 +311,7 @@ public class DataReceiver {
 			ps.close();
 			conn.close();
 		}catch (SQLException e) {
-			System.out.println("SQLException: ");
+			logger.error("SQLException: ");
 			e.printStackTrace();
 			throw new RuntimeException(e);
 		}
@@ -278,6 +319,7 @@ public class DataReceiver {
 	}
 
 	public List<Portfolios> getPortfolio() {
+		logger.info("Person retrieved.");
 		getAsset();		
 		Connection conn = ConnectionInfo.connection();
 
@@ -325,7 +367,7 @@ public class DataReceiver {
 				temp.add(rs.getInt("portfolioID"));
 			}
 		}catch (SQLException e) {
-			System.out.println("SQLException: ");
+			logger.error("SQLException: ");
 			e.printStackTrace();
 			throw new RuntimeException(e);
 
@@ -346,7 +388,7 @@ public class DataReceiver {
 					beneficiaryID = rs.getInt("beneficiaryID");
 				}
 			}catch (SQLException e) {
-				System.out.println("SQLException: ");
+				logger.error("SQLException: ");
 				e.printStackTrace();
 				throw new RuntimeException(e);
 			}
@@ -362,7 +404,7 @@ public class DataReceiver {
 					ownerCode = rs.getString("personCode");
 				}
 			}catch (SQLException e) {
-				System.out.println("SQLException: ");
+				logger.error("SQLException: ");
 				e.printStackTrace();
 				throw new RuntimeException(e);
 			}
@@ -378,7 +420,7 @@ public class DataReceiver {
 					managerCode = rs.getString("personCode");
 				}
 			}catch (SQLException e) {
-				System.out.println("SQLException: ");
+				logger.error("SQLException: ");
 				e.printStackTrace();
 				throw new RuntimeException(e);
 			}
@@ -398,7 +440,7 @@ public class DataReceiver {
 					}
 				}
 			}catch (SQLException e) {
-				System.out.println("SQLException: ");
+				logger.error("SQLException: ");
 				e.printStackTrace();
 				throw new RuntimeException(e);
 			}
@@ -414,7 +456,7 @@ public class DataReceiver {
 					assetIDtemp.put(assetID, portValue);
 				}
 			}catch (SQLException e) {
-				System.out.println("SQLException: ");
+				logger.error("SQLException: ");
 				e.printStackTrace();
 				throw new RuntimeException(e);
 			}
@@ -461,7 +503,7 @@ public class DataReceiver {
 						}
 					}
 				}catch (SQLException e) {
-					System.out.println("SQLException: ");
+					logger.error("SQLException: ");
 					e.printStackTrace();
 					throw new RuntimeException(e);
 				}

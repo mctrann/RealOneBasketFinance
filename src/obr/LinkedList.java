@@ -9,30 +9,53 @@ public class LinkedList <T> {
 	private ListNode <T> prevNode;
 	private ListNode <T> afterNode;
 	public void addElement(T element, Comparator<T> c) {
-		
+		System.out.println(getSize());
 		if(getSize()==0){
 			ListNode<T> newHead= new ListNode<T>(element);
 			newHead.setNext(this.head);
 			this.head=newHead;
+			System.out.println("head: " + head.getElement());
+			System.out.println();
 		}
 		else if (getSize()==1){
 			int value=c.compare(element,head.getElement());
+			System.out.println("head: " + head.getElement());
+			System.out.println("element: " + element);
 			if (value < 0){
 				addToStart(element);
+				System.out.print("h");
+				System.out.println();
 			}
 			else if (value > 0){
-				addToEnd(element);
+				ListNode<T> newTail= new ListNode<T>(element) ;
+				this.tail= newTail;
+				this.tail.setNext(null);
+				head.setNext(this.tail);
+				System.out.println("t");
+				System.out.println();
 			}
 			else{
-				addToEnd(element);
+				ListNode<T> newTail= new ListNode<T>(element) ;
+				this.tail= newTail;
+				this.tail.setNext(null);
+				head.setNext(this.tail);
+				System.out.println("c");
+				System.out.println();
 			}
 		}
 		else{
 			int value=0;
 			for(int i = 0; i <getSize(); i++) {
+	
 				prevNode=getListNode(i);
 				afterNode= getListNode(i+1);
+				
+				System.out.println("element: " + element);
+				System.out.println("head: " + head.getElement());
+				System.out.println("prevNode: " + prevNode.getElement());
+				System.out.println("afterNode: " + afterNode.getElement());
 				value = c.compare(element,prevNode.getElement());
+				System.out.println();
 				if(value < 0) {
 					addToStart(element);
 					break;
@@ -43,6 +66,23 @@ public class LinkedList <T> {
 						ListNode <T> e = new ListNode<T>(element);
 						prevNode.setNext(e);
 						e.setNext(afterNode);
+					}
+					else if(value == 0) {
+						
+						if(i == getSize()-2) {
+							ListNode<T> newTail= new ListNode<T>(element) ;
+							this.tail= newTail;
+							afterNode.setNext(this.tail);
+							this.tail.setNext(null);
+							break;
+						}
+						else {
+							ListNode<T> e = new ListNode<T>(element);
+							e.setNext(afterNode.getNext());
+							afterNode.setNext(e);
+							break;
+						}
+						
 					}
 				}
 				else {
@@ -75,7 +115,7 @@ public class LinkedList <T> {
 			throw new IllegalArgumentException("index out of bound");
 		}
 		ListNode<T> current= head;
-		for (int i=0; i< position-1; i++){
+		for (int i=0; i< position; i++){
 			current= current.getNext();
 		}
 		return current;
@@ -99,15 +139,21 @@ public class LinkedList <T> {
 		this.tail=getListNode(this.getSize());
 	}
 	public void addToEnd(T t) {
-		this.getTail();
-		if (this.tail!=null){
+		if(this.tail == null){
+			ListNode<T> newTail= new ListNode<T>(t) ;
+			this.tail= newTail;
+			afterNode.setNext(this.tail);
+			this.tail.setNext(null);
+			
+		}
+		else if (this.tail!=null){
 			ListNode<T> newTail=new ListNode<T> (t);
 			this.tail.setNext(newTail);
 			this.tail= newTail;
 		}
-		else{ //forces it to become an addToStartMethod
-			this.addToStart(t);
-		}
+//		else{ //forces it to become an addToStartMethod
+//			this.addToStart(t);
+//		}
 		//throw new UnsupportedOperationException("Not yet implemented.");
 	}
 

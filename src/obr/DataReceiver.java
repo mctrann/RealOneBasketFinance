@@ -470,6 +470,8 @@ public class DataReceiver {
 			}
 			System.out.println(pf.getPortfolioCode());
 			l.addElement(pf, c);
+			//System.out.println(l.getElement(pt).getOwner().getLastName());
+			//System.out.print(l);
 			assetIDtemp.clear();
 		}
 		//returns list of portfolio objects

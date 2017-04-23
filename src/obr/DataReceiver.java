@@ -6,6 +6,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -14,8 +15,8 @@ import java.util.Map.Entry;
 public class DataReceiver {
 	static Connection conn=null;
 	private static List<Assets> asset= new ArrayList<Assets>();
-	
-	
+
+
 	//used by getPortfolio to retrieve asset data and create asset objects
 	public static void getAsset(){
 		String assetCode;
@@ -99,10 +100,10 @@ public class DataReceiver {
 			throw new RuntimeException(e);
 		}
 	}
-//retrieves Person and makes person objects
-	public List<Persons> getPerson() {
+	//retrieves Person and makes person objects
+	public Persons getPerson(String pCode) {
 
-		String personCode = null;
+		String personCode = pCode;
 		int personID = 0;
 		String firstName = null;
 		String lastName = null;
@@ -110,21 +111,18 @@ public class DataReceiver {
 		String personType = null;
 		List<String> Email = new ArrayList<String>();
 
-
-		List <Persons> pr = new ArrayList<Persons>();
-		List<Integer> temp = new ArrayList<Integer>();
 		Connection conn = ConnectionInfo.connection();
-		String query = "SELECT personID FROM Person";
+		String query = "SELECT personID FROM Person WHERE personCode = ?";
 		PreparedStatement ps = null;
 		ResultSet rs=null;
 
 		try{
 			ps = conn.prepareStatement(query);
+			ps.setString(1, personCode);
 			rs = ps.executeQuery();
 
 			while(rs.next()) {
 				personID = rs.getInt("personID");
-				temp.add(personID);
 			}
 		}
 		catch (SQLException e) {
@@ -132,8 +130,11 @@ public class DataReceiver {
 			e.printStackTrace();
 			throw new RuntimeException(e);
 		}
-		String query1 = "SELECT personCode, lastName, firstName, secID, personType FROM Person WHERE personID = ?";
-		String query2 = "SELECT addressID FROM Address WHERE personID = ?";
+
+
+		String query1 = "SELECT lastName, firstName, secID, personType FROM Person p WHERE p.personID = ?";
+		String query2 = "SELECT addressID FROM Address a WHERE a.personID = ?";
+
 		String query3 = "SELECT stateID, countryID, street, city, zipcode FROM Address WHERE addressID = ?";
 		int addressID=0;
 		int stateID=0;
@@ -145,142 +146,130 @@ public class DataReceiver {
 		String state = null;
 		Address a = null;
 
-		for(Integer t: temp) {
-			try{
-				ps = conn.prepareStatement(query1);
-				ps.setInt(1, t);
-				rs = ps.executeQuery();
-				while(rs.next()) {
-					personCode = rs.getString("personCode");
-					lastName = rs.getString("lastName");
-					firstName = rs.getString("firstName");
-					secID = rs.getString("secID");
-					personType = rs.getString("personType");
-					if (personType == null){
-						personType="";
-					}
-				}
-			}catch (SQLException e) {
-				System.out.println("SQLException: ");
-				e.printStackTrace();
-				throw new RuntimeException(e);
-			}
 
-			try{
-				ps = conn.prepareStatement(query2);
-				ps.setInt(1, t);
-				rs = ps.executeQuery();
-				while(rs.next()){
-					addressID = rs.getInt("addressID");
-				}
-			}catch (SQLException e) {
-				System.out.println("SQLException: ");
-				e.printStackTrace();
-				throw new RuntimeException(e);
-			}
-
-			try{
-				ps = conn.prepareStatement(query3);
-				ps.setInt(1, addressID);
-				rs = ps.executeQuery();
-				while(rs.next()) {
-					stateID = rs.getInt("stateID");
-					countryID = rs.getInt("countryID");
-					street = rs.getString("street");
-					city = rs.getString("city");
-					zipcode = rs.getString("zipcode");
-				}
-			}
-			catch (SQLException e) {
-				System.out.println("SQLException: ");
-				e.printStackTrace();
-				throw new RuntimeException(e);
-			}
-			//retrieves state corresponding to a person's address
-			String query4 = "SELECT stateAbbreviation FROM States WHERE stateID = ?";
-			try{
-				ps= conn.prepareStatement(query4);
-				ps.setInt(1, stateID);
-				rs = ps.executeQuery();
-
-				while(rs.next()) {
-					state = rs.getString("stateAbbreviation");
-				}
-			}catch (SQLException e) {
-				System.out.println("SQLException: ");
-				e.printStackTrace();
-				throw new RuntimeException(e);
-			}
-			//retrieves country corresponding to a person's address
-			String query5= "SELECT countryName FROM Country WHERE countryID=?";
-			try{
-				ps=conn.prepareStatement(query5);
-				if (countryID==0){
-					country="";
-				}
-				else{
-					ps.setInt(1, countryID);
-					rs=ps.executeQuery();
-					while(rs.next()){
-						country=rs.getString("countryName");
-					}
-				}
-
-			}catch (SQLException e) {
-				System.out.println("SQLException: ");
-				e.printStackTrace();
-				throw new RuntimeException(e);
-
-			}
-			//creates address object from retrieved data
-			a= new Address(street, city, state, country, zipcode);
-			
-			//retrieves email address
-			String query6= "SELECT emailAddress FROM EmailAddress WHERE personID=?";
-			try{
-				ps=conn.prepareStatement(query6);
-				ps.setInt(1, t);
-				rs=ps.executeQuery();
-				while(rs.next()){
-					Email.add(rs.getString("emailAddress"));
-				}
-			}catch (SQLException e) {
-				System.out.println("SQLException: ");
-				e.printStackTrace();
-				throw new RuntimeException(e);
-			}
-			//creates person object
-			if(personType.equals("J")) {
-				Junior j = new Junior(personCode, personType, secID, firstName, lastName, a, Email);
-				pr.add(j);
-			}
-			else if(personType.equals("E")) {
-				Expert e = new Expert(personCode, personType, secID, firstName, lastName, a, Email);
-				pr.add(e);
-			}
-			else{
-				Customer c = new Customer(personCode, firstName, lastName, a, Email );
-				pr.add(c);
-			}
-		}
-
-		//Reset email array list
-		Email.clear();
 		try{
-			ps.close();
-			conn.close();
+			ps = conn.prepareStatement(query1);
+			ps.setInt(1, personID);
+			rs = ps.executeQuery();
+			while(rs.next()) {
+				lastName = rs.getString("lastName");
+				firstName = rs.getString("firstName");
+				secID = rs.getString("secID");
+				personType = rs.getString("personType");
+				if (personType == null){
+					personType="";
+				}
+			}
 		}catch (SQLException e) {
 			System.out.println("SQLException: ");
 			e.printStackTrace();
 			throw new RuntimeException(e);
 		}
-		return pr;
+
+		try{
+			ps = conn.prepareStatement(query2);
+			ps.setInt(1, personID);
+			rs = ps.executeQuery();
+			while(rs.next()){
+				addressID = rs.getInt("addressID");
+			}
+		}catch (SQLException e) {
+			System.out.println("SQLException: ");
+			e.printStackTrace();
+			throw new RuntimeException(e);
+		}
+
+		try{
+			ps = conn.prepareStatement(query3);
+			ps.setInt(1, addressID);
+			rs = ps.executeQuery();
+			while(rs.next()) {
+				stateID = rs.getInt("stateID");
+				countryID = rs.getInt("countryID");
+				street = rs.getString("street");
+				city = rs.getString("city");
+				zipcode = rs.getString("zipcode");
+			}
+		}
+		catch (SQLException e) {
+			System.out.println("SQLException: ");
+			e.printStackTrace();
+			throw new RuntimeException(e);
+		}
+		//retrieves state corresponding to a person's address
+		String query4 = "SELECT stateAbbreviation FROM States WHERE stateID = ?";
+		try{
+			ps= conn.prepareStatement(query4);
+			ps.setInt(1, stateID);
+			rs = ps.executeQuery();
+
+			while(rs.next()) {
+				state = rs.getString("stateAbbreviation");
+			}
+		}catch (SQLException e) {
+			System.out.println("SQLException: ");
+			e.printStackTrace();
+			throw new RuntimeException(e);
+		}
+		//retrieves country corresponding to a person's address
+		String query5= "SELECT countryName FROM Country WHERE countryID=?";
+		try{
+			ps=conn.prepareStatement(query5);
+			if (countryID==0){
+				country="";
+			}
+			else{
+				ps.setInt(1, countryID);
+				rs=ps.executeQuery();
+				while(rs.next()){
+					country=rs.getString("countryName");
+				}
+			}
+
+		}catch (SQLException e) {
+			System.out.println("SQLException: ");
+			e.printStackTrace();
+			throw new RuntimeException(e);
+
+		}
+		//creates address object from retrieved data
+		a= new Address(street, city, state, country, zipcode);
+
+		//retrieves email address
+		String query6= "SELECT emailAddress FROM EmailAddress WHERE personID=?";
+		try{
+			ps=conn.prepareStatement(query6);
+			ps.setInt(1, personID);
+			rs=ps.executeQuery();
+			while(rs.next()){
+				Email.add(rs.getString("emailAddress"));
+			}
+		}catch (SQLException e) {
+			System.out.println("SQLException: ");
+			e.printStackTrace();
+			throw new RuntimeException(e);
+		}
+		//creates person object
+		if(personType.equals("J")) {
+			Junior j = new Junior(personCode, personType, secID, firstName, lastName, a, Email);
+			return j;
+
+		}
+		else if(personType.equals("E")) {
+			Expert e = new Expert(personCode, personType, secID, firstName, lastName, a, Email);
+			return e;
+		}
+		else{
+			Customer c = new Customer(personCode, firstName, lastName, a, Email );
+			return c;
+		}
 	}
 
-	public List<Portfolios> getPortfolio() {
+	public LinkedList<Portfolios> getPortfolio(Comparator<Portfolios> c) {
 		getAsset();		
 		Connection conn = ConnectionInfo.connection();
 
+		LinkedList<Portfolios> l = new LinkedList<Portfolios>();
 		List<Portfolios> p = new ArrayList<Portfolios>();
 		List<Integer> temp = new ArrayList<Integer>();
 		int portfolioID = 0;
@@ -310,6 +299,11 @@ public class DataReceiver {
 		String managerCode = null;
 		String beneficiaryCode = null;
 
+//		//creating a person
+//		String lastName= null;
+//		String firstName=null;
+//		String secID=null;
+//		String personType=null;
 
 		//uses id to find corresponding asset to make the objects
 		Map <Integer,Double> assetIDtemp= new HashMap<Integer,Double>();
@@ -331,7 +325,7 @@ public class DataReceiver {
 
 		}
 
-//retrieves data from Portfolio table to create a portfolio object
+		//retrieves data from Portfolio table to create a portfolio object
 		for(Integer pt: temp) {
 			String query2 = "SELECT portCode, ownerID, managerID, beneficiaryID FROM Portfolio WHERE portfolioID = ?";
 			try {
@@ -366,7 +360,7 @@ public class DataReceiver {
 				e.printStackTrace();
 				throw new RuntimeException(e);
 			}
-
+			
 			//Finds the personCode of the manager
 			String query4 = "SELECT personCode FROM Person WHERE personID = ?";
 			try{
@@ -377,12 +371,13 @@ public class DataReceiver {
 				while(rs.next()) {
 					managerCode = rs.getString("personCode");
 				}
+
 			}catch (SQLException e) {
 				System.out.println("SQLException: ");
 				e.printStackTrace();
 				throw new RuntimeException(e);
 			}
-
+			
 			//Finds the personCode of the beneficiary
 			String query5 = "SELECT personCode FROM Person WHERE personID = ?";
 			try{
@@ -466,12 +461,18 @@ public class DataReceiver {
 					throw new RuntimeException(e);
 				}
 			}
+			Portfolios pf= null;
 			//creates portfolio objects
-			Portfolios pf = new Portfolios(portCode,ownerCode,managerCode,beneficiaryCode,a);
-			p.add(pf);
+			if(beneficiaryCode.equals("")) {
+				pf = new Portfolios(portCode,getPerson(ownerCode),getPerson(managerCode),null,a);
+			}else {
+				pf = new Portfolios(portCode,getPerson(ownerCode),getPerson(managerCode),getPerson(beneficiaryCode),a);
+			}
+			System.out.println(pf.getPortfolioCode());
+			l.addElement(pf, c);
 			assetIDtemp.clear();
 		}
 		//returns list of portfolio objects
-		return p;
+		return l;
 	}
 }

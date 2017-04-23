@@ -7,18 +7,24 @@ public class Portfolios {
 
 	//create private variables
 	private String portfolioCode;
-	private String ownerCode;
-	private String managerCode;
-	private String beneficiaryCode;
+	Persons o;//owner
+	Persons m; //manager
+	Persons b;//beneficiary 
+//	private String ownerCode;
+//	private String managerCode;
+//	private String beneficiaryCode;
 	private List<Assets> assetList;
 
 	//create constructor
-	public Portfolios(String portfolioCode, String ownerCode, String managerCode, String beneficiaryCode,
+	public Portfolios(String portfolioCode, Persons o, Persons m, Persons b,
 			List<Assets> assetList){
 		this.portfolioCode = portfolioCode;
-		this.ownerCode = ownerCode;
-		this.managerCode = managerCode;
-		this.beneficiaryCode = beneficiaryCode;
+		this.o=o;
+		this.m=m;
+		this.b=b;
+		//this.ownerCode = ownerCode;
+		//this.managerCode = managerCode;
+		//this.beneficiaryCode = beneficiaryCode;
 		this.assetList = assetList;
 	}
 
@@ -27,19 +33,20 @@ public class Portfolios {
 		return portfolioCode;
 	}
 
-	//method for returning the owner dode
-	public String getOwnerCode() {
-		return ownerCode;
+	//method for returning the owner code
+	public Persons getOwner() {
+		return o;
 	}
+	
 
 	//method for returning the manager code
-	public String getManagerCode() {
-		return managerCode;
+	public Persons getManager() {
+		return m;
 	}
 
 	//method for returning the beneficiary code
-	public String getBeneficiaryCode() {
-		return beneficiaryCode;
+	public Persons getBeneficiary() {
+		return b;
 	}
 
 	//method for returning the list of Assets
@@ -108,13 +115,13 @@ public class Portfolios {
 	}
 
 	//method to get name corresponding to personCode
-	public String getName(String personCode, List<Persons> perInfo) {
-		String name = "";
-		for(int i = 0; i < perInfo.size(); i++) {
-			if(personCode.equals(perInfo.get(i).getPersonCode())) {
-				name = perInfo.get(i).getLastName() + "," + perInfo.get(i).getFirstName();
-			}
-		}
-		return name;
-	}
+//	public String getName(String personCode, List<Persons> perInfo) {
+//		String name = "";
+//		for(int i = 0; i < perInfo.size(); i++) {
+//			if(personCode.equals(perInfo.get(i).getPersonCode())) {
+//				name = perInfo.get(i).getLastName() + "," + perInfo.get(i).getFirstName();
+//			}
+//		}
+//		return name;
+//	}
 }

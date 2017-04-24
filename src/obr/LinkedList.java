@@ -66,9 +66,25 @@ public class LinkedList <T> {
 						ListNode <T> e = new ListNode<T>(element);
 						prevNode.setNext(e);
 						e.setNext(afterNode);
+						break;
 					}
 					else if(value == 0) {
 						
+//						if(i == getSize()-2) {
+//							ListNode<T> newTail= new ListNode<T>(element) ;
+//							this.tail= newTail;
+//							afterNode.setNext(this.tail);
+//							this.tail.setNext(null);
+//							break;
+//						}
+//						else {
+							ListNode<T> e = new ListNode<T>(element);
+							e.setNext(afterNode.getNext());
+							afterNode.setNext(e);
+							break;
+//						}
+					}
+					else if(value > 0) {
 						if(i == getSize()-2) {
 							ListNode<T> newTail= new ListNode<T>(element) ;
 							this.tail= newTail;
@@ -76,19 +92,13 @@ public class LinkedList <T> {
 							this.tail.setNext(null);
 							break;
 						}
-						else {
-							ListNode<T> e = new ListNode<T>(element);
-							e.setNext(afterNode.getNext());
-							afterNode.setNext(e);
-							break;
-						}
-						
 					}
 				}
 				else {
 					ListNode <T> e = new ListNode<T>(element);
 					prevNode.setNext(e);
 					e.setNext(afterNode);
+					break;
 				}
 			}
 		}

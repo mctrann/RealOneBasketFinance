@@ -57,7 +57,7 @@ public class PortfolioWriter {
 //			}
 			
 			//prints each portfolio's calculations and persons involved
-			System.out.println(String.format("%-12s %25s %24s %15s %15s %16s %15s %15s", portInfo.getElement(i).getPortfolioCode(), portInfo.getElement(i).getOwner().getPersonCode(), portInfo.getElement(i).getManager().getPersonCode(), "$" +df.format(localFees), 
+			System.out.println(String.format("%-12s %25s %24s %15s %15s %16s %15s %15s", portInfo.getElement(i).getPortfolioCode(), portInfo.getElement(i).getOwner().getLastName() + " " + portInfo.getElement(i).getOwner().getFirstName(), portInfo.getElement(i).getManager().getLastName() + " " + portInfo.getElement(i).getManager().getFirstName(), "$" +df.format(localFees), 
 					"$" + df.format(localCommissions), dflong.format(portInfo.getElement(i).getRisk(portInfo.getElement(i).getAssetList())), "$" + df.format(localReturnValue), "$" + df.format(localTotalValue))); 
 		}
 		

@@ -249,6 +249,12 @@ public class DataReceiver {
 			e.printStackTrace();
 			throw new RuntimeException(e);
 		}
+		try {
+			conn.close();
+		} catch (SQLException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		}
 		//creates person object
 		if(personType.equals("J")) {
 			Junior j = new Junior(personCode, personType, secID, firstName, lastName, a, Email);
@@ -473,6 +479,12 @@ public class DataReceiver {
 			//System.out.println(l.getElement(pt).getOwner().getLastName());
 			//System.out.print(l);
 			assetIDtemp.clear();
+		}
+		try {
+			conn.close();
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
 		}
 		//returns list of portfolio objects
 		return l;

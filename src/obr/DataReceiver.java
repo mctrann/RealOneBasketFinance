@@ -474,10 +474,8 @@ public class DataReceiver {
 			}else {
 				pf = new Portfolios(portCode,getPerson(ownerCode),getPerson(managerCode),getPerson(beneficiaryCode),a);
 			}
-			System.out.println(pf.getPortfolioCode());
+
 			l.addElement(pf, c);
-			//System.out.println(l.getElement(pt).getOwner().getLastName());
-			//System.out.print(l);
 			assetIDtemp.clear();
 		}
 		try {

@@ -9,38 +9,28 @@ public class LinkedList <T> {
 	private ListNode <T> prevNode;
 	private ListNode <T> afterNode;
 	public void addElement(T element, Comparator<T> c) {
-		System.out.println(getSize());
+//		System.out.println(getSize());
 		if(getSize()==0){
 			ListNode<T> newHead= new ListNode<T>(element);
 			newHead.setNext(this.head);
 			this.head=newHead;
-			System.out.println("head: " + head.getElement());
-			System.out.println();
 		}
 		else if (getSize()==1){
 			int value=c.compare(element,head.getElement());
-			System.out.println("head: " + head.getElement());
-			System.out.println("element: " + element);
 			if (value < 0){
 				addToStart(element);
-				System.out.print("h");
-				System.out.println();
 			}
 			else if (value > 0){
 				ListNode<T> newTail= new ListNode<T>(element) ;
 				this.tail= newTail;
 				this.tail.setNext(null);
 				head.setNext(this.tail);
-				System.out.println("t");
-				System.out.println();
 			}
 			else{
 				ListNode<T> newTail= new ListNode<T>(element) ;
 				this.tail= newTail;
 				this.tail.setNext(null);
 				head.setNext(this.tail);
-				System.out.println("c");
-				System.out.println();
 			}
 		}
 		else{
@@ -49,11 +39,7 @@ public class LinkedList <T> {
 	
 				prevNode=getListNode(i);
 				afterNode= getListNode(i+1);
-				
-				System.out.println("element: " + element);
-				System.out.println("head: " + head.getElement());
-				System.out.println("prevNode: " + prevNode.getElement());
-				System.out.println("afterNode: " + afterNode.getElement());
+	
 				value = c.compare(element,prevNode.getElement());
 				System.out.println();
 				if(value < 0) {

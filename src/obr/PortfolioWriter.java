@@ -11,12 +11,13 @@ public class PortfolioWriter {
 	private static List<Persons> perInfo= new ArrayList<Persons>();
 	
 	//create private variables of class Portfolios
-	private static double totalFees = 0.0;
-	private static double totalCommissions = 0.0;
-	private static double totalReturnValue = 0.0;
-	private static double totalValue = 0.0; 
+ 
 	
 	public static void PortfolioWrite(LinkedList<Portfolios>portInfo) {
+		double totalFees = 0.0;
+		double totalCommissions = 0.0;
+		double totalReturnValue = 0.0;
+		double totalValue = 0.0;
 		//formats decimals
 		DecimalFormat df = new DecimalFormat("0.00");
 		DecimalFormat dflong = new DecimalFormat("0.0000");
@@ -64,6 +65,12 @@ public class PortfolioWriter {
 		//prints total fees, commissions, return, and value of all portfolios
 		System.out.println("----------------------------------------------------------------------------------------------------------------------------------------------------");
 		System.out.println(String.format("%-12s %25s %24s %15s %15s %16s %15s %15s", "", "", "Totals", "$" + df.format(totalFees), "$" + df.format(totalCommissions), "", "$" + df.format(totalReturnValue), df.format(totalValue)));
+		
+		
+		totalFees = 0.0;
+		totalCommissions = 0.0;
+		totalReturnValue = 0.0;
+		totalValue = 0.0;
 		
 //		//System.outs the individual details of each portfolio
 //		System.out.println();

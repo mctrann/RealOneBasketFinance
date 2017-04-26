@@ -272,7 +272,7 @@ public class DataReceiver {
 	}
 
 	public LinkedList<Portfolios> getPortfolio(Comparator<Portfolios> c) {
-		getAsset();		
+		//getAsset();		
 		Connection conn = ConnectionInfo.connection();
 
 		LinkedList<Portfolios> l = new LinkedList<Portfolios>();
@@ -440,27 +440,27 @@ public class DataReceiver {
 						assetVal = rs.getDouble("totalValue");
 						sharePrice = rs.getDouble("sharePrice");
 						//creates new asset objects
-						for(int i=0; i<asset.size();i++){
-							if(asset.get(i).getCode().equals(assetCode)) {
+//						for(int i=0; i<asset.size();i++){
+//							if(asset.get(i).getCode().equals(assetCode)) {
 								if (assetType.equals("D")){
-									Deposit_Account d = new Deposit_Account((Deposit_Account) asset.get(i));
+									Deposit_Account d = new Deposit_Account(assetCode, assetType, assetLabel, apr);
 									d.setBalance(entry.getValue());
 									a.add(d);
 								}
 								else if (assetType.equals("P")){
-									Private_Investments pi = new Private_Investments((Private_Investments) asset.get(i));
+									Private_Investments pi = new Private_Investments(assetCode, assetType, assetLabel, quarterlyDividend,BRR, omegaMeasure,assetVal);
 									pi.setPercentageStake(entry.getValue());
 									a.add(pi);
 
 								}
 								else {
-									Stocks s = new Stocks ((Stocks) asset.get(i));
+									Stocks s = new Stocks (assetCode, assetType, assetLabel, quarterlyDividend, BRR, betaMeasure, stockSymbol, sharePrice);
 									s.setSharesOwned(entry.getValue());
 									a.add(s);	
 								}
 							}
-						}
-					}
+//						}
+//					}
 				}catch (SQLException e) {
 					System.out.println("SQLException: ");
 					e.printStackTrace();

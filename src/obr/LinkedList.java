@@ -152,7 +152,24 @@ public class LinkedList <T> {
 //		}
 		//throw new UnsupportedOperationException("Not yet implemented.");
 	}
-
+	
+	public T removeHead() {
+		T remove = null;
+		if(this.getSize() == 0) {
+			throw new IllegalArgumentException("Nothing to remove since size is 0");
+		}
+		if(this.getSize() == 1) {
+			remove = this.head.getElement();
+			this.head = null;
+			this.tail = null;
+		}
+		else{
+			remove = this.head.getElement();
+			this.head.getNext();
+			this.head.setPrev(null);
+		}
+		return remove;
+	}
 	public void remove(int position) {
 		ListNode<T> previousNode = this.getListNode(position-1);
 		ListNode<T> afterNode=this.getListNode(position+1);

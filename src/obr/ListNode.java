@@ -22,4 +22,12 @@ public class ListNode<T> {
 	    public void setNext(ListNode <T> next) {
 	        this.next = next;
 	    }
+	    
+	    public ListNode <T> getPrev() {
+	    	return prev;
+	    }
+	    
+	    public void setPrev(ListNode<T> prev) {
+	    	this.prev = prev;
+	    }
 }

@@ -6,18 +6,14 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class PortfolioWriter {
-	//lists writer uses to make portfolio summary, a portfolio list and a person list
-	private static List<Portfolios> portInfo= new ArrayList<Portfolios>();
-	private static List<Persons> perInfo= new ArrayList<Persons>();
-	
-	//create private variables of class Portfolios
- 
-	
+
 	public static void PortfolioWrite(LinkedList<Portfolios>portInfo) {
 		double totalFees = 0.0;
 		double totalCommissions = 0.0;
 		double totalReturnValue = 0.0;
 		double totalValue = 0.0;
+		double localTotalValue=0.0;
+		double localReturnValue=0.0;
 		//formats decimals
 		DecimalFormat df = new DecimalFormat("0.00");
 		DecimalFormat dflong = new DecimalFormat("0.0000");
@@ -27,10 +23,10 @@ public class PortfolioWriter {
 		System.out.println("---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------");
 		System.out.println(String.format("%-12s %25s %24s %15s %15s %16s %15s %15s", "Portfolio", "Owner", "Manager", "Fees", "Comissions", "Weighted Risk", "Return", "Total"));
 		for(int i = 0; i < portInfo.getSize(); i++) {
-			double localTotalValue = portInfo.getElement(i).getTotalValue(portInfo.getElement(i).getAssetList());
+			localTotalValue = portInfo.getElement(i).getTotalValue(portInfo.getElement(i).getAssetList());
 			totalValue = totalValue + localTotalValue;
 
-			double localReturnValue = portInfo.getElement(i).getTotalReturnValue(portInfo.getElement(i).getAssetList());
+			localReturnValue = portInfo.getElement(i).getTotalReturnValue(portInfo.getElement(i).getAssetList());
 			totalReturnValue = totalReturnValue + localReturnValue;
 			
 			double localFees = 0.0;
@@ -44,7 +40,7 @@ public class PortfolioWriter {
 				localCommissions = portInfo.getElement(k).getManager().getCommissions(portInfo.getElement(i).getTotalReturnValue(portInfo.getElement(i).getAssetList()));
 				totalCommissions = totalCommissions + localCommissions;
 			}
-			
+				
 //			//calculates total commissions and fees
 //			for(int k = 0; k < perInfo.size(); k++	) {
 //				 if(portInfo.get(i).getManagerCode().equals(perInfo.get(k).getPersonCode())) {
@@ -66,11 +62,7 @@ public class PortfolioWriter {
 		System.out.println("----------------------------------------------------------------------------------------------------------------------------------------------------");
 		System.out.println(String.format("%-12s %25s %24s %15s %15s %16s %15s %15s", "", "", "Totals", "$" + df.format(totalFees), "$" + df.format(totalCommissions), "", "$" + df.format(totalReturnValue), df.format(totalValue)));
 		
-		
-		totalFees = 0.0;
-		totalCommissions = 0.0;
-		totalReturnValue = 0.0;
-		totalValue = 0.0;
+		((LinkedList<Portfolios>) portInfo).removeHead();
 		
 //		//System.outs the individual details of each portfolio
 //		System.out.println();
@@ -118,6 +110,7 @@ public class PortfolioWriter {
 		TypeOrder TO = new TypeOrder();
 		ValueOrder VO = new ValueOrder();
 		//writes the portfolio summary 
+		
 		PortfolioWrite(dr.getPortfolio(LNO));
 		PortfolioWrite(dr.getPortfolio(VO));
 		PortfolioWrite(dr.getPortfolio(TO));
